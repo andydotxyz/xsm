@@ -1,0 +1,5 @@
+<xsmconnection type="local" provides="">
+  <rootDir>/var/www/htdocs/demo</rootDir>
+  <rootUrl>http://localhost/demo</rootUrl>
+  <prefixUrl>/demo</prefixUrl>
+</xsmconnection>

@@ -1,0 +1,32 @@
+Requires:
+
+  java
+  maven
+  tomcat (or similar)
+
+If you got XSM from source you will need to compile the application WAR file, type
+
+  mvn package
+
+The xsm-web/target/xsm-web-{version}.war file should then be copied into your
+servlet container (we recommend tomcat) as xsm.war.
+
+on a default install you need to extract xsm_demo_config.zip into your /etc
+directory and give your servlet container write permissions to the /etc/xsm
+directory it creates. This creates a default site named "demo".
+
+Edit xsm_local.properties and set the "xsm.url" property to the url used
+to access your xsm installation. This should not be localhost:8080 if you want
+to make your site publicly available.
+This file can be used to override more XSM default settings.
+
+For more information on configuration check the documentation at
+http://rectang.com/Software/XSM/Installing_XSM/
+
+You will also need to place id_rsa (ssh private key) if you wish to use ssh remote
+publishing.
+
+You should now start your servlet container and head to:
+http://localhost:8080/xsm/ (your installation may be different)
+and log in as the user "admin" password "admin" and site name "demo" to get
+started.

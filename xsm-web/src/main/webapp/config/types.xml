@@ -1,0 +1,83 @@
+<xsmtypes>
+  <type name="html" class="com.rectang.xsm.types.Html">
+    <description>Standard page type that provides easy to edit web content</description>
+    <requires></requires>
+  </type>
+
+  <type name="appcast" class="com.rectang.xsm.types.Appcast">
+    <description>An extension of the news page which provides appcast publishing</description>
+    <requires></requires>
+  </type>
+  <type name="book" class="com.rectang.xsm.types.Book">
+    <description></description>
+    <requires></requires>
+  </type>
+  <type name="donate" class="com.rectang.xsm.types.Donate">
+    <description>A donate page for your site! Allows you to accept donations
+      from your website to your paypal account.</description>
+    <requires></requires>
+  </type>
+  <type name="embed" class="com.rectang.xsm.types.Embed">
+    <description>Embed a page or site inside an XSM page. This uses the IFRAME
+      tag and is not fully supported by all browsers.</description>
+    <requires></requires>
+  </type>
+  <type name="events" class="com.rectang.xsm.types.Events">
+    <description>A simple event system that will grow with time</description>
+    <requires></requires>
+  </type>
+  <type name="faq" class="com.rectang.xsm.types.FAQ">
+    <description></description>
+    <requires></requires>
+  </type>
+  <type name="files" class="com.rectang.xsm.types.Files">
+    <description></description>
+    <requires></requires>
+  </type>
+  <type name="form" class="com.rectang.xsm.types.Form">
+    <description>Create a form that is used to email the results to various user input</description>
+    <requires>php</requires>
+  </type>
+  <type name="gallery" class="com.rectang.xsm.types.Gallery">
+    <description></description>
+    <requires></requires>
+  </type>
+  <type name="glossary" class="com.rectang.xsm.types.Glossary">
+    <description>A glossary page for definitions of terms or
+      abbreviations.</description>
+    <requires></requires>
+  </type>
+  <type name="images" class="com.rectang.xsm.types.Images" hidden="true">
+    <description>(Internal use only, not a real template)</description>
+    <requires></requires>
+  </type>
+  <type name="links" class="com.rectang.xsm.types.Links">
+    <description></description>
+    <requires></requires>
+  </type>
+  <type name="login" class="com.rectang.xsm.types.Login">
+    <description>A login page for your site, keeps a unified look and saves
+      typing the site name</description>
+    <requires></requires>
+  </type>
+  <type name="news" class="com.rectang.xsm.types.News">
+    <description>A blog-like news page with archives and syndication</description>
+    <requires></requires>
+  </type>
+  <type name="podcast" class="com.rectang.xsm.types.Podcast">
+    <description>An extension of the news page which provides podcast publishing</description>
+    <requires></requires>
+  </type>
+  <type name="PHP" class="com.rectang.xsm.types.PHP">
+    <description>generate a dynamic page that can be programmed using the php language</description>
+    <requires>php</requires>
+  </type>
+  <type name="previewedfile" class="com.rectang.xsm.types.PreviewedFile">
+    <description></description>
+    <requires></requires>
+  </type>
+  <type name="sitemap" class="com.rectang.xsm.types.SiteMap">
+    <description>A page that generates a map of your entire site.</description>
+    <requires></requires>
+  </type>
+</xsmtypes>

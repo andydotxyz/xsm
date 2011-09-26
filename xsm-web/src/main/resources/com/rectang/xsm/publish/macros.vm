@@ -1,0 +1,150 @@
+#macro( title )
+  $site.title :: #pageName()
+#end
+
+#macro( pageName )
+  $page.title
+#end
+
+#macro( metadataTitle )
+  $metadata.title
+#end
+
+#macro( metadataDescription )
+  $metadata.description
+#end
+
+#macro( metadataLastEditor )
+  $metadata.lastEditor
+#end
+
+#macro( metadataLastEdited )
+  $dateFormatter.formatISO($metadata.lastEdited)
+#end
+
+#macro( metadataFormattedLastEdited $format )
+  #if( $format == "shortdate" )
+    $dateFormatter.formatShortDate($metadata.lastEdited)
+  #elseif( $format == "date" )
+    $dateFormatter.formatDate($metadata.lastEdited)
+  #elseif( $format == "shorttime" )
+    $dateFormatter.formatShortTime($metadata.lastEdited)
+  #elseif( $format == "time" )
+    $dateFormatter.formatTime($metadata.lastEdited)
+  #else
+    $dateFormatter.formatISO($metadata.lastEdited)
+  #end
+#end
+
+#macro( navigation )
+  #navtree( $site.pages, true )
+#end
+
+#macro( categorisedNavigation )
+  #set( $pages = $site.pages )
+
+  <ul class="xsm_menu_categories">
+
+  #foreach( $node in $pages )
+    <li class="xsm_menu_category">$node.title
+
+    #if( $node.subPages && $node.subPages.size() > 0 )
+      #navtree( $node.subPages, true )
+    #end
+    </li>
+  #end
+  </ul>
+#end
+
+#macro( navtree $pages $visible )
+  <ul class="xsm_menu_group">
+
+  #foreach( $node in $pages )
+
+    #if( $visible )
+      #set( $class = '' )
+    #else
+      #set( $class = 'xsm_menu_hidden' )
+    #end
+
+    #if( !$node.hidden )
+      #if ($node.path.equals($page.path))
+        #set( $selected = "xsm_menu_item_selected" )
+      #else
+        #set( $selected = "" )
+      #end
+
+    <li class="xsm_menu_item $selected $class"><a href="${node.link}">$node.title</a>
+
+      #if( $node.subPages && $node.subPages.size() > 0 )
+        #navtree( $node.subPages, $page.path.startsWith($node.path) )
+      #end
+    </li>
+    #end
+  #end
+  </ul>
+#end
+
+#macro( newsSummary )
+  #set( $source = $site.getNewsSource() )
+  #set( $length = 150 )
+  #set( $count = 5 )
+
+  #if ( !$source )
+    (No news source chosen)
+  #else
+    #set( $docPage = $metadata.getDocument().getXSMDoc($site, $site.getPage($source)) )
+    #if ( !$docPage.getType($user).getClass().getName().endsWith(".News") )
+      (Chosen page is not a news page)
+    #else
+      #set( $list = $docPage.getContentElement().getChildren("article") )
+      #foreach( $article in $list )
+        #if ($velocityCount <= $count)
+          <p class="xsm_newssummary">
+            <span class="xsm_newssummary_subject">$article.getChildText("subject")</span><br />
+
+            <span class="xsm_newssummary_body">$htmlUtils.summarise( $article.getChildText("body"), $length)</span><br />
+
+            <a href="$site.getPrefixUrl()$site.getNewsSource()/_articles/${article.getAttributeValue("index")}.html" class="xsm_newssummary_more">read more...</a>
+          </p>
+        #end
+      #end
+    #end
+  #end
+#end
+
+#macro( lastAddition $pageName )
+  #set( $source = $site.getPage( $pageName ) )
+
+  #if ( !$source )
+    (Page not found)
+  #else
+    #set( $docPage = $source.getXSMDocument() )
+    #set( $nextIndex = $docPage.getContentElement().getAttributeValue( "next_index" ) )
+    #if ( !$nextIndex )
+      (Chosen page is not a list based page)
+    #else
+      #set( $list = $docPage.getContentElement().getChildren() )
+
+      #foreach( $index in [$numberUtils.parseInt($nextIndex) .. 0] )
+        #if (!$latest)
+          #foreach( $item in $list )
+            #if ( $item.getAttributeValue("index") == $index )
+              #set( $latest = $item )
+            #end
+          #end
+        #end
+      #end
+
+      #if (!$latest)
+        #set( $latest = $list.get(0) )
+      #end
+
+      #if (!$latest)
+        (No entries)
+      #else
+        $renderUtils.publish( $docPage.getType($user), $latest )
+      #end
+    #end
+  #end
+#end

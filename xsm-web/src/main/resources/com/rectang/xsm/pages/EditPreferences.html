@@ -1,0 +1,29 @@
+<html>
+  <body>
+    <wicket:extend>
+      <h1>Your Preferences</h1>
+
+      <p>Please modify your preferences below and click "Save Preferences"</p>
+
+      <form wicket:id="preferences" action="#">
+        <table>
+          <tr>
+            <td><label for="theme" class="label">Your chosen theme is:</label></td>
+            <td><select wicket:id="theme" id="theme" /></td>
+          </tr>
+          <tr>
+            <td><label for="htmlEditor" class="label">Your chosen html editor is:</label></td>
+            <td><select wicket:id="htmlEditor" id="htmlEditor" /></td>
+          </tr>
+          <!--tr>
+            <td><label for="locale" class="label">Your chosen language is:</label></td>
+            <td><select wicket:id="locale" id="locale" /></td>
+          </tr-->
+          <tr>
+            <td colspan="2"><div align="right"><input type="submit" value="Save Preferences" /></div></td>
+          </tr>
+        </table>
+      </form>
+    </wicket:extend>
+  </body>
+</html>

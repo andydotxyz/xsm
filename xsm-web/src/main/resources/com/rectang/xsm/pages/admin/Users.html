@@ -1,0 +1,25 @@
+<html>
+  <body>
+    <wicket:extend>
+      <h1>Site User List</h1>
+
+      <table class="dataview" cellspacing="0" wicket:id="users">[table]</table>
+
+      <p>You can add <a href="add-user">new users</a> to your site</p>
+
+      <h1>User permissions:</h1>
+
+      <table class="dataview" cellspacing="0" wicket:id="permissions">[table]</table>
+
+      <wicket:enclosure>
+      <h1>Visitor Accounts</h1>
+
+      <p>These accounts are used to secure pages in your web site - they are not given access to XSM.</p>
+
+      <table class="dataview" cellspacing="0" wicket:id="visitors">[table]</table>
+
+      <p><a href="add-visitor">Add a visitor account</a> to your site</p>
+      </wicket:enclosure>
+    </wicket:extend>
+  </body>
+</html>

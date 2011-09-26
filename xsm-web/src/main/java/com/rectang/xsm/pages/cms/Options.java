@@ -1,0 +1,85 @@
+package com.rectang.xsm.pages.cms;
+
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.PageParameters;
+
+import com.rectang.xsm.doc.SupportedOption;
+import com.rectang.xsm.wicket.OptionPanel;
+
+/**
+ * The main CMS options tab
+ *
+ * @author Andrew Williams
+ * @version $Id: Options.java 818 2010-05-30 14:04:21Z andy $
+ * @since 2.0
+ *
+ * @plexus.component role="org.apache.wicket.Page" role-hint="page-options"
+ */
+public class Options extends DocumentPage {
+  public void layout() {
+    super.layout();
+    if (hasError()) return;
+
+    add(new OptionsForm("optionsform"));
+  }
+
+  private class OptionsForm extends Form {
+    public OptionsForm(String id) {
+      super(id);
+      final boolean canEdit = getDoc().canEdit(getXSMSession().getUser());
+
+      add(new ListView("options", getDoc().getSupportedOptions(getXSMSession().getUser())) {
+        protected void populateItem(ListItem listItem) {
+          SupportedOption option = (SupportedOption) listItem.getModelObject();
+
+          // TODO if canEdit we display edit fields instead of the text
+          // Make some SupportedOption wicket panels to drop in
+          listItem.add(new Label("label", option.getDescription()));
+          if (canEdit) {
+            switch (option.getType()) {
+              case SupportedOption.TYPE_BOOL:
+                listItem.add(new OptionPanel.BooleanOption("option", option, getDoc()));
+                break;
+              case SupportedOption.TYPE_INT:
+                listItem.add(new OptionPanel.IntegerOption("option", option, getDoc()));
+                break;
+              default:
+                listItem.add(new OptionPanel.StringOption("option", option, getDoc()));
+            }
+          } else {
+            switch (option.getType()) {
+              case SupportedOption.TYPE_BOOL:
+                listItem.add(new Label("option", option.getBoolean(getDoc())?"yes":"no"));
+                break;
+              case SupportedOption.TYPE_INT:
+                listItem.add(new Label("option", String.valueOf(option.getInteger(getDoc()))));
+                break;
+              default:
+                listItem.add(new Label("option", "\"" + option.getString(getDoc()) + "\""));
+            }
+          }
+        }
+      });
+
+      Button save = new Button("save");
+      save.setVisible(canEdit);
+      add(save);
+
+      Button reset = new Button("reset");
+      reset.setVisible(canEdit);
+      add(reset);
+    }
+
+
+    protected void onSubmit() {
+      super.onSubmit();
+
+      getDoc().save();
+      getDoc().publish(getXSMSession().getUser());
+    }
+  }
+}

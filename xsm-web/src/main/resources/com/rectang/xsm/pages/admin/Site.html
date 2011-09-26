@@ -1,0 +1,33 @@
+<html>
+  <body>
+    <wicket:extend>
+      <h1>Site Settings</h1>
+
+      <form wicket:id="site" action="#">
+        <table>
+          <tr>
+            <td><label for="title" class="label">Site title</label></td>
+            <td><input wicket:id="title" id="title"/></td>
+          </tr>
+          <tr>
+            <td><label for="keywords" class="label">Site keywords</label></td>
+            <td><input wicket:id="keywords" id="keywords"/></td>
+          </tr>
+          <tr>
+            <td><label for="description" class="label">Site description</label></td>
+            <td><input wicket:id="description" id="description"/></td>
+          </tr>
+          <tr>
+            <td><label for="favicon">Favicon file</label></td>
+            <td><img wicket:id="favicon-img" src="#" alt="favicon" />
+              <input wicket:id="favicon" id="favicon" type="file"/></td>
+          </tr>
+          <tr>
+            <td colspan="2"><div align="right"><input type="submit" value="Save Settings" /></div></td>
+          </tr>
+        </table>
+      </form>
+
+    </wicket:extend>
+  </body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title><span wicket:id="site-title-head">site</span></title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="-1" />
+
+    <script language="javascript">
+//    <[CDATA[
+      IEListFix = function(navRoot) {
+        for (i=0; i<navRoot.childNodes.length; i++) {
+          node = navRoot.childNodes[i];
+          if (node.nodeName=="LI") {
+            node.onmouseover=function() {
+              this.className+=" over";
+            }
+            node.onmouseout=function() {
+              this.className=this.className.replace(" over", "");
+            }
+          }
+        }
+      }
+      startList = function() {
+        if (document.all&&document.getElementById) {
+          navRoot = document.getElementById("xsm_menu").childNodes[0].childNodes[0];
+          IEListFix(navRoot);
+
+          for (j=0; j<navRoot.childNodes.length; j++) {
+            subNode = navRoot.childNodes[j].childNodes[2];
+
+            if (subNode && subNode.hasChildNodes()) {
+              IEListFix(subNode);
+             }
+          }
+        }
+      }
+      window.onload=startList;
+//    ]]>
+    </script>
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
+  </head>
+  <body>
+    <div id="xsm_body">
+      <div id="xsm_page">
+        <div id="xsm_header">
+          <h1><span wicket:id="site-title">site</span></h1>
+        </div>
+
+      <div id="xsm-editor-toolbar">
+
+        <div id="xsm-editor-logo">&nbsp;</div>
+
+        <ul class="xsm-editor-buttons-user" wicket:id="user-buttons">
+
+          <li><span class="xsm-editor-button-background">
+            <a wicket:id="profilePlugin" href="#" class="xsm-editor-button">
+              <img wicket:id="pluginImage" class="xsm-editor-button-icon"
+                  alt="Profile" title="Profile" />
+            <span class="xsm-editor-button-caption">Profile</span></a></span></li>
+          <li><span class="xsm-editor-button-background">
+            <a wicket:id="preferencesPlugin" href="#" class="xsm-editor-button">
+              <img wicket:id="pluginImage" class="xsm-editor-button-icon"
+                  alt="Prefences" title="Preferences" />
+            <span class="xsm-editor-button-caption">Preferences</span></a></span></li>
+
+          <li><span class="xsm-editor-button-background">
+            <a wicket:id="logoutPlugin" href="#" class="xsm-editor-button">
+              <img wicket:id="pluginImage" class="xsm-editor-button-icon"
+                  alt="Logout" title="Logout" />
+            <span class="xsm-editor-button-caption">Logout</span></a></span></li>
+        </ul>
+
+        <ul class="xsm-editor-buttons-admin" wicket:id="admin-buttons">
+          <li><span class="xsm-editor-button-background">
+            <a wicket:id="settingsPlugin" href="#" class="xsm-editor-button">
+              <img wicket:id="pluginImage" class="xsm-editor-button-icon"
+                  alt="Site Settings" title="Site Settings" />
+            <span class="xsm-editor-button-caption">Site Settings</span></a></span></li>
+          <li><span class="xsm-editor-button-background">
+            <a wicket:id="themePlugin" href="#" class="xsm-editor-button">
+              <img wicket:id="pluginImage" class="xsm-editor-button-icon"
+                  alt="Site Theme" title="Site Theme" />
+            <span class="xsm-editor-button-caption">Site Theme</span></a></span></li>
+          <li><span class="xsm-editor-button-background">
+            <a wicket:id="usersPlugin" href="#" class="xsm-editor-button">
+              <img wicket:id="pluginImage" class="xsm-editor-button-icon"
+                  alt="Users" title="Users" />
+            <span class="xsm-editor-button-caption">Users</span></a></span></li>
+          <li><span class="xsm-editor-button-background">
+            <a wicket:id="backupPlugin" href="#" class="xsm-editor-button">
+              <img wicket:id="pluginImage" class="xsm-editor-button-icon"
+                  alt="Backup" title="Backup" />
+            <span class="xsm-editor-button-caption">Backup</span></a></span></li>
+          <li><span class="xsm-editor-button-background">
+            <a wicket:id="systemPlugin" href="#" class="xsm-editor-button">
+              <img wicket:id="pluginImage" class="xsm-editor-button-icon"
+                  alt="System" title="System" />
+            <span class="xsm-editor-button-caption">System</span></a></span></li>
+        </ul>
+
+        <ul class="xsm-editor-buttons-xsmadmin" wicket:id="xsmadmin-buttons">
+          <li><span class="xsm-editor-button-background">
+            <a wicket:id="adminPlugin" href="#" class="xsm-editor-button">
+              <img wicket:id="pluginImage" class="xsm-editor-button-icon"
+                  alt="XSM Admin" title="XSM Admin" />
+            <span class="xsm-editor-button-caption">XSM Admin</span></a></span></li>
+        </ul>
+
+        <ul class="xsm-editor-buttons-help">
+          <li><span class="xsm-editor-button-background">
+            <a wicket:id="helpPlugin" href="#" class="xsm-editor-button">
+              <img wicket:id="pluginImage" class="xsm-editor-button-icon"
+                  alt="Help" title="Help" />
+            <span class="xsm-editor-button-caption">Help</span></a></span></li>
+        </ul>
+
+      </div>
+
+        <div id="xsm_main">
+          <div id="xsm_menu">
+            <div class="xsm_navigation">
+              <div wicket:id="xsm-tree"></div>
+            </div>
+
+
+          </div>
+
+          <div id="xsm_news">
+
+
+          </div>
+
+          <div id="xsm_content">
+          <div wicket:id="feedback" />
+
+            <wicket:child />
+
+          </div>
+
+        </div><!-- end main -->
+
+        <div id="xsm_footer">
+          eXtensible Site Manager :: Version <span wicket:id="xsm-version"></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

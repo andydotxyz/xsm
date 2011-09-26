@@ -1,0 +1,56 @@
+This is a rough idea of what I want to get done, and in some cases, when too.
+Check the bugs on http://dev.rectang.com/projects/xsm/query too.
+
+
+1.1:
+
+  features:
+    add editing of admins and site editors to interface...
+    email users on creation if the email address is filled in
+    add "move to top" and "move to bottom" next to move up and down buttons
+
+    admin:
+      set the default page of a site (then save the page)
+      set the news page of a site (then regen site)
+      set the login page of a site (blank = old style login link) (then save the page)
+
+other:
+
+  features:
+
+    add groups too! - need a groups page for site admin
+    users can set their timezones?
+
+    allow direct (external) links in menu
+
+    allow users to specify that the textarea fields etc be non-proportional
+    
+    Gallery should somehow thumbnail videos? or allow custom thumbnails...
+
+    add XSM admin pages - start with "upgrade" for re-deploying...
+
+    add widgets choice[multiple/single/boolean]
+    add a javadoc renderer - overriding the default docbook class?
+
+    add calendar summary
+    spell check for wysiwyg editor
+
+    add layout taglibs
+      xsm:stylesheet
+      xsm:breadcrumbs
+      site metadata too
+
+    add other (internal) tags
+      xsm:encodevalue    } these should unify the encoding needed on HTML forms
+      xsm:encodetextarea }
+ 
+housekeeping:
+
+  fix handlers, uses props Map and see what else req is used for
+
+  replace all text with locale lookups
+
+  fix class names all over for more advanced stylesheet control
+
+  remove extra mkdirs etc and optimise publishing backends
+  replace e.printStackTraces with logging - read logs in site admin and XSM admin

@@ -1,0 +1,195 @@
+@import "xsm-toolbar.css";
+
+textarea, .metadata, .metadata_value, .metadata_title, .metadata_description {
+  width: 100%;
+}
+
+.xsm-editor-tabs {
+  width: 100%;
+  margin-bottom: 5px;
+  padding: 0 1px;
+
+  background-image: url( xsm-editor-bg.png );
+  border: 1px solid #fde300;
+
+  font-family: arial, sans-serif;
+  font-size: 12px;
+}
+
+.xsm-editor-tab-active {
+  text-align: center;
+
+  margin:0;
+  padding:2px 1px;
+  width: 80px;
+}
+
+.xsm-editor-tab-active a {
+  text-decoration: none;
+  background-color: #463f00;
+  display: block;
+  color: #ffffff;
+  border: 1px outset #fde300;
+}
+
+.xsm-editor-tab-active a:hover {
+  color: #ffffff;
+}
+
+.xsm-editor-tab-inactive {
+  text-align: center;
+  margin:0;
+  padding:2px 1px;
+  width: 80px;
+}
+
+.xsm-editor-tab-inactive a {
+  text-decoration: none;
+  display: block;
+  padding: 1px;
+  color: #ffffff;
+}
+
+.xsm-editor-tab-inactive a:hover {
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #463f00;
+  border: 1px outset #fde300;
+  padding: 0;
+}
+
+.xsm-editor-tab-extra {
+  display: none;
+}
+
+.xsm-editor-tab-spacer {
+  margin:0;
+  padding:1px;
+}
+
+.xsm-editor-php-mask {
+  border: 1px outset #fde300;
+  color: #ffffff;
+  background-image: url( xsm-editor-bg.png );
+}
+
+.xsm-editor-message, .xsm-editor-message-wide {
+  border: 1px ridge #fde300;
+
+  margin-bottom: 10px;
+}
+
+.xsm-editor-message-wide .xsm-editor-message-wide {
+  border: 1px solid #fde300;
+
+  margin-bottom: 2px;
+}
+
+.xsm-editor-message-wide {
+  width: 100%;
+}
+
+.xsm-editor-message-title {
+  text-align: left;
+  background-image: url( xsm-editor-bg.png );
+  font-family: arial, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  color: #ffffff;
+
+  border-bottom: 1px solid #fde300;
+  padding: 2px;
+}
+
+.xsm-editor-message-wide .xsm-editor-message-wide .xsm-editor-message-title {
+  background-image: none;
+}
+
+.xsm-editor-message-main {
+  background-color: #000000;
+  color: #ffffff;
+  
+  padding: 2px;
+}
+
+.xsm-editor-message-main a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.xsm-editor-message-main a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+/* data tables */
+table.dataview {
+  background-image: url( xsm-editor-bg.png );
+  border: 1px solid #fde300;
+  margin-bottom: 10px;
+
+  font-family: arial, sans-serif;
+  font-size: 12px;
+  color: #ffffff;
+}
+
+table.dataview a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+table.dataview a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+table.dataview th {
+  border-bottom: 1px outset #fde300;
+
+  text-align: left;
+  white-space: nowrap;
+}
+
+table.dataview tr {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+table.dataview tr.even {
+  background-color: #000000;
+}
+
+table.dataview tr.odd {
+  background-color: #353105;
+}
+
+table.dataview td, table.dataview th {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+/* progress bar */
+
+div.wupb-uploadStatus {
+  color: #ffffff;
+  margin: 5px;
+  margin-top: 0;
+}
+
+div.wupb-progressBar {
+  margin: 5px;
+}
+
+div.wupb-progressBar .wupb-border {
+  background-color: #000000;
+  border: 1px solid #fde300;
+  width: 100%;
+}
+
+div.wupb-progressBar .wupb-background {
+  background-image: url( xsm-editor-bg.png );
+}

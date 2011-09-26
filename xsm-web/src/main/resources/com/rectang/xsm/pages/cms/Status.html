@@ -1,0 +1,16 @@
+<html>
+  <body>
+    <wicket:extend>
+      <p wicket:id="locked">Lock status</p>
+
+      <p wicket:id="watched">No watchers</p>
+
+      <ul wicket:id="watchers"><li wicket:id="watcher"><span wicket:id="username"></span></li></ul>
+
+      <form wicket:id="update">
+        <input type="submit" wicket:id="watch" value="Watch" />
+        <input type="submit" wicket:id="unwatch" value="Don't Watch" />
+      </form>
+    </wicket:extend>
+  </body>
+</html>

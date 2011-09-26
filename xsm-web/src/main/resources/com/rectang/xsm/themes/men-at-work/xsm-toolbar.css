@@ -1,0 +1,55 @@
+#xsm-editor-toolbar {
+  position: absolute;
+  top: 90px;
+  left: 0;
+}
+
+#xsm_page > #xsm-editor-toolbar {
+  position: fixed;
+}
+
+#xsm-editor-toolbar {
+  width: 38px;
+
+  background-image: url( xsm-editor-bg.png );
+  border-top: 1px ridge #fde300;
+  border-bottom: 1px ridge #fde300;
+  border-right: 1px ridge #fde300;
+  padding: 1px 0;
+}
+
+#xsm-editor-toolbar img {
+  border: none;
+}
+
+#xsm-editor-toolbar ul {
+  list-style: none;
+  padding: 1px 2px;
+  margin: 0;
+}
+
+#xsm-editor-toolbar ul.xsm-editor-buttons-user, #xsm-editor-toolbar ul.xsm-editor-buttons-admin,
+#xsm-editor-toolbar ul.xsm-editor-buttons-xsmadmin {
+  padding-bottom: 10px;
+}
+
+#xsm-editor-toolbar a.xsm-editor-button {
+  display: block;
+  padding: 1px;
+  width: 32px;
+  height: 32px;
+}
+
+#xsm-editor-toolbar a.xsm-editor-button:hover {
+  background-color: #463f00;
+  padding: 0px;
+  border: 1px outset #fde300;
+}
+
+#xsm-editor-logo {
+  display: none;
+}
+
+#xsm-editor-toolbar .xsm-editor-button-caption {
+  display: none;
+}

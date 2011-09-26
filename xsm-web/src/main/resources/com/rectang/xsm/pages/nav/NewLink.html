@@ -1,0 +1,30 @@
+<html>
+  <body>
+    <wicket:extend>
+      <p><wicket:message key="intro"></wicket:message></p>
+      <form wicket:id="newform">
+        <ul>
+          <li>Page name<br />
+            <input type="text" wicket:id="name" />
+            <p><i>hint</i> this is the name that will appear in the navigation bar,
+              don't use a space ( ) or an underscore (_) at the beginning</p>
+          </li>
+
+          <li>Link address<br />
+            <input type="text" wicket:id="url" />
+            <p><i>hint</i> this should be an external link, remember to include the http://</p>
+          </li>
+
+          <li><div wicket:id="levelgroup"><p>Page location<br />
+            <input type="radio" wicket:id="siblinglevel" />
+              <span wicket:id="siblingtext"></span><br />
+            <input type="radio" wicket:id="childlevel" />
+              <span wicket:id="childtext"></span></p></div>
+          </li>
+        </ul>
+
+        <input type="submit" value="Create Link">
+      </form>
+    </wicket:extend>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+<html>
+  <body>
+    <wicket:extend>
+      <h1>Welcome to help [<span wicket:id="sectionTitle">Section</span>]</h1>
+
+      <div id="help-container">
+      <div style="float:left; padding-right: 10px; padding-bottom: 10px; vertical-align:top">
+        <ul style="list-style: none; padding: 0; margin:0">
+          <li wicket:id="helpPages"><a wicket:id="helpPage"><span wicket:id="helpPageLabel"></span></a></li>
+        </ul>
+      </div>
+      <div wicket:id="content"></div>
+      </div>
+
+<!-- TODO only if there are child pages -->
+      <div class="hr" style="clear:both"><hr /></div>
+      <p class="footer">Sub pages: <br />
+        <blockquote wicket:id="childPages" class="footer">
+          <a wicket:id="childPage" href="help?section=%{section}">
+            <span wicket:id="ChildPageLabel"></span></a>
+        </blockquote>
+      </p>
+    </wicket:extend>
+  </body>
+</html>

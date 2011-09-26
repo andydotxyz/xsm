@@ -1,0 +1,37 @@
+<html>
+  <body>
+    <wicket:extend>
+<h1>XSM Dashboard</h1>
+
+<p>Welcome, <span wicket:id="name">user</span> to your portal into this XSM
+  managed site.</p>
+
+<p>Welcome to XSM, today is <span wicket:id="date">today</span>
+at <span wicket:id="time">now</span>.
+
+<span wicket:id="lastlog">A welcome message.</span>
+</p>
+
+<p>From here you can edit files using the content menu, or alter options from
+your personal panel.</p>
+<p>If you are a site administrator you will see an extra panel where you can
+edit various features of your site!</p>
+
+<div class="xsm-editor-message">
+<div class="xsm-editor-message-title">
+Quick links
+</div>
+<div class="xsm-editor-message-main">
+<p>Add new news items to:<ul>
+  <li wicket:id="newsPages"><a wicket:id="newsPage" href="#">
+    <span wicket:id="newsPageLabel"></span></a></li>
+</ul></p>
+
+<p>Edit recently used pages:<ul>
+  <li wicket:id="recentPages"><a wicket:id="recentPage" href="#">
+      <span wicket:id="recentPageLabel"></span></a></li>
+</ul></p>
+</div></div>
+    </wicket:extend>
+  </body>
+</html>

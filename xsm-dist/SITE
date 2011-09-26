@@ -1,0 +1,51 @@
+need to insert a script to generate an initial site configuration, as it involves
+MD5 hashes of passwords.
+
+If you know your chosen MD5 you can try to hack...
+
+you need
+
+  site.xml
+  connection.xml
+  members/user1.xml (where user1 is your 1st username)
+
+examples:
+
+site.xml:
+
+  <xsmsite admin="admin" newsSource="/News">
+    <title>Site title</title>
+    <description /><keywords />
+    <stylesheet>default</stylesheet>
+    <layout>default</layout>
+    <pages default="/Home">
+    </pages>
+  </xsmsite>
+  
+clearly this will require "Home" and "News" pages, but they can be created inside
+the interface
+
+connection.xml:
+  <xsmconnection type="local">
+    <rootDir>/var/www/localhost/htdocs</rootDir>
+    <rootUrl>http://example.com</rootUrl>
+    <prefixUrl></prefixUrl>
+  </xsmconnection>
+  
+other examples will be available soon
+
+member/user1.xml
+
+  <member>
+    <fullname>Aname</fullname>
+    <theme>blue</theme>
+    <htmlEditor></htmlEditor>
+    <email>anemail@example.com</email>
+    <web></web>
+    <pic></pic>
+    <password>INSERT MD5</password>
+  </member>
+
+OK, that is all you need to start hacking - you can now log in as the new user
+("user1") with the password that the MD5 belongs to, and the site name that the
+directory specifies...

@@ -1,0 +1,10 @@
+<p>Welcome to Rectang XSM - the next generation in web site management.</p>
+
+<p>Rectang's eXtensible Site Manager makes it easy for the user to edit their
+web site online whilst maintaining a static (thus very fast to browse) web site
+on the server.</p>
+
+<p>See what XSM looks like in these documents, and browse sites it manages
+such as <a href="http://handyande.co.uk">HandyAndE.co.uk</a>,
+<a href="http://rectang.com">Rectang.com</a>, 
+<a href="http://michmog.com">Michmog.com</a> and many more</p>

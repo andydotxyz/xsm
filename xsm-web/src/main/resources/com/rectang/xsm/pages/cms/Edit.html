@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <wicket:head>
+      <!-- tinyMCE -->
+      <script language="javascript" type="text/javascript" src="tinymce/jscripts/tiny_mce/tiny_mce_src.js"></script>
+      <script language="javascript" type="text/javascript" wicket:id="activateEditor"></script>
+      <!-- /tinyMCE -->
+    </wicket:head>
+  </head>
+  <body>
+    <wicket:extend>
+      <form wicket:id="editform" accept-charset="utf-8">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" class="xsm-editor-message-wide">
+          <tr>
+            <th class="xsm-editor-message-title">Metadata</th>
+          </tr><tr>
+            <td class="xsm-editor-message-main">
+              <table border="0" width="100%">
+                <tr><td>
+                  <table border="0" class="metadata">
+                    <tr><td class="metadata_label">
+                      type:
+                    </td><td class="metadata_value">
+                      <span wicket:id="metadata.type"></span>
+                    </td></tr>
+                    <tr><td class="metadata_label">
+                      title:
+                    </td><td class="metadata_value">
+                      <input type="text" wicket:id="metadata.title" class="metadata_title" />
+                    </td></tr>
+                    <tr><td class="metadata_label">
+                      description:
+                    </td><td class="metadata_value">
+                      <textarea wicket:id="metadata.description" class="metadata_description"></textarea>
+                    </td></tr>
+                  </table>
+                </td></tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+
+        <br />
+        <input type="submit" name="save" value="Quicksave">&nbsp;
+        <input type="submit" name="publish" value="Save and Publish" wicket:id="publish1">
+        <br /><br />
+
+        <div wicket:id="content"></div>
+
+        <br />
+        <div wicket:id="progress"></div>
+        <input type="submit" name="save" value="Quicksave">&nbsp;
+        <input type="submit" name="publish" value="Save and Publish" wicket:id="publish2">
+      </form>
+    </wicket:extend>
+  </body>
+</html>

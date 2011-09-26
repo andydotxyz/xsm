@@ -1,0 +1,21 @@
+<html>
+  <body>
+    <wicket:extend>
+      <h1>Site Upgrade</h1>
+
+      <p wicket:id="intro">intro</p>
+
+      <p wicket:id="status">status</p>
+
+      <div wicket:id="run-upgrade">
+        <ul>
+          <li wicket:id="upgrade-items"><span wicket:id="title">Title</span></li>
+        </ul>
+
+        <form action="upgrade?action=run" method="post">
+          <input type="submit" value="Upgrade" />
+        </form>
+      </div>
+    </wicket:extend>
+  </body>
+</html>

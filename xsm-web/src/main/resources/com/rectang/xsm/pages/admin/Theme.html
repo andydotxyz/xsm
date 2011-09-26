@@ -1,0 +1,27 @@
+<html>
+  <body>
+    <wicket:extend>
+      <h1>Site Look and Feel</h1>
+
+      <form wicket:id="theme" action="#">
+        <table>
+          <tr>
+            <td><label for="stylesheet" class="label">Site style</label></td>
+            <td><select wicket:id="stylesheet" id="stylesheet" /></td>
+            <td><a href="edit-template?section=style">Customise</a></td>
+          </tr>
+          <tr>
+            <td><label for="layout" class="label">Site layout</label></td>
+            <td><select wicket:id="layout" id="layout" /></td>
+            <td><a href="edit-template?section=layout">Customise</a></td>
+          </tr>
+          <tr>
+            <td colspan="3"><div align="right"><input type="submit" value="Save Look and Feel" /></div></td>
+          </tr>
+        </table>
+      </form>
+
+      <p>Advanced users can <a href="edit-template?section=template">edit the template</a> which generates the XHML output.</p>
+    </wicket:extend>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+<help>
+  <page section="welcome"><title>Welcome</title></page>
+  <page section="using" remote="http://rectang.com/Software/XSM/User_Guide/"><title>Using XSM</title></page>
+  <page section="about"><title>About XSM</title></page>
+  <page section="install" remote="http://rectang.com/Software/XSM/Installing_XSM/"><title>Installing XSM</title>
+    <page section="requirements"><title>Installation Requirements</title></page>
+  </page>
+</help>

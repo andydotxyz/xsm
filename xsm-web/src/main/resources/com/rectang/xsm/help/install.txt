@@ -1,0 +1,4 @@
+Installing XSM on your own server
+
+<p>Note: this is a <i>developer</i> document 
+- not needed for users of the XSM system</p>
