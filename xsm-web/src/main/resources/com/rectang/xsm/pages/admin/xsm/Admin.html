@@ -6,6 +6,17 @@
       <h2>Setup XSM</h2>
       <p>Run through the <a href="setup">setup</a> wizard to check that permissions, config files etc are all correct.</p>
 
+      <h2>Sites</h2>
+      <ul>
+        <li wicket:id="site">
+          <span wicket:id="id">id</span> -
+          "<span wicket:id="name">name</span>"
+          <wicket:enclosure child="quota">
+            used <span wicket:id="used">5</span>MB of <span wicket:id="quota">250</span>MB
+            (<span wicket:id="perc">2</span>%)
+          </wicket:enclosure>
+        </li>
+      </ul>
     </wicket:extend>
   </body>
 </html>

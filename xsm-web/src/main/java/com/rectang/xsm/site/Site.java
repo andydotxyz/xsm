@@ -7,6 +7,7 @@ package com.rectang.xsm.site;
 import java.util.*;
 import java.io.*;
 
+import com.rectang.xsm.util.StreamGobbler;
 import org.jdom.*;
 import org.codehaus.plexus.util.IOUtil;
 
@@ -32,6 +33,9 @@ public class Site implements Serializable {
   private List admins, editors, technologies;
   private String rootDir, rootUrl, prefixUrl;
   private HierarchicalPage rootPage;
+
+  private long quota;
+  private String quotaIncludes;
 
   private String remoteUser, remotePassword, remoteHost;
   private List visitors;
@@ -85,6 +89,11 @@ public class Site implements Serializable {
       String techString = root.getAttributeValue("provides");
       technologies = StringUtils.stringToList(techString);
 
+      String quotaStr = root.getChildText("quota");
+      if (quotaStr == null)
+        quotaStr = "0";
+      quota = Long.parseLong(quotaStr);
+      quotaIncludes = root.getChildText("quotaIncludes");
     } catch (Exception e) {
       /* FIXME cannot error here */
       e.printStackTrace();
@@ -627,14 +636,24 @@ public class Site implements Serializable {
   public void setKeywords(String keywords) {
     this.keywords = keywords;
   }
-  
+
+  public long getQuota() {
+    return quota;
+  }
+
+  public String getQuotaIncludes() {
+    return quotaIncludes;
+  }
+
   public static Vector getSiteList() {
     File[] list = new File(XSM.getConfig().getDataDir()).listFiles();
 
     Vector ret = new Vector();
     if (list != null) {
       for (int i = 0; i < list.length; i++) {
-        ret.add(list[i].getName());
+        if (new File(list[i], "site.xml").exists()) {
+          ret.add(list[i].getName());
+        }
       }
     }
     
@@ -723,29 +742,112 @@ public class Site implements Serializable {
       create = "c";
     }
 
+    Process p = null;
     try {
-      Process p = Runtime.getRuntime().exec("htpasswd -mb" + create + " " + getVisitorsFile().getPath() + " " +
+      p = Runtime.getRuntime().exec("htpasswd -mb" + create + " " + getVisitorsFile().getPath() + " " +
           visitor.getUsername() + " " + visitor.getPassword());
       p.waitFor();
     } catch (IOException e) {
       e.printStackTrace();
     } catch (InterruptedException e) {
       e.printStackTrace();
+    } finally {
+      if (p != null) {
+        try {
+          p.getInputStream().close();
+        } catch (Exception e) {}
+        try {
+          p.getErrorStream().close();
+        } catch (Exception e) {}
+        try {
+          p.getOutputStream().close();
+        } catch (Exception e) {}
+      }
     }
 
     loadVisitors();
   }
 
   public void removeVisitor(Visitor visitor) {
+    Process p = null;
     try {
-      Process p = Runtime.getRuntime().exec("htpasswd -D " + getVisitorsFile().getPath() + " " + visitor.getUsername());
+      p = Runtime.getRuntime().exec("htpasswd -D " + getVisitorsFile().getPath() + " " + visitor.getUsername());
       p.waitFor();
     } catch (IOException e) {
       e.printStackTrace();
     } catch (InterruptedException e) {
       e.printStackTrace();
+    } finally {
+      if (p != null) {
+        try {
+          p.getInputStream().close();
+        } catch (Exception e) {}
+       try {
+          p.getErrorStream().close();
+        } catch (Exception e) {}
+        try {
+          p.getOutputStream().close();
+        } catch (Exception e) {}
+      }
     }
 
     loadVisitors();
+  }
+
+  public long calculateSpaceUsage() {
+    java.lang.String folders = new File(XSM.getConfig().getDataDir(), getId()).getAbsolutePath();
+    if (getType() == Site.LOCAL) {
+      folders += " " + getRootDir();
+    }
+    if (getQuotaIncludes() != null) {
+      folders += " " + getQuotaIncludes();
+    }
+
+    long used = 0;
+    Process process = null;
+    StreamGobbler out, err;
+    try {
+      process = Runtime.getRuntime().exec("du -cm " + folders);
+
+      out = new StreamGobbler(process.getInputStream());
+      err = new StreamGobbler(process.getErrorStream());
+
+      out.start();
+      err.start();
+      process.waitFor();
+
+      // check that our gobblers are finished...
+      while ( !err.isComplete() || !out.isComplete() ) {
+        try {
+         Thread.sleep( 1000 );
+        } catch (InterruptedException e) {
+          // we were just trying to tidy up...
+        }
+      }
+
+      String quotaLine = out.getLastLine();
+
+      if (quotaLine != null) {
+        String[] parts = quotaLine.trim().split("\t");
+        if (parts.length >= 1) {
+          used = Long.parseLong(parts[0]);
+        }
+      }
+
+    } catch (Exception e) {
+      e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+    } finally {
+      try {
+        process.getInputStream().close();
+      } catch (Exception e) {}
+      try {
+        process.getOutputStream().close();
+      } catch (Exception e) {}
+      try {
+        process.getErrorStream().close();
+      } catch (Exception e) {}
+    }
+
+    return used;
   }
 }

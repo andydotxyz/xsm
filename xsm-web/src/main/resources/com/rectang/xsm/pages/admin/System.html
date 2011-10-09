@@ -6,6 +6,11 @@
       <h2>Regenerate Site</h2>
       <p>You can force a <a href="site-publish">regeneration</a> of the site by clicking.</p>
 
+      <wicket:enclosure child="quota">
+      <h2>Quota</h2>
+      <p>Used <span wicket:id="used">5</span>MB of <span wicket:id="quota">250</span>MB
+        (<span wicket:id="perc">2</span>%)</p>
+      </wicket:enclosure>
     </wicket:extend>
   </body>
 </html>
