@@ -78,10 +78,6 @@ public class HierarchicalPage extends Page {
     return true;
   }
 
-  public String getIcon() {
-    return "";
-  }
-
   public String getType() {
     return "";
   }

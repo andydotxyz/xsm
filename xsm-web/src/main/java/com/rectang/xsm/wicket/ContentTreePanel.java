@@ -32,15 +32,13 @@ public class ContentTreePanel extends Panel {
     add(new ListView("pages", rootPage.getSubPages()) {
 
       protected void populateItem(ListItem listItem) {
-        Page page = (Page) listItem.getModelObject();
+        final Page page = (Page) listItem.getModelObject();
         Class linkClass =
             ((PlexusPageFactory) getSession().getPageFactory())
                 .getPageClass(page.getType() + "-" + viewType);
 
         PageParameters params = new PageParameters();
         params.add("page", page.getPath());
-        listItem.add(new Image("page-icon", new ResourceReference(XSM.class,
-            "icons/" + page.getIcon())));
         BookmarkablePageLink link = new BookmarkablePageLink("page", linkClass, params);
         listItem.add(link);
 
@@ -50,13 +48,15 @@ public class ContentTreePanel extends Panel {
         }
         link.add(new Label("page-label", title));
 
-        if (page.getPath().equals(current)) {
-          listItem.add( new AttributeModifier( "class", new Model() {
-            public Object getObject() {
-              return "xsm_menu_item xsm_menu_item_selected";
+        listItem.add(new AttributeModifier("class", new Model() {
+          public Object getObject() {
+            String style = "xsm_menu_item";
+            if (page.getPath().equals(current)) {
+              style += " xsm_menu_item_selected";
             }
-          }));
-        }
+            return style + " " + page.getType();
+          }
+        }));
 
         if (page instanceof HierarchicalPage
             && ((HierarchicalPage) page).getSubPages().size() > 0) {

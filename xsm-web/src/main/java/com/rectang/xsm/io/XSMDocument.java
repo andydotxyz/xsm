@@ -7,7 +7,6 @@ import java.util.*;
 import org.jdom.*;
 
 import com.rectang.xsm.*;
-import com.rectang.xsm.velocity.DateFormatter;
 import com.rectang.xsm.types.*;
 import com.rectang.xsm.doc.DocElement;
 import com.rectang.xsm.doc.Type;
@@ -18,43 +17,15 @@ import com.rectang.xsm.site.Page;
 import com.rectang.xsm.util.*;
 import org.apache.wicket.Component;
 import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
 import org.codehaus.plexus.util.IOUtil;
 
 public class XSMDocument implements Serializable {
-
-  private static VelocityEngine velocity;
 
   private RemoteDocument doc;
   private long LOCK_TIMEOUT = 1000 * 60 * 60 * 2; // 2 hour timeout on locks
 
   private MetaData metadata;
   private DocumentPage page;
-
-  static {
-    initTemplates();
-  }
-
-  private static void initTemplates() {
-    /* Initialise an engine that we will use for all document publishing */
-    velocity = new VelocityEngine();
-    /*  first, get and initialize an engine  */
-    velocity.setProperty("resource.loader", "class,file");
-    velocity.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
-    velocity.setProperty("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader");
-    velocity.setProperty("file.resource.loader.path", XSM.getConfig().getDataDir());
-    velocity.setProperty("velocimacro.library", "com/rectang/xsm/publish/macros.vm");
-
-    velocity.setProperty("runtime.log.logsystem.class", "org.apache.velocity.runtime.log.SimpleLog4JLogSystem");
-    velocity.setProperty("runtime.log.logsystem.log4j.category", "org.apache.velocity.runtime.log.SimpleLog4JLogSystem");
-
-    try {
-      velocity.init();
-    } catch (Exception e) {
-      // TODO handle this error in a more visible way
-      e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-    }
-  }
 
   public static XSMDocument getXSMDoc(Site site, DocumentPage page) {
     return getXSMDoc(site, page, false);
@@ -293,60 +264,17 @@ public class XSMDocument implements Serializable {
   public boolean publishContent(PublishedFile pubFile, String content, UserData user) {
     Writer writer = null;
     try {
-      File customTemplate = new File(
-          XSM.getConfig().getSiteTemplateDir(user.getSite()), "publish.vm");
-
-      org.apache.velocity.Template t;
-      try {
-        if (customTemplate.exists()) {
-          t = velocity.getTemplate(user.getSite().getId() + "/template/publish.vm");
-        } else {
-          t = velocity.getTemplate("com/rectang/xsm/publish/publish.vm");
-        }
-      } catch ( NullPointerException e ) {
-        // reset the template engine
-        initTemplates();
-
-        // try again
-        if (customTemplate.exists()) {
-          t = velocity.getTemplate(user.getSite().getId() + "/template/publish.vm");
-        } else {
-          t = velocity.getTemplate("com/rectang/xsm/publish/publish.vm");
-        }        
-      }
-
       /*  create a context and add data */
       VelocityContext context = new VelocityContext();
-      context.put("page", getPage());
-      context.put("metadata", getPage().getXSMDocument().getMetadata());
-      context.put("user", user);
-      context.put("site", user.getSite());
-      context.put("config", XSM.getConfig());
-      context.put("type", getType(user));
-      context.put("content", content);
-
-      context.put("pubFile", pubFile);
-      context.put("doc", this);
-
-      context.put("dateFormatter", new DateFormatter());
-      context.put("htmlUtils", new HTMLUtils());
-      context.put("stringUtils", new StringUtils());
-      context.put("fileUtils", new FileUtils());
-      context.put("numberUtils", new NumberUtils());
-      context.put("renderUtils", new RenderUtils() );
+      Map<String, Object> contextItems = Engine.getContext(this, page, getType(user), pubFile, user.getSite(), content, user);
+      for (String key : contextItems.keySet()) {
+        context.put(key, contextItems.get(key));
+      }
 
       pubFile.mkparentdirs();
 
-      DocElement type = getType(user);
-      boolean isWelcome = type instanceof Html && Html.WELCOME_PAGE.getBoolean(this) ||
-          type instanceof PHP && PHP.WELCOME_PAGE.getBoolean(this);
-      context.put("isWelcome", Boolean.valueOf(isWelcome));
-      boolean hasRss = type instanceof News ||
-        (type instanceof PreviewedFile && PreviewedFile.PUBLISH_RSS.getBoolean(this));
-      context.put("hasrss", Boolean.valueOf(hasRss));
-
       writer = new OutputStreamWriter(pubFile.getOutputStream());
-      t.merge(context, writer);
+      Engine.process(user.getSite(), context, writer);
       IOUtil.close(writer);
 
       /* only publish to index.html in the base of the site if we are the default file AND we are currently
@@ -358,7 +286,7 @@ public class XSMDocument implements Serializable {
 
           try {
             writer = new OutputStreamWriter(pubFile.getOutputStream());
-            t.merge(context, writer);
+            Engine.process(user.getSite(), context, writer);
           } catch (Exception e) {
             e.printStackTrace();
             return false;

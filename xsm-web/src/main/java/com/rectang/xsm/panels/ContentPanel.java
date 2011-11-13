@@ -30,12 +30,7 @@ public class ContentPanel extends Panel {
     PageParameters params = new PageParameters();
     params.add("page", site.getDefault());
 
-    add(new Image("new-page-icon", new ResourceReference(XSM.class,
-          "icons/document-new.png")));
     add(new BookmarkablePageLink("new-page-link", New.class, params));
-
-    add(new Image("new-link-icon", new ResourceReference(XSM.class,
-          "icons/html-new.png")));
     add(new BookmarkablePageLink("new-link-link", NewLink.class, params));
   }
 }

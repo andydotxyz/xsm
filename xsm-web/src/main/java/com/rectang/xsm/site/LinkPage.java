@@ -30,10 +30,6 @@ public class LinkPage extends Page {
     return true;
   }
 
-  public String getIcon() {
-    return "text-html.png";
-  }
-
   public String getType() {
     return "link";
   }

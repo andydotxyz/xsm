@@ -88,7 +88,7 @@ public abstract class Page extends XSMPage implements Secure {
     return getPageParameters().getString("page");
   }
 
-  protected com.rectang.xsm.site.Page getXSMPage() {
+  public com.rectang.xsm.site.Page getXSMPage() {
     if (getPageName() == null)
       return null;
 

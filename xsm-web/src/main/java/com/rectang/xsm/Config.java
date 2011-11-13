@@ -78,10 +78,16 @@ public class Config implements Serializable {
   }
 
   public String getSiteDataDir(Site site) {
+    if (site == null) {
+      return null;
+    }
     return (new File(new File(dataDir, site.getId()), "data")).getPath();
   }
 
   public String getSiteTemplateDir(Site site) {
+    if (site == null) {
+      return null;
+    }
     return (new File(new File(dataDir, site.getId()), "template")).getPath();
   }
 

@@ -31,10 +31,6 @@ public class DocumentPage extends HierarchicalPage {
     return (doc != null && doc.publish(user));
   }
 
-  public String getIcon() {
-    return "text-x-generic.png";
-  }
-
   public String getType() {
     return "page";
   }

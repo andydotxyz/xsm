@@ -1,5 +1,6 @@
 package com.rectang.xsm.pages.admin;
 
+import com.rectang.xsm.Engine;
 import com.rectang.xsm.pages.XSMPage;
 import com.rectang.xsm.pages.Secure;
 import com.rectang.xsm.AccessControl;
@@ -48,6 +49,7 @@ public class Theme extends XSMPage implements Secure {
 
     public void onSubmit() {
       if (site.save()) {
+        Engine.initTemplates();
         site.publishTheme();
       } else {
         error("Unable to save site settings");

@@ -95,8 +95,11 @@ public class Contents extends Page {
     PageParameters subPage = new PageParameters();
     subPage.add("page", page.getPath());
 
-    panel.add(new Image("page-icon", new ResourceReference(XSM.class,
-        "icons/" + page.getIcon())));
+    panel.add(new WebMarkupContainer("page-icon").add(new AttributeModifier("class", true, new Model() {
+      public Object getObject() {
+        return "contenticon " + page.getType();
+      }
+    })));
 
     BookmarkablePageLink link = new BookmarkablePageLink("link", getClass(),
         subPage);

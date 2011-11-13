@@ -108,8 +108,6 @@ public abstract class Page implements Serializable {
 
   public abstract boolean publish(UserData user);
 
-  public abstract String getIcon();
-
   public abstract String getType();
 
   public String getLink() {

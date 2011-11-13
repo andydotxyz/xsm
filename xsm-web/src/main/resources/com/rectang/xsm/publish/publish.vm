@@ -4,9 +4,15 @@
   <head>
     <title>#title()</title>
 
+#if( $editing )
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="-1" />
+#else
     <meta name="generator" content="Rectang.com XSM - Managing the web with style - http://rectang.com/Software/XSM/" />
     <meta name="description" content="$site.description" />
     <meta name="keywords" content="$site.keywords" />
+#end
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
@@ -43,18 +49,19 @@
 //    ]]>
     </script>
 
-    <link rel="stylesheet" type="text/css" href="${site.prefixUrl}/_theme/layout.css" />
-    <link rel="stylesheet" type="text/css" href="${site.prefixUrl}/_theme/style.css" />
-
+    <link rel="stylesheet" type="text/css" href="${site.rootUrl}/_theme/layout.css" />
+    <link rel="stylesheet" type="text/css" href="${site.rootUrl}/_theme/style.css" />
+    #editheaders()
 #if( $hasrss )
     <link id="RSS" title="RSS" type="application/rss+xml" rel="alternate"
       href="${site.rootUrl}${page.path}/feed.xml" />
 #end
 
-    <link rel="icon" href="${site.prefixUrl}/favicon.ico" type="image/ico" />
-    <link rel="shortcut icon" href="${site.prefixUrl}/favicon.ico" type="image/ico" />
+    <link rel="icon" href="${site.rootUrl}/favicon.ico" type="image/ico" />
+    <link rel="shortcut icon" href="${site.rootUrl}/favicon.ico" type="image/ico" />
   </head>
   <body>
+  #toolbar()
 #if( $isWelcome )
     $content
 #else
@@ -73,6 +80,7 @@
             #newsSummary()
           </div>
           <div id="xsm_content">
+            #feedback()
             <h1 class="xsm_meta_title">#metadataTitle()</h1>
             <p class="xsm_meta_description">#metadataDescription()</p>
 
@@ -92,16 +100,8 @@
               <a href="http://rectang.com/Software/XSM/" target="_blank"><img src="http://rectang.com/Software/XSM/Artwork/_images/xsm-powered.png" alt="Powered by XSM" /></a>
             </span>
 
-#if( $site.login == "" )
-  #set( $login = $config.url + "login?sitename=" + $site.id )
-  #set( $target = 'target="_blank"' )
-#else
-  #set( $login = $site.prefixUrl + $site.login )
-  #set( $target = "" )
-#end
-
             <span class="xsm_edit">
-              <a href="$login" $target>Edit</a>
+#editlink()
             </span>
           </p>
         </div>

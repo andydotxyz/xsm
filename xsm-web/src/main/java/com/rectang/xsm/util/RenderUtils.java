@@ -1,6 +1,9 @@
 package com.rectang.xsm.util;
 
 import com.rectang.xsm.doc.DocElement;
+import com.rectang.xsm.io.XSMDocument;
+import com.rectang.xsm.site.DocumentPage;
+import com.rectang.xsm.site.Site;
 import org.jdom.Element;
 
 /**
@@ -15,6 +18,10 @@ public class RenderUtils {
     StringBuffer ret = new StringBuffer();
     type.element.publish( node, ret );
     return ret.toString();
+  }
+
+  public static XSMDocument getXSMDoc(Site site, DocumentPage page) {
+    return XSMDocument.getXSMDoc(site, page);
   }
 }
 
