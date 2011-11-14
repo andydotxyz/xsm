@@ -795,7 +795,7 @@ public class Site implements Serializable {
   }
 
   public long calculateSpaceUsage() {
-    java.lang.String folders = new File(XSM.getConfig().getDataDir(), getId()).getAbsolutePath();
+    String folders = new File(XSM.getConfig().getDataDir(), getId()).getAbsolutePath();
     if (getType() == Site.LOCAL) {
       folders += " " + getRootDir();
     }

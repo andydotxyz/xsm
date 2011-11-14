@@ -1,6 +1,8 @@
 package com.rectang.xsm.panels;
 
 import com.rectang.xsm.XSM;
+import com.rectang.xsm.pages.cms.View;
+import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.model.PropertyModel;
@@ -99,8 +101,11 @@ public class LoginPanel extends Panel {
               + " as " + userData.getUsername());
 
           /* if this fails we fall to the login page content */
-          if (!continueToOriginalDestination())
-            setResponsePage(Dashboard.class);
+          if (!continueToOriginalDestination()) {
+            PageParameters params = new PageParameters();
+            params.add("page", userData.getSite().getDefault());
+            setResponsePage(View.class, params);
+          }
         } else {
           getSession().warn("Error logging in - username or password incorrect");
         }

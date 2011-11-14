@@ -7,7 +7,9 @@ import com.rectang.xsm.pages.admin.xsm.Setup;
 import com.rectang.xsm.panels.ContentPanel;
 import com.rectang.xsm.panels.LoginPanel;
 import com.rectang.xsm.panels.XSMFeedbackPanel;
+import com.rectang.xsm.site.DocumentPage;
 import com.rectang.xsm.site.Site;
+import com.rectang.xsm.wicket.VelocityPanel;
 import org.apache.velocity.VelocityContext;
 import org.apache.wicket.authorization.AuthorizationException;
 import org.apache.wicket.behavior.HeaderContributor;
@@ -15,6 +17,7 @@ import org.apache.wicket.markup.DefaultMarkupResourceStreamProvider;
 import org.apache.wicket.markup.IMarkupCacheKeyProvider;
 import org.apache.wicket.markup.IMarkupResourceStreamProvider;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.StringResourceStream;
 import org.codehaus.plexus.wicket.PlexusPageFactory;
@@ -123,6 +126,9 @@ public abstract class XSMPage extends PlexusWebPage implements IMarkupResourceSt
     com.rectang.xsm.site.Page page = null;
     if (this instanceof com.rectang.xsm.pages.cms.Page) {
       page = ((com.rectang.xsm.pages.cms.Page) this).getXSMPage();
+      if (page instanceof DocumentPage ) {
+        doc = XSMDocument.getXSMDoc(((XSMSession) getSession()).getSite(), (DocumentPage) page);
+      }
     }
     final Map<String, Object> map = Engine.getContext(doc, page, null, null, getXSMSession().getSite(),
         "<wicket:child></wicket:child>", getXSMSession().getUser());
@@ -191,9 +197,7 @@ public abstract class XSMPage extends PlexusWebPage implements IMarkupResourceSt
     add(new PluginLink("helpPlugin", getPageClass("help"), "help"));
 
     if (user == null) {
-      String sitename = getPageParameters().getString("sitename");
-
-      add(new LoginPanel("xsm-tree", sitename, getXSMSession()));
+      add(new VelocityPanel("xsm-tree", "#publishedNav()"));
     } else {
       String page = getPageParameters().getString("page");
 

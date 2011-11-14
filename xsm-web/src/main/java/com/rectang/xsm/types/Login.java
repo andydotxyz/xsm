@@ -44,7 +44,7 @@ public class Login extends DocList {
     s.append(getSite().getUniqueID());
     s.append("\" /><br />\n");
     s.append("  <input type=\"hidden\" name=\"action\" value=\"login\" />\n");
-    s.append("  <input type=\"submit\" value=\"Log in to XSM\" />\n  </p>\n");
+    s.append("  <input type=\"submit\" value=\"Log In\" />\n  </p>\n");
     s.append("</form>\n");
 
     if (getSite().canRegister()) {

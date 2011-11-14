@@ -111,7 +111,7 @@ public abstract class Page implements Serializable {
   public abstract String getType();
 
   public String getLink() {
-    return getSite().getPrefixUrl() + getPath() + "/";
+    return getSite().getRootUrl() + getPath() + "/";
   }
 
   public boolean isPublishable() {

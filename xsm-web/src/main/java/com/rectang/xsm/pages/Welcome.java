@@ -1,8 +1,5 @@
 package com.rectang.xsm.pages;
 
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.model.StringResourceModel;
-
 /**
  * Created by IntelliJ IDEA.
  *
@@ -15,9 +12,6 @@ public class Welcome extends XSMPage {
   public void layout() {
     super.layout();
 
-    Label text = new Label("welcome.text");
-    text.setModel(new StringResourceModel("welcome.text", text, null));
-    text.setEscapeModelStrings(false);
-    add(text);
+    setResponsePage(Login.class);
   }
 }

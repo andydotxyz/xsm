@@ -1,5 +1,7 @@
 package com.rectang.xsm.pages;
 
+import com.rectang.xsm.panels.LoginPanel;
+
 /**
  * Created by IntelliJ IDEA.
  *
@@ -10,4 +12,11 @@ package com.rectang.xsm.pages;
  * @plexus.component role="org.apache.wicket.Page" role-hint="login"
  */
 public class Login extends XSMPage {
+    @Override
+    public void layout() {
+        super.layout();
+        
+        String sitename = getPageParameters().getString("sitename");
+        add( new LoginPanel( "login", sitename, getXSMSession() ) );
+    }
 }

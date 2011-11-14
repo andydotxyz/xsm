@@ -179,13 +179,11 @@
   #else
     #if( $site.login == "" )
       #set( $login = $config.url + "login?sitename=" + $site.id )
-      #set( $target = 'target="_blank"' )
     #else
       #set( $login = $site.prefixUrl + $site.login )
-      #set( $target = "" )
     #end
 
-    <a href="$login" $target>Edit</a>
+    <a href="$login">Edit</a>
   #end
 #end
 
