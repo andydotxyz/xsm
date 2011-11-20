@@ -125,6 +125,24 @@
   #end
 #end
 
+#macro( newsArchiveBlock )
+  <div class="xsm_news_archive">
+    <h3 class="title">Archives</h3>
+  #set( $source = $site.getNewsSource() )
+
+  #if ( !$source )
+    (No news source chosen)
+  #else
+    #set( $docPage = $metadata.getDocument().getXSMDoc($site, $site.getPage($source)) )
+    #if ( !$docPage.getType($user).getClass().getName().endsWith(".News") )
+      (Chosen page is not a news page)
+    #else
+      $renderUtils.renderNewsArchiveBlock($site, $docPage)
+    #end
+  #end
+  </div>
+#end
+
 #macro( lastAddition $pageName )
   #set( $source = $site.getPage( $pageName ) )
 

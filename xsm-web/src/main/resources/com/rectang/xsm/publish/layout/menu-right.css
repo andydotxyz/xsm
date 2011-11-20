@@ -54,7 +54,7 @@ div.xsm_gallery_preview {
 
 /* XSM Menu bar */
 
-.xsm_menu_group {
+.xsm_menu_group, .xsm_menu_categories, .xsm_news_archive ul {
   margin: 0;
   padding-left: 0;
   list-style: none;

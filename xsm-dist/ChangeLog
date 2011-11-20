@@ -1,3 +1,8 @@
 SNAPSHOT:
 
+Features:
+* Change rendering mechanism for XSM to use the site template directly
+* Update News publishing to generate an archive and use a better URL scheme
+
+Bug fixes:
 

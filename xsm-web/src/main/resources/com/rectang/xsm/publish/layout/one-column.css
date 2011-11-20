@@ -81,6 +81,10 @@ div.xsm_gallery_preview {
   left: 20px;
 }
 
+.xsm_news_archive ul {
+    list-style: none;
+}
+
 /* This is not so nice as li:hover ul, but it is IE compatible - only handles 3 levels */
 .xsm_menu_group li:hover ul, .xsm_menu_group li.over ul {
   display: block;

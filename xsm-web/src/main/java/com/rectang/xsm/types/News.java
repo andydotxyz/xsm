@@ -14,10 +14,7 @@ import java.io.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Iterator;
-import java.util.Vector;
-import java.util.ArrayList;
+import java.util.*;
 
 import org.jdom.Element;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -46,6 +43,8 @@ public class News extends DocGroup {
       "The number of characters (approx) in a news article summary", 500);
 
   private Vector options;
+  // TODO fix access to this
+  public static DateFormat storedFormat = new SimpleDateFormat("EE, dd MMM yyyy HH:mm:ss ZZZZ");
 
   /* FIXME - don't allow folk to save to items they cannot edit */
   public News(java.lang.String name) {
@@ -65,7 +64,7 @@ public class News extends DocGroup {
 
   public void view(Element node, StringBuffer s) {
     int page_length = PAGE_LENGTH.getInteger(getDoc());
-    publishNNodes(node, page_length, s);
+    publishNNodes(node.getChildren(element.getName()), page_length, s);
     /* FIXME maybe summarise the archive too? */
   }
 
@@ -85,7 +84,7 @@ public class News extends DocGroup {
     int page_length = PAGE_LENGTH.getInteger(getDoc());
 
     /* publish front page */
-    publishNNodes(node, page_length, s);
+    publishNNodes(node.getChildren(element.getName()), page_length, s);
     /* publish user pages */
     boolean author_pages = AUTHOR_PAGES.getBoolean(getDoc());
     if (author_pages) {
@@ -110,24 +109,25 @@ public class News extends DocGroup {
 
     /* publish each article */
     publishPermaNodes(node);
+    publishArchive(node);
     
     publishRSS(node);
-    
-    List children = node.getChildren(element.getName());
-    if (children.size() > page_length) {
-      String archivePage = getPath() + "/archive.html";
-      s.append("<p align=\"right\">more in the <a href=\"");
-      s.append(getSite().getPrefixUrl() + archivePage + "\">archive</a></p>");
 
-      PublishedFile archive = getSite().getPublishedDoc(archivePage);
-      StringBuffer out = new StringBuffer();
-      publishNNodes(node, 0, out);
-      getDoc().publishContent(archive, out.toString(), getUser());
-    }
+// TODO do we need to output something else in this place?
+//    List children = node.getChildren(element.getName());
+//    if (children.size() > page_length) {
+//      String archivePage = getPath() + "/archive.html";
+//      s.append("<p align=\"right\">more in the <a href=\"");
+//      s.append(getSite().getPrefixUrl() + archivePage + "\">archive</a></p>");
+//
+//      PublishedFile archive = getSite().getPublishedDoc(archivePage);
+//      StringBuffer out = new StringBuffer();
+//      publishNNodes(node, 0, out);
+//      getDoc().publishContent(archive, out.toString(), getUser());
+//    }
   }
 
-  private void publishNNodes(Element node, int n, StringBuffer s) {
-    List children = node.getChildren(element.getName());
+  private void publishNNodes(List children, int n, StringBuffer s) {
     Iterator allChildren = children.iterator();
 
     int counter = 0;
@@ -170,14 +170,13 @@ public class News extends DocGroup {
   }
 
   private void publishPermaNodes(Element node) {
-    String dir = getPath() + File.separatorChar + "_articles"
-        + File.separatorChar;
-    (getSite().getPublishedDoc(dir)).mkdir();
+    (getSite().getPublishedDoc(getPath())).mkdir();
 
     List children = node.getChildren(element.getName());
     Iterator allChildren = children.iterator();
     String index;
     int fakeIndex = 0;
+    Calendar cal = Calendar.getInstance();
     while (allChildren.hasNext()) {
       Element next = (Element) allChildren.next();
       index = next.getAttributeValue("index");
@@ -186,11 +185,62 @@ public class News extends DocGroup {
 
       StringBuffer content = new StringBuffer();
       element.publish(next, content);
-      PublishedFile out = getSite().getPublishedDoc(dir + index + ".html");
+
+      try {
+        cal.setTime(storedFormat.parse(next.getChild("time").getText()));
+      } catch (ParseException e) {
+        e.printStackTrace();
+        // will default to current time
+      }
+        
+      String path = getPath() + getArticlePath(next, index);
+      (getSite().getPublishedDoc(new File(getPath()).getParent())).mkdir();
+      PublishedFile out = getSite().getPublishedDoc(path);
       getDoc().publishContent(out, content.toString(), getUser());
     }
   }
 
+  private void publishArchive(Element node) {
+    String dir = getPath() + File.separatorChar;
+    (getSite().getPublishedDoc(dir)).mkdir();
+  
+    List children = node.getChildren(element.getName());
+    Iterator allChildren = children.iterator();
+    String index;
+    int fakeIndex = 0;
+    int year = 0;
+    int month = 0;
+    Calendar cal = Calendar.getInstance();
+    List monthNodes = new ArrayList();
+    while (allChildren.hasNext()) {
+      Element next = (Element) allChildren.next();
+      try {
+        cal.setTime(storedFormat.parse(next.getChild("time").getText()));
+      } catch (ParseException e) {
+        e.printStackTrace();
+        continue;
+      }
+
+      monthNodes.add(next);
+      if (year == cal.get(Calendar.YEAR) || month == cal.get(Calendar.MONTH)) {
+        continue;
+      }
+
+      StringBuffer content = new StringBuffer();
+      year = cal.get(Calendar.YEAR);
+      month = cal.get(Calendar.MONTH);
+
+      String monthDir = dir + year + File.separatorChar + (month + 1);
+      (getSite().getPublishedDoc(monthDir)).mkdir();
+
+      publishNNodes(monthNodes, 0, content);
+      PublishedFile out = getSite().getPublishedDoc(monthDir + File.separatorChar + "index.html");
+      getDoc().publishContent(out, content.toString(), getUser());
+
+      monthNodes.clear();
+    }
+  }
+    
   public void publishRSS(Element root) {
     PublishedFile rss = getSite().getPublishedDoc(getPath() + File.separatorChar
         + "feed.xml");
@@ -219,9 +269,9 @@ public class News extends DocGroup {
         if (index == null || index.equals(""))
           index = "x" + fakeIndex++;
 
-        java.lang.String link = escape(getSite().getRootUrl() + getPath() + "/_articles/" + index + ".html");
-        java.lang.String guid = getSite().getRootUrl() + getPath() + "/_articles/"
-            + index + ".html";
+        String url = getArticlePath(next, index).replace(File.separatorChar, '/');
+        java.lang.String link = escape(getSite().getRootUrl() + getPath() + url);
+        java.lang.String guid = getSite().getRootUrl() + getPath() + url;
         StringBuffer tmp = new StringBuffer();
         ((NewsArticle) element).publishRSS(next, link, guid, tmp);
         out.write(tmp.toString());
@@ -238,6 +288,19 @@ public class News extends DocGroup {
   
   private static String escape(String in) {
     return NewsArticle.escape(in);
+  }
+
+  static String getArticlePath(Element node, String index) {
+    Calendar cal = Calendar.getInstance();
+    try {
+      cal.setTime(storedFormat.parse(node.getChild("time").getText()));
+    } catch (ParseException e) {
+      e.printStackTrace();
+      // will default to current time
+    }
+        
+    return File.separator + cal.get(Calendar.YEAR) + File.separator + (cal.get(Calendar.MONTH) + 1) + File.separator +
+        index + ".html";
   }
 
   public List getSupportedOptions() {
@@ -293,7 +356,7 @@ public class News extends DocGroup {
   
 class NewsArticle extends DocList {
   protected DocElement[] embed = new DocElement[0];
-  private DateFormat storedFormat = new SimpleDateFormat("EE, dd MMM yyyy HH:mm:ss ZZZZ");
+  private DateFormat storedFormat = News.storedFormat;
   private DateFormat renderFormat = new SimpleDateFormat("dd MMM yyyy HH:mm");
 
   public NewsArticle(String name) {
@@ -338,11 +401,12 @@ class NewsArticle extends DocList {
 
   public void publish(Element root, boolean summarise, String id, StringBuffer s) {
     int inc = embed.length;
+    String url = News.getArticlePath(root, id).replace(File.separatorChar, '/');
     s.append("<p class=\"xsm_news_title\"><b><a name=\"");
     s.append(root.getAttributeValue("index") + "\"></a>");
     if (summarise) {
       s.append("<a href=\"" + getSite().getPrefixUrl());
-      s.append(getPath() + "/_articles/" + id + ".html\" title=\"permalink\">");
+      s.append(getPath() + url + "\" title=\"permalink\">");
     }
     elements[0].publish(root.getChild("subject"), s);
     if (summarise) {
@@ -385,7 +449,7 @@ class NewsArticle extends DocList {
 
     if (summarise && summarised && News.ARTICLE_LINK.getBoolean(getDoc())) {
       s.append(" <a class=\"xsm_news_fulllink\"href=\"" + getSite().getPrefixUrl());
-      s.append(getPath() + "/_articles/" + id + ".html\" title=\"permalink\">");
+      s.append(getPath() + url + "\" title=\"permalink\">");
       s.append("[Full article]</a>");
     }
     s.append("</div>\n");
@@ -410,8 +474,7 @@ class NewsArticle extends DocList {
       return;
     }
 
-    getSite().getPublishedDoc(getPath() + File.separatorChar
-        + "_articles" + File.separatorChar + index + ".html").delete();
+    getSite().getPublishedDoc(getPath() + News.getArticlePath(root, "" + index)).delete();
   }
 
   public void publishRSS(Element root, String link, String guid, StringBuffer s) {

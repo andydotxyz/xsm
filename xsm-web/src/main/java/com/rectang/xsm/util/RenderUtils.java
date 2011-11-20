@@ -1,10 +1,21 @@
 package com.rectang.xsm.util;
 
 import com.rectang.xsm.doc.DocElement;
+import com.rectang.xsm.io.PublishedFile;
 import com.rectang.xsm.io.XSMDocument;
 import com.rectang.xsm.site.DocumentPage;
 import com.rectang.xsm.site.Site;
+import com.rectang.xsm.types.News;
 import org.jdom.Element;
+
+import java.io.File;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * TODO Document me!
@@ -22,6 +33,43 @@ public class RenderUtils {
 
   public static XSMDocument getXSMDoc(Site site, DocumentPage page) {
     return XSMDocument.getXSMDoc(site, page);
+  }
+
+  public static String renderNewsArchiveBlock(Site site, XSMDocument docPage) {
+    DateFormat linkFormat = new SimpleDateFormat("MMMM yyyy"); 
+    List children = docPage.getContentElement().getChildren( "article" );
+    Iterator allChildren = children.iterator();
+    int year = 0;
+    int month = 0;
+    Calendar cal = Calendar.getInstance();
+    StringBuffer content = new StringBuffer();
+    content.append("<ul>");
+    while (allChildren.hasNext()) {
+      Element next = (Element) allChildren.next();
+      try {
+        cal.setTime(News.storedFormat.parse(next.getChild("time").getText()));
+      } catch (ParseException e) {
+        e.printStackTrace();
+        continue;
+      }
+
+      if (year == cal.get(Calendar.YEAR) || month == cal.get(Calendar.MONTH)) {
+        continue;
+      }
+
+      year = cal.get(Calendar.YEAR);
+      month = cal.get(Calendar.MONTH);
+
+      String link = docPage.getPage().getLink() + year + "/" + (month + 1) + "/";
+
+      content.append("<li><a href=\"" );
+      content.append(link);
+      content.append("\">");
+      content.append(linkFormat.format(cal.getTime()));
+      content.append("</a></li>");
+    }
+    content.append("</ul>");
+    return content.toString();
   }
 }
 
