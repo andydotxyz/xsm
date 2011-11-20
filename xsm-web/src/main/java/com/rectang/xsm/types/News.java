@@ -11,6 +11,9 @@ import com.rectang.xsm.widget.HTMLTextArea;
 import com.rectang.xsm.widget.Value;
 
 import java.io.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Iterator;
 import java.util.Vector;
@@ -290,6 +293,8 @@ public class News extends DocGroup {
   
 class NewsArticle extends DocList {
   protected DocElement[] embed = new DocElement[0];
+  private DateFormat storedFormat = new SimpleDateFormat("EE, dd MMM yyyy HH:mm:ss ZZZZ");
+  private DateFormat renderFormat = new SimpleDateFormat("dd MMM yyyy HH:mm");
 
   public NewsArticle(String name) {
     this(name, new DocElement[] {
@@ -324,29 +329,7 @@ class NewsArticle extends DocList {
   }
 
   public void view(Element root, StringBuffer s) {
-    int inc = embed.length;
-    s.append("<table border=\"1\"><tr><td><b>");
-    elements[0].view(root.getChild("subject"), s);
-    s.append("</b> - ");
-    elements[2 + inc].view(root.getChild("author"), s);
-    s.append(" &lt;"); 
-    elements[4 + inc].view(root.getChild("email"), s);
-    s.append("&gt;");
-    s.append(" (");
-    elements[5 + inc].view(root.getChild("time"), s);
-    s.append(")</td></tr>\n");
-
-    for (int i = 0; i < embed.length; i++) {
-      s.append("<tr><td>");
-      embed[i].view(root.getChild(embed[i].getName()), s);
-      s.append("</td></tr>");
-    }
-
-    s.append("<tr><td><p>");
-    elements[1 + inc].view(root.getChild("body"), s);
-    s.append("</p><p>Comments:<br /><br />");
-    elements[5 + inc].view(root.getChild("comments"), s);
-    s.append("</td></tr></table>\n");
+    // not used anymore - view of News uses publish here
   }
 
   public void publish(Element root, StringBuffer s) {
@@ -365,20 +348,25 @@ class NewsArticle extends DocList {
     if (summarise) {
       s.append("</a>");
     }
-    s.append("</b> - ");
+    s.append("</b> <span class=\"xsm_news_posted\">posted ");
+    try {
+      s.append(renderFormat.format(storedFormat.parse(root.getChild("time").getText())));
+    } catch (ParseException e) {
+      e.printStackTrace();
+      elements[5 + inc].view(root.getChild("time"), s);
+    }
+    s.append(" by <span class=\"xsm_news_author\">");
     elements[2 + inc].publish(root.getChild("author"), s);
     if (News.AUTHOR_PAGES.getBoolean(getDoc())) {
       String uid = root.getChildText("uid");
-      if (uid != null & !uid.equals("")) {
+      if (uid != null && !uid.equals("")) {
         s.append(" [<a href=\"");
         s.append(getSite().getPrefixUrl() + getPath());
         s.append("/_authors/" + root.getChildText("uid") + ".html\">");
         s.append("All my articles</a>]");
       }
     }
-    s.append(" (");
-    elements[5 + inc].publish(root.getChild("time"), s);
-    s.append(")</p>\n");
+    s.append("</span></span></p>\n");
 
     publishEmbeded(root, embed, s);
 
@@ -396,7 +384,7 @@ class NewsArticle extends DocList {
     }
 
     if (summarise && summarised && News.ARTICLE_LINK.getBoolean(getDoc())) {
-      s.append(" <a href=\"" + getSite().getPrefixUrl());
+      s.append(" <a class=\"xsm_news_fulllink\"href=\"" + getSite().getPrefixUrl());
       s.append(getPath() + "/_articles/" + id + ".html\" title=\"permalink\">");
       s.append("[Full article]</a>");
     }
