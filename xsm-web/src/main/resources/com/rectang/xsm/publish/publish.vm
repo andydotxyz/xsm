@@ -75,6 +75,9 @@
             <div class="xsm_navigation">
               #navigation()
             </div>
+            <div class="xsm_sidebar">
+              #newsArchiveBlock()
+            </div>
           </div>
           <div id="xsm_news">
             #newsSummary()
