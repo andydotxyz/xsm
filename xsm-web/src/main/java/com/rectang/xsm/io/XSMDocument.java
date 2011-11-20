@@ -58,6 +58,9 @@ public class XSMDocument implements Serializable {
   }
 
   public static String makeFileName(Page page) {
+    if (page == null) {
+      return null;
+    }
     String fileName = page.getPath();
     if (fileName.charAt(0) != File.separatorChar)
       fileName = File.separatorChar + fileName;
