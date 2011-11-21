@@ -86,7 +86,7 @@
         #set( $selected = "" )
       #end
 
-    <li class="xsm_menu_item $selected $class ${page.file}"><a href="${node.link}">$node.title</a>
+    <li class="xsm_menu_item $selected $class ${node.file}"><a href="${node.link}">$node.title</a>
 
       #if( $node.subPages && $node.subPages.size() > 0 )
         #navtree( $node.subPages, $page.path.startsWith($node.path) )
