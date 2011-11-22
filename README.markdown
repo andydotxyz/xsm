@@ -10,3 +10,7 @@ We hope you enjoy this CMS but please be patient as we transition our codebase t
 
 To get up and running in no time at all clone this repo, go to the "xsm-web" directory and execute "mvn jetty:run" then point a browser to http://localhost:9090
 
+# Community
+
+If you are interested in support or just catching up you can join our google group - <http://groups.google.com/group/xsm-users/>
+
