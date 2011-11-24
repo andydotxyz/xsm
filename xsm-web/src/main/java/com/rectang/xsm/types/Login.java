@@ -33,7 +33,7 @@ public class Login extends DocList {
     // long wicket-generated action param
     s.append("<form action=\"");
     s.append(XSM.getConfig().getUrl());
-    s.append("login?wicket:interface=%3A59%3Axsm-tree%3Alogin%3A%3AIFormSubmitListener%3A%3A\"");
+    s.append("login?wicket:interface=%3A3%3Alogin%3Alogin%3A%3AIFormSubmitListener%3A%3A\"");
     s.append(" method=\"post\">\n");
 
     s.append("  <p>\n  <label for=\"xsm_username\">Username</label><br />\n");
