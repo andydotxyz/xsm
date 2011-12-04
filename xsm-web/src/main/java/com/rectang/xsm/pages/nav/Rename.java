@@ -103,7 +103,10 @@ public class Rename extends Page {
 
           if (renamed && getXSMPage().rename(newTitle)) {
             (RemoteDocument.getDoc(site, "/data" + pagePath, false)).rename(site, "/data" + path, false);
-            site.getPublishedDoc(pagePath).rename(path);
+            // this means there is no slug set, so rename the output too
+            if (getXSMPage().getPath().equals(getXSMPage().getPublishedPath())) {
+              site.getPublishedDoc(getXSMPage().getPath()).rename(path);
+            }
             site.save();
             getSession().info("Page \"" + oldTitle + "\" successfully renamed to \""
                 + newTitle + "\"");
