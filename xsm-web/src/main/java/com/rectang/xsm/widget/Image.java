@@ -154,7 +154,7 @@ public class Image extends File implements Serializable {
 
   public static java.lang.String getPath(com.rectang.xsm.doc.DocElement elem,
       java.lang.String name) {
-    return elem.getPath() + java.io.File.separatorChar + "_images"
+    return elem.getPublishedPath() + java.io.File.separatorChar + "_images"
         + java.io.File.separatorChar + name;
   }
 

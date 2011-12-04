@@ -131,7 +131,7 @@ public class File extends DocWidget implements Serializable {
   
   public static java.lang.String getPath(com.rectang.xsm.doc.DocElement elem,
       java.lang.String name) {
-    return elem.getPath() + java.io.File.separatorChar + "_files"
+    return elem.getPublishedPath() + java.io.File.separatorChar + "_files"
         + java.io.File.separatorChar + name;
   }
   

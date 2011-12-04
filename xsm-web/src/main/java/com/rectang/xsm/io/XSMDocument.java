@@ -258,7 +258,7 @@ public class XSMDocument implements Serializable {
     if (getType(user) instanceof PHPFile)
       fileName = "index.php";
 
-    PublishedFile pubFile = user.getSite().getPublishedDoc(page.getPath()
+    PublishedFile pubFile = user.getSite().getPublishedDoc(page.getPublishedPath()
         + File.separatorChar + fileName);
 
     return publishContent(pubFile, content, user);

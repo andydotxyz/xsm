@@ -1,7 +1,10 @@
 package com.rectang.xsm.pages.cms;
 
+import com.rectang.xsm.io.XSMDocument;
+import com.rectang.xsm.site.Site;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.basic.Label;
@@ -9,6 +12,9 @@ import org.apache.wicket.PageParameters;
 
 import com.rectang.xsm.doc.SupportedOption;
 import com.rectang.xsm.wicket.OptionPanel;
+import org.apache.wicket.model.PropertyModel;
+
+import java.io.File;
 
 /**
  * The main CMS options tab
@@ -20,10 +26,13 @@ import com.rectang.xsm.wicket.OptionPanel;
  * @plexus.component role="org.apache.wicket.Page" role-hint="page-options"
  */
 public class Options extends DocumentPage {
+  private String oldPath;
+
   public void layout() {
     super.layout();
     if (hasError()) return;
 
+    oldPath = getDocumentPage().getPublishedPath();
     add(new OptionsForm("optionsform"));
   }
 
@@ -31,6 +40,8 @@ public class Options extends DocumentPage {
     public OptionsForm(String id) {
       super(id);
       final boolean canEdit = getDoc().canEdit(getXSMSession().getUser());
+        
+      add(new TextField("slug", new PropertyModel(this, "slug")));
 
       add(new ListView("options", getDoc().getSupportedOptions(getXSMSession().getUser())) {
         protected void populateItem(ListItem listItem) {
@@ -74,12 +85,36 @@ public class Options extends DocumentPage {
       add(reset);
     }
 
+    public String getSlug() {
+      return getDocumentPage().getSlug();
+    }
+      
+    public void setSlug(String slug) {
+      getDocumentPage().setSlug(slug);
+    }
 
     protected void onSubmit() {
       super.onSubmit();
 
+      // TODO should we sanity check the slug (i.e. unique...)
       getDoc().save();
-      getDoc().publish(getXSMSession().getUser());
+      if (!oldPath.equals(getDocumentPage().getPublishedPath())) {
+          getDocumentPage().getSite().save();
+        rename();
+
+        oldPath = getDocumentPage().getPublishedPath();
+        getDocumentPage().getSite().publish(getXSMSession().getUser());
+      } else {
+        getDoc().publish(getXSMSession().getUser());
+      }
+    }
+
+    private void rename() {
+      Site site = getDocumentPage().getSite();
+      if (getXSMPage() instanceof com.rectang.xsm.site.DocumentPage) {
+        // what to do if we fail?
+        site.getPublishedDoc(oldPath).rename(getDocumentPage().getPublishedPath());
+      }
     }
   }
 }

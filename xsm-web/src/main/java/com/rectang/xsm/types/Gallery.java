@@ -220,7 +220,7 @@ public class Gallery extends DocGroup {
           s.append(content);
         else
           getDoc().publishContent(file, content.toString(), getUser());
-        file = getSite().getPublishedDoc(getPath() + "/_thumbs/"
+        file = getSite().getPublishedDoc(getPublishedPath() + "/_thumbs/"
             + ++pageCounter + ".html");
         content = new StringBuffer();
       }
@@ -228,7 +228,7 @@ public class Gallery extends DocGroup {
     if (content.length() != 0)
       getDoc().publishContent(file, content.toString(), getUser());
 
-    String parentPath = (new java.io.File(getPath())).getParent();
+    String parentPath = (new java.io.File(getPublishedPath())).getParent();
     if (!parentPath.equals("/")) {
       HierarchicalPage parent = (HierarchicalPage) getSite().getPage(parentPath);
 
@@ -248,12 +248,12 @@ public class Gallery extends DocGroup {
     String nStr = "";
     if (counter > 0)
       if (counter == 1)
-        pStr = "<a href=\"" + getSite().getPrefixUrl() + getPath() + "/index.html\">Previous</a>";
+        pStr = "<a href=\"" + getSite().getPrefixUrl() + getPublishedPath() + "/index.html\">Previous</a>";
       else
-        pStr = "<a href=\"" + getSite().getPrefixUrl() + getPath() + "/_thumbs/" + (counter - 1)
+        pStr = "<a href=\"" + getSite().getPrefixUrl() + getPublishedPath() + "/_thumbs/" + (counter - 1)
             + ".html\">Previous</a>";
     if (hasNext)
-      nStr = "<a href=\"" + getSite().getPrefixUrl() + getPath() + "/_thumbs/" + (counter + 1) + ".html\">Next</a>";
+      nStr = "<a href=\"" + getSite().getPrefixUrl() + getPublishedPath() + "/_thumbs/" + (counter + 1) + ".html\">Next</a>";
 
     s.append("<p class=\"xsm_gallery_nav\">\n");
     s.append("<span class=\"xsm_gallery_nav_prev\">" + pStr + "</span>\n");
@@ -345,7 +345,7 @@ public class Gallery extends DocGroup {
       publishPreviewNav(pos, tot, before, after, dir, content);
     if (full) {
       content.append("<a href=\"" + getSite().getPrefixUrl());
-      content.append(getPath() + java.io.File.separatorChar + "_images");
+      content.append(getPublishedPath() + java.io.File.separatorChar + "_images");
       content.append(java.io.File.separatorChar + path(node) + "\" target=\"_blank\">");
     }
     content.append("<img border=\"0\"src=\"");
@@ -361,10 +361,10 @@ public class Gallery extends DocGroup {
     content.append("<p class=\"xsm_gallery_nav_up\">");
     if (page == 0) {
       content.append("<a href=\"" + getSite().getPrefixUrl());
-      content.append(getPath() + "/index.html\">Up</a>");
+      content.append(getPublishedPath() + "/index.html\">Up</a>");
     } else {
       content.append("<a href=\"" + getSite().getPrefixUrl());
-      content.append(getPath() + "/_thumbs/" + page + ".html\">Up</a>");
+      content.append(getPublishedPath() + "/_thumbs/" + page + ".html\">Up</a>");
     }
     content.append("</p></div>\n");
 
@@ -409,7 +409,7 @@ public class Gallery extends DocGroup {
   }
 
   protected java.lang.String getPreviewPath(java.lang.String name) {
-    return getPath() + java.io.File.separatorChar + "_previews"
+    return getPublishedPath() + java.io.File.separatorChar + "_previews"
         + java.io.File.separatorChar + name;
   }
 
@@ -440,7 +440,7 @@ class GalleryPreviewedImage extends PreviewedImage {
   }
 
   public void destroy(Element node) {
-    getSite().getPublishedDoc(getPath() + java.io.File.separatorChar + "_previews" + java.io.File.separatorChar
+    getSite().getPublishedDoc(getPublishedPath() + java.io.File.separatorChar + "_previews" + java.io.File.separatorChar
         + node.getText() + ".html").delete();
     super.destroy(node);
     

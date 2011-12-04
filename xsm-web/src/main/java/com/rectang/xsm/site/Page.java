@@ -16,6 +16,7 @@ public abstract class Page implements Serializable {
   private Site site;
   private HierarchicalPage parent;
   private String title;
+  private String slug;
   boolean hidden;
 
   public Page(Site site, HierarchicalPage parent, String title) {
@@ -45,6 +46,18 @@ public abstract class Page implements Serializable {
     this.title = title;
   }
 
+  public String getSlug() {
+    if (slug != null) {
+      return slug;
+    }
+
+    return getFile();
+  }
+
+  public void setSlug(String slug) {
+    this.slug = slug;
+  }
+
   public boolean getHidden() {
     return hidden;
   }
@@ -70,6 +83,17 @@ public abstract class Page implements Serializable {
     if (ret.charAt(ret.length() - 1) == '/')
       return ret + getFile();
     return ret + "/" + getFile();
+  }
+
+  public String getPublishedPath() {
+    String ret = "";
+    if (parent != null)
+      ret = parent.getPublishedPath();
+    if (getTitle().equals("/"))
+      return "/";
+    if (ret.charAt(ret.length() - 1) == '/')
+      return ret + getSlug();
+    return ret + "/" + getSlug();
   }
 
   public boolean rename(String name) {
@@ -111,7 +135,7 @@ public abstract class Page implements Serializable {
   public abstract String getType();
 
   public String getLink() {
-    return getSite().getRootUrl() + getPath() + "/";
+    return getSite().getRootUrl() + getPublishedPath() + "/";
   }
 
   public boolean isPublishable() {

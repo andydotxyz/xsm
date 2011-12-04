@@ -7,7 +7,6 @@ import com.rectang.xsm.doc.DocGroup;
 import com.rectang.xsm.doc.DocList;
 import com.rectang.xsm.doc.SupportedOption;
 import com.rectang.xsm.io.PublishedFile;
-import com.rectang.xsm.io.XSMDocument;
 import com.rectang.xsm.widget.DateTime;
 import com.rectang.xsm.widget.HTMLTextArea;
 import com.rectang.xsm.widget.Value;
@@ -89,7 +88,7 @@ public class Events extends DocGroup {
     /* publish user pages */
     boolean author_pages = AUTHOR_PAGES.getBoolean(getDoc());
     if (author_pages) {
-      String author_dir = getPath() + File.separatorChar + "_authors"
+      String author_dir = getPublishedPath() + File.separatorChar + "_authors"
           + File.separatorChar;
       (getSite().getPublishedDoc(author_dir)).mkdir();
       Vector authors = new Vector();
@@ -113,7 +112,7 @@ public class Events extends DocGroup {
     
     List children = node.getChildren(element.getName());
     if (children.size() > page_length) {
-      String archivePage = getPath() + "/archive.html";
+      String archivePage = getPublishedPath() + "/archive.html";
       s.append("<p align=\"right\">more in the <a href=\"");
       s.append(getSite().getPrefixUrl() + archivePage + "\">archive</a></p>");
 
@@ -172,7 +171,7 @@ public class Events extends DocGroup {
     Hashtable days = new Hashtable();
     Calendar lastDate = null, lastMonth = null;
 
-    String dir = getPath() + File.separatorChar + "_events"
+    String dir = getPublishedPath() + File.separatorChar + "_events"
         + File.separatorChar;
     (getSite().getPublishedDoc(dir)).mkdir();
 
@@ -230,7 +229,7 @@ public class Events extends DocGroup {
       for (int i = 0; i < monthEvents.size(); i++) {
         element.publish((Element) monthEvents.get(i), content);
       }
-      PublishedFile out = getSite().getPublishedDoc(getPath() +
+      PublishedFile out = getSite().getPublishedDoc(getPublishedPath() +
           "/_months/" + cal.get(Calendar.MONTH) + ".html");
       getDoc().publishContent(out, content.toString(), getUser());
     }
@@ -246,7 +245,7 @@ public class Events extends DocGroup {
       for (int i = 0; i < dayEvents.size(); i++) {
         element.publish((Element) dayEvents.get(i), content);
       }
-      PublishedFile out = getSite().getPublishedDoc(getPath() +
+      PublishedFile out = getSite().getPublishedDoc(getPublishedPath() +
           "/_months/" + cal.get(Calendar.MONTH) + "/" +
           cal.get(Calendar.DAY_OF_MONTH) + ".html");
       getDoc().publishContent(out, content.toString(), getUser());
@@ -363,7 +362,7 @@ class Event extends DocList {
       String uid = root.getChildText("uid");
       if (uid != null & !uid.equals("")) {
         s.append(" [<a href=\"");
-        s.append(getSite().getPrefixUrl() + getPath());
+        s.append(getSite().getPrefixUrl() + getPublishedPath());
         s.append("/_authors/" + root.getChildText("uid") + ".html\">");
         s.append("All my events</a>]");
       }
@@ -376,7 +375,7 @@ class Event extends DocList {
     DateFormat format = DateFormat.getDateTimeInstance();
     format.setCalendar(start);
 
-    String link = getSite().getPrefixUrl() + getPath() + "/_months/" + start.get(Calendar.MONTH);
+    String link = getSite().getPrefixUrl() + getPublishedPath() + "/_months/" + start.get(Calendar.MONTH);
     s.append(" (");
     s.append(new SimpleDateFormat("EE").format(start.getTime()));
     s.append(" <a href=\"" + link + "/" + start.get(Calendar.DATE) + ".html\">");
@@ -413,7 +412,7 @@ class Event extends DocList {
     if (summarise) {
       s.append(summarise(body.toString()));
       s.append(" <a href=\"" + getSite().getPrefixUrl());
-      s.append(getPath() + "/_events/" + id + ".html\">Read more</a>");
+      s.append(getPublishedPath() + "/_events/" + id + ".html\">Read more</a>");
     } else
       s.append(body);
     s.append("</div>\n");
@@ -438,7 +437,7 @@ class Event extends DocList {
       return;
     }
 
-    getSite().getPublishedDoc(getPath() + File.separatorChar
+    getSite().getPublishedDoc(getPublishedPath() + File.separatorChar
         + "_events" + File.separatorChar + index + ".html").delete();
   }
 

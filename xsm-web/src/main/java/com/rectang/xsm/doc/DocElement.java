@@ -34,6 +34,13 @@ public class DocElement implements Serializable {
   }
 
   /**
+   * @return The path to our published page
+   */
+  public String getPublishedPath() {
+    return page.getPublishedPath();
+  }
+
+  /**
    * @param page The page to set.
    */
   public void setPage(DocumentPage page) {

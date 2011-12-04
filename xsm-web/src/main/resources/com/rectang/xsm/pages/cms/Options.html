@@ -3,6 +3,11 @@
     <wicket:extend>
       <form wicket:id="optionsform">
         <table border="0">
+          <tr>
+            <td>Custom URL - this overrides the usual output of the page title</td>
+            <td><input type="text" wicket:id="slug" /></td>
+          </tr>
+
           <tr wicket:id="options">
             <td><span wicket:id="label"></span></td>
             <td><div wicket:id="option"></div></td>

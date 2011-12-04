@@ -49,7 +49,7 @@ public class PreviewedFile extends DocGroup {
   }
 
   public void publishRSS(Element root) {
-    PublishedFile rss = getSite().getPublishedDoc(getPath() +
+    PublishedFile rss = getSite().getPublishedDoc(getPublishedPath() +
         java.io.File.separatorChar + "feed.xml");
     try {
       OutputStream os = rss.getOutputStream();
@@ -59,10 +59,10 @@ public class PreviewedFile extends DocGroup {
       out.write("<rss version=\"2.0\">\n");
       out.write("  <channel>\n");
       out.write("    <title>" + escape(getSite().getTitle()) + "</title>\n");
-      out.write("    <link>" + escape(getSite().getRootUrl() + getPath())
+      out.write("    <link>" + escape(getSite().getRootUrl() + getPublishedPath())
           + "/feed.xml</link>\n");
       out.write("    <description>RSS generated from " + escape(
-          getSite().getRootUrl() + getPath()) + "/</description>\n");
+          getSite().getRootUrl() + getPublishedPath()) + "/</description>\n");
       out.write("    <generator>Rectang XSM</generator>\n");
       
       List elements = root.getChildren("item");
@@ -75,8 +75,8 @@ public class PreviewedFile extends DocGroup {
         if (index == null || index.equals(""))
           index = "x" + fakeIndex++;
 //        java.lang.String link = escape(site.getRootUrl()
-//            + getPath() + "/_items/" + id + ".html");
-        java.lang.String guid = getSite().getRootUrl() + getPath() + ".html#" + index;
+//            + getPublishedPath() + "/_items/" + id + ".html");
+        java.lang.String guid = getSite().getRootUrl() + getPublishedPath() + ".html#" + index;
         StringBuffer tmp = new StringBuffer();
         ((PrevItem) element).publishRSS(next, guid, tmp);
         out.write(tmp.toString());
@@ -107,11 +107,11 @@ class PrevItem extends DocList {
     java.lang.String file = node.getChild("file").getValue();
     if (file != null && !file.equals("")) {
       s.append("<a href=\"" + getSite().getPrefixUrl());
-      s.append(getPath() + java.io.File.separatorChar + "_files");
+      s.append(getPublishedPath() + java.io.File.separatorChar + "_files");
       s.append(java.io.File.separatorChar + file + "\">");
     }
     s.append("<img border=\"0\" src=\"");
-    s.append(getSite().getPrefixUrl() + getPath());
+    s.append(getSite().getPrefixUrl() + getPublishedPath());
     s.append(java.io.File.separatorChar + "_images");
     s.append(java.io.File.separatorChar + node.getChild("preview").getValue());
     s.append("\" alt=\"");
@@ -159,7 +159,7 @@ class PrevItem extends DocList {
     java.lang.String file = root.getChild("file").getValue();
     s.append("  <link>");
     s.append(PreviewedFile.escape(getSite().getRootUrl()
-        + getPath() + java.io.File.separatorChar + "_files" +
+        + getPublishedPath() + java.io.File.separatorChar + "_files" +
         java.io.File.separatorChar + file));
     s.append("</link>\n");
 
@@ -179,7 +179,7 @@ class PrevItem extends DocList {
     s.append("<enclosure url=\"");
     java.lang.String preview = root.getChild("preview").getValue();
     s.append(PreviewedFile.escape(getSite().getRootUrl()
-        + getPath() + java.io.File.separatorChar + "_images" +
+        + getPublishedPath() + java.io.File.separatorChar + "_images" +
         java.io.File.separatorChar + preview));
     /* FIXME - figure length and type */
     s.append("\" length=\"\" type=\"\"/>");

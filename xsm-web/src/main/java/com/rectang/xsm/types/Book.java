@@ -35,13 +35,13 @@ public class Book extends DocList {
   /* view maybe split into pieces with contents */
 /* TODO make a nice edit layout
   public void edit(Element node, String path, StringBuffer s) {
-    s.append("<p>You can <a href=\"XSM?action=page.edit&page=" + getPath());
+    s.append("<p>You can <a href=\"XSM?action=page.edit&page=" + getPublishedPath());
     s.append("&index=" + path + "/images@1\">edit</a> the books images<br>\n");
-    s.append("or <a href=\"XSM?action=page.edit&page=" + getPath());
+    s.append("or <a href=\"XSM?action=page.edit&page=" + getPublishedPath());
     s.append("&index=" + path + "/files@2\">edit</a> the books files<br>\n");
     
     if (node.getChild("contents").getChildren("page").size() == 0) {
-      s.append("<a href=\"XSM?action=page.add&page=" + getPath());
+      s.append("<a href=\"XSM?action=page.add&page=" + getPublishedPath());
       s.append("&index=" + path + "/contents@0&addnode=page@0\">create");
       s.append("</a> your books first page<br>\n");
     } else
@@ -62,7 +62,7 @@ public class Book extends DocList {
     while (children.hasNext()) {
       Element next = (Element) children.next();
 
-      String rootLink = "XSM?page=" + getPath() + "&index=" + root + "/contents@0&viewindex=" + root;
+      String rootLink = "XSM?page=" + getPublishedPath() + "&index=" + root + "/contents@0&viewindex=" + root;
       String movelink = rootLink + "&movenode=" + rel + "/page@" + counter + "&action=page.";
       s.append("<tr><td>");
       if (counter > 0) {
@@ -76,13 +76,13 @@ public class Book extends DocList {
         s.append("<a href=\"" + movelink + "down\"><img src=\"icons/go-down.png\"");
         s.append("border=\"0\" alt=\"down\" title=\"down\"></a>");
       }
-      s.append("</td><td><a href=\"XSM?action=page.edit&page=" + getPath());
+      s.append("</td><td><a href=\"XSM?action=page.edit&page=" + getPublishedPath());
       s.append("&index=" + path + "/page@" + counter + "\">");
       s.append("edit</a> " + next.getChildText("title"));
       
       if (next.getChildren("page").size() == 0) {
         s.append("<font size=\"-2\">\t\t(<a href=\"XSM?action=page.add&page=");
-        s.append(getPath() + "&index=" + path + "/page@" + counter);
+        s.append(getPublishedPath() + "&index=" + path + "/page@" + counter);
         s.append("&addnode=page@0" + "\">... add a sub level ...</a>)</font>\n");
       } else {
         s.append("</td></tr><tr><td>&nbsp;</td><td>");
@@ -91,7 +91,7 @@ public class Book extends DocList {
       s.append("</td></tr>\n");
       counter++;
     }
-    s.append("<tr><td><a href=\"XSM?action=page.add&page=" + getPath());
+    s.append("<tr><td><a href=\"XSM?action=page.add&page=" + getPublishedPath());
     s.append("&index=" + path + "&addnode=page@" + counter);
     s.append("\"><img src=\"icons/document-new.png\" border=\"0\"");
     s.append("alt=\"add page\" title=\"add page\"></a></td><td>&nbsp;</td></tr>\n");
@@ -104,7 +104,7 @@ public class Book extends DocList {
     if (nodes == null || nodes.size() == 0)
       return;
 
-    String pageDir = getPath() + File.separatorChar + "_pages"
+    String pageDir = getPublishedPath() + File.separatorChar + "_pages"
         + File.separatorChar;
     (getSite().getPublishedDoc(pageDir)).mkdir();
 
@@ -118,14 +118,14 @@ public class Book extends DocList {
     if (GEN_TABLES.getBoolean(getDoc())) {
       /* generate the gallery pages */
       PublishedFile galleryFile = getSite().getPublishedDoc(
-          getPath() + File.separatorChar + "images.html");
+          getPublishedPath() + File.separatorChar + "images.html");
       out = new StringBuffer();
       elements[1].publish(node.getChild("images"), out);
       getDoc().publishContent(galleryFile, out.toString(), getUser());
 
       /* generate the files page */
       PublishedFile filesFile = getSite().getPublishedDoc(
-          getPath() + File.separatorChar + "files.html");
+          getPublishedPath() + File.separatorChar + "files.html");
       out = new StringBuffer();
       elements[2].publish(node.getChild("files"), out);
       getDoc().publishContent(filesFile, out.toString(), getUser());
@@ -191,12 +191,12 @@ public class Book extends DocList {
         content.append("&nbsp;");
       else {
         content.append("<a href=\"" + getSite().getPrefixUrl());
-        content.append(getPath() + "/_pages/" + nav.prev + ".html\">Previous</a>");
+        content.append(getPublishedPath() + "/_pages/" + nav.prev + ".html\">Previous</a>");
       }
       content.append("</td><td width=\"34%\" align=\"center\">");
       if (level == 0) {
         content.append("<a href=\"" + getSite().getPrefixUrl());
-        content.append(getPath() + "/index.html\">Contents</a>");
+        content.append(getPublishedPath() + "/index.html\">Contents</a>");
       } else {
         content.append("<a href=\"" + getSite().getPrefixUrl());
         content.append(dir + getId(level - 1) + ".html\">Up</a>");
@@ -206,7 +206,7 @@ public class Book extends DocList {
         content.append("&nbsp;");
       else {
         content.append("<a href=\"" + getSite().getPrefixUrl());
-        content.append(getPath() + "/_pages/" + nav.next + ".html\">Next</a>");
+        content.append(getPublishedPath() + "/_pages/" + nav.next + ".html\">Next</a>");
       }
       content.append("</td></tr></table>\n");
 
@@ -293,9 +293,9 @@ public class Book extends DocList {
     s.append("<ul>");
     if (level == 0 && GEN_TABLES.getBoolean(getDoc())) {
       s.append("<li><a href=\"" + getSite().getPrefixUrl());
-      s.append(getPath() + "/images.html\">List of images</a></li>\n");
+      s.append(getPublishedPath() + "/images.html\">List of images</a></li>\n");
       s.append("<li><a href=\"" + getSite().getPrefixUrl());
-      s.append(getPath() + "/files.html\">List of files</a></li>\n");
+      s.append(getPublishedPath() + "/files.html\">List of files</a></li>\n");
     }
     while (pages.hasNext()) {
       Element next = (Element) pages.next();

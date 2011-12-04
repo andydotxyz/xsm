@@ -7,10 +7,11 @@ import com.rectang.xsm.doc.DocGroup;
 import com.rectang.xsm.doc.DocList;
 import com.rectang.xsm.doc.SupportedOption;
 import com.rectang.xsm.io.PublishedFile;
-import com.rectang.xsm.widget.HTMLTextArea;
-import com.rectang.xsm.widget.Value;
+import com.rectang.xsm.widget.*;
 
 import java.io.*;
+import java.io.File;
+import java.lang.String;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -88,7 +89,7 @@ public class News extends DocGroup {
     /* publish user pages */
     boolean author_pages = AUTHOR_PAGES.getBoolean(getDoc());
     if (author_pages) {
-      String author_dir = getPath() + File.separatorChar + "_authors"
+      String author_dir = getPublishedPath() + File.separatorChar + "_authors"
           + File.separatorChar;
       (getSite().getPublishedDoc(author_dir)).mkdir();
       Vector authors = new Vector();
@@ -116,7 +117,7 @@ public class News extends DocGroup {
 // TODO do we need to output something else in this place?
 //    List children = node.getChildren(element.getName());
 //    if (children.size() > page_length) {
-//      String archivePage = getPath() + "/archive.html";
+//      String archivePage = getPublishedPath() + "/archive.html";
 //      s.append("<p align=\"right\">more in the <a href=\"");
 //      s.append(getSite().getPrefixUrl() + archivePage + "\">archive</a></p>");
 //
@@ -170,7 +171,7 @@ public class News extends DocGroup {
   }
 
   private void publishPermaNodes(Element node) {
-    (getSite().getPublishedDoc(getPath())).mkdir();
+    (getSite().getPublishedDoc(getPublishedPath())).mkdir();
 
     List children = node.getChildren(element.getName());
     Iterator allChildren = children.iterator();
@@ -193,15 +194,15 @@ public class News extends DocGroup {
         // will default to current time
       }
         
-      String path = getPath() + getArticlePath(next, index);
-      (getSite().getPublishedDoc(new File(getPath()).getParent())).mkdir();
+      String path = getPublishedPath() + getArticlePath(next, index);
+      (getSite().getPublishedDoc(new File(getPublishedPath()).getParent())).mkdir();
       PublishedFile out = getSite().getPublishedDoc(path);
       getDoc().publishContent(out, content.toString(), getUser());
     }
   }
 
   private void publishArchive(Element node) {
-    String dir = getPath() + File.separatorChar;
+    String dir = getPublishedPath() + File.separatorChar;
     (getSite().getPublishedDoc(dir)).mkdir();
   
     List children = node.getChildren(element.getName());
@@ -242,7 +243,7 @@ public class News extends DocGroup {
   }
     
   public void publishRSS(Element root) {
-    PublishedFile rss = getSite().getPublishedDoc(getPath() + File.separatorChar
+    PublishedFile rss = getSite().getPublishedDoc(getPublishedPath() + File.separatorChar
         + "feed.xml");
     try {
       OutputStream os = rss.getOutputStream();
@@ -252,10 +253,10 @@ public class News extends DocGroup {
       out.write("<rss version=\"2.0\">\n");
       out.write("  <channel>\n");
       out.write("    <title>" + escape(getSite().getTitle()) + "</title>\n");
-      out.write("    <link>" + escape(getSite().getRootUrl() + getPath())
+      out.write("    <link>" + escape(getSite().getRootUrl() + getPublishedPath())
           + "/feed.xml</link>\n");
       out.write("    <description>RSS generated from " + escape(
-          getSite().getRootUrl() + getPath()) + "/</description>\n");
+          getSite().getRootUrl() + getPublishedPath()) + "/</description>\n");
       out.write("    <generator>Rectang XSM</generator>\n");
       
       List elements = root.getChildren("article");
@@ -270,8 +271,8 @@ public class News extends DocGroup {
           index = "x" + fakeIndex++;
 
         String url = getArticlePath(next, index).replace(File.separatorChar, '/');
-        java.lang.String link = escape(getSite().getRootUrl() + getPath() + url);
-        java.lang.String guid = getSite().getRootUrl() + getPath() + url;
+        java.lang.String link = escape(getSite().getRootUrl() + getPublishedPath() + url);
+        java.lang.String guid = getSite().getRootUrl() + getPublishedPath() + url;
         StringBuffer tmp = new StringBuffer();
         ((NewsArticle) element).publishRSS(next, link, guid, tmp);
         out.write(tmp.toString());
@@ -298,7 +299,11 @@ public class News extends DocGroup {
       e.printStackTrace();
       // will default to current time
     }
-        
+
+    String slug = node.getChildText("slug");
+    if (slug != null && slug.length() > 0) {
+      index = slug;
+    }
     return File.separator + cal.get(Calendar.YEAR) + File.separator + (cal.get(Calendar.MONTH) + 1) + File.separator +
         index + ".html";
   }
@@ -368,6 +373,7 @@ class NewsArticle extends DocList {
         new Value("uid", Value.USERNAME),
         new Value("email", Value.EMAIL),
         new Value("time", Value.DATE),
+        new com.rectang.xsm.widget.String("slug"),
         new GalleryCommentList("comments") /* FIXME- have a central comments definition */
     });
   }
@@ -406,7 +412,7 @@ class NewsArticle extends DocList {
     s.append(root.getAttributeValue("index") + "\"></a>");
     if (summarise) {
       s.append("<a href=\"" + getSite().getPrefixUrl());
-      s.append(getPath() + url + "\" title=\"permalink\">");
+      s.append(getPublishedPath() + url + "\" title=\"permalink\">");
     }
     elements[0].publish(root.getChild("subject"), s);
     if (summarise) {
@@ -425,7 +431,7 @@ class NewsArticle extends DocList {
       String uid = root.getChildText("uid");
       if (uid != null && !uid.equals("")) {
         s.append(" [<a href=\"");
-        s.append(getSite().getPrefixUrl() + getPath());
+        s.append(getSite().getPrefixUrl() + getPublishedPath());
         s.append("/_authors/" + root.getChildText("uid") + ".html\">");
         s.append("All my articles</a>]");
       }
@@ -449,7 +455,7 @@ class NewsArticle extends DocList {
 
     if (summarise && summarised && News.ARTICLE_LINK.getBoolean(getDoc())) {
       s.append(" <a class=\"xsm_news_fulllink\"href=\"" + getSite().getPrefixUrl());
-      s.append(getPath() + url + "\" title=\"permalink\">");
+      s.append(getPublishedPath() + url + "\" title=\"permalink\">");
       s.append("[Full article]</a>");
     }
     s.append("</div>\n");
@@ -459,7 +465,7 @@ class NewsArticle extends DocList {
       int commentCount = comments.getChildren("comment").size();
       if (commentCount > 0) {
         s.append("<div class=\"xsm_comments\"><p><b>Comments:</b></p>");
-        elements[6 + inc].publish(comments, s);
+        elements[7 + inc].publish(comments, s);
         s.append("</div>");
       }
     }
@@ -474,7 +480,7 @@ class NewsArticle extends DocList {
       return;
     }
 
-    getSite().getPublishedDoc(getPath() + News.getArticlePath(root, "" + index)).delete();
+    getSite().getPublishedDoc(getPublishedPath() + News.getArticlePath(root, "" + index)).delete();
   }
 
   public void publishRSS(Element root, String link, String guid, StringBuffer s) {

@@ -22,7 +22,7 @@ import com.rectang.xsm.util.StringUtils;
  */
 public class Site implements Serializable {
 
-  private static final int VERSION = 9;
+  private static final int VERSION = 10;
 
   private int version = 1; // all sites more recent than version 1 are tagged
   private String stylesheet, layout, index, id, news, login;
@@ -299,6 +299,7 @@ public class Site implements Serializable {
         ((HierarchicalPage) newPage).addSubPages(initPages(next.getChildren(),
             (HierarchicalPage) newPage));
 
+      newPage.setSlug(next.getAttributeValue("slug"));
       ret.add(newPage);
     }
     return ret;
@@ -326,6 +327,10 @@ public class Site implements Serializable {
       newPage.addContent(new Element("title").setText(next.getTitle()));
       if (next instanceof HierarchicalPage)
         newPage.addContent(savePages(((HierarchicalPage) next).getSubPages()));
+
+      if (!next.getFile().equals(next.getSlug())) {
+        newPage.setAttribute("slug", next.getSlug());
+      }
       ret.add(newPage);
     }
     return ret;
