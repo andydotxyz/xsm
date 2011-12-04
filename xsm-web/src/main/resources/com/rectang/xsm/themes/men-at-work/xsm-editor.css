@@ -129,6 +129,10 @@ textarea, .metadata, .metadata_value, .metadata_title, .metadata_description {
   font-weight: bold;
 }
 
+#xsm_content .xsm-editor-message-main input, #xsm_content .xsm-editor-message-main textarea {
+  width: 99%;
+}
+
 /* overriding themes */
 
 .xsm_menu_item a {

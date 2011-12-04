@@ -67,3 +67,19 @@ p {
     font-size: 80%;
 }
 
+/** common styling */
+.xsm_form table{
+    width: 100%;
+}
+
+.xsm_form_answer input, .xsm_form_answer textarea {
+    width: 100%;
+}
+
+.xsm_form textarea {
+    height: 150px;
+}
+
+.xsm_form_question {
+    vertical-align: top;
+}
