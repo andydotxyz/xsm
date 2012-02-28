@@ -51,7 +51,7 @@ public class SiteMap extends DocElement {
       return;
     while (pages.hasNext()) {
       Page node = (Page) pages.next();
-      String file = node.getPath();
+      String file = node.getPublishedPath();
 
       if (!node.getHidden()) {
         s.append(indent + "<a href=\"" + preHref + file + postHref 
