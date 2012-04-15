@@ -58,8 +58,9 @@ public class Edit extends DocumentPage {
     "    skin_variant : \"black\",\n" +
     "    content_css : \"" + user.getSite().getRootUrl() + "/_theme/style.css\",\n" +
     "    language : \"" + Locale.getString(user, "tinymce.lang") + "\",\n" +
-    "    document_base_url : \"" + user.getSite().getRootUrl() + "/index.html\",\n" +
-    "    convert_urls : false,\n" +
+    "    document_base_url : \"" + getDocumentPage().getLink() + "\",\n" +
+    "    convert_urls : true,\n" +
+    "    relative_urls : false,\n" +
     "    remove_linebreaks : \"false\",\n" +
     "    plugins : \"table,advimage,advlink,contextmenu,autosave,fullscreen,inlinepopups,style,insertdatetime,safari,visualchars,xhtmlxtras,searchreplace\", \n" +
     "    theme_advanced_buttons1_add : \"ins,del,abbr,acronym\", \n" +
@@ -73,7 +74,8 @@ public class Edit extends DocumentPage {
         + URLEncoder.encode(getDocumentPage().getPath()) + "\",\n" +
     "    external_link_list_url : \"" + XSM.getConfig().getUrl() + "page-linklist/?page="
         + URLEncoder.encode(getDocumentPage().getPath()) + "\",\n" +
-    "    valid_elements: \"*[*]\"\n" +
+    "    valid_elements : \"*[*]\",\n" +
+    "    extended_valid_elements : \"table[border=0|cellspacing|cellpadding|width|height|class],tr[class|rowspan|width|height],td[class|colspan|rowspan|width|height]\",\n" +
     "  });\n";
   }
 
@@ -89,6 +91,7 @@ public class Edit extends DocumentPage {
       this.doc = doc;
 
       setModel(new CompoundPropertyModel(doc));
+// TODO allow the Page template to insert these somehow - in another form possibly?
       add(new TextField("metadata.title"));
       add(new TextArea("metadata.description"));
       add(new Label("metadata.type", getDoc().getContentElement().getName()));
