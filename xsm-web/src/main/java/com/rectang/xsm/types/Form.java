@@ -118,7 +118,7 @@ class FormField extends DocList {
     if (type.equals("text")) {
       s.append("<input type=\"text\" name=\"field" + node.getAttributeValue("index") + "\" " + enabledStr + " />");
     } else if (type.equals("textarea")) {
-      s.append("<textarea name=\"" + node.getAttributeValue("index") + "\"" + enabledStr + "></textarea>");
+      s.append("<textarea name=\"field" + node.getAttributeValue("index") + "\"" + enabledStr + "></textarea>");
     } else if (type.equals("checkbox")) {
       s.append("<input type=\"checkbox\" name=\"field" + node.getAttributeValue("index") + "\" " + enabledStr + " />");
     }
