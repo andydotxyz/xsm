@@ -222,24 +222,37 @@ public class News extends DocGroup {
         continue;
       }
 
-      monthNodes.add(next);
-      if (year == cal.get(Calendar.YEAR) || month == cal.get(Calendar.MONTH)) {
+      if (year == cal.get(Calendar.YEAR) && month == cal.get(Calendar.MONTH)) {
+        monthNodes.add(next);
         continue;
       }
 
       StringBuffer content = new StringBuffer();
-      year = cal.get(Calendar.YEAR);
-      month = cal.get(Calendar.MONTH);
 
-      String monthDir = dir + year + File.separatorChar + (month + 1);
-      (getSite().getPublishedDoc(monthDir)).mkdir();
+      if ( year != 0 )
+      {
+        String monthDir = dir + year + File.separatorChar + (month + 1);
+        (getSite().getPublishedDoc(monthDir)).mkdir();
 
-      publishNNodes(monthNodes, 0, content);
-      PublishedFile out = getSite().getPublishedDoc(monthDir + File.separatorChar + "index.html");
-      getDoc().publishContent(out, content.toString(), getUser());
+        publishNNodes(monthNodes, 0, content);
+        PublishedFile out = getSite().getPublishedDoc(monthDir + File.separatorChar + "index.html");
+        getDoc().publishContent(out, content.toString(), getUser());
 
-      monthNodes.clear();
+        monthNodes.clear();
+      }
+
+        year = cal.get(Calendar.YEAR);
+        month = cal.get(Calendar.MONTH);
+        monthNodes.add(next);
     }
+
+    String monthDir = dir + year + File.separatorChar + (month + 1);
+    (getSite().getPublishedDoc(monthDir)).mkdir();
+
+    StringBuffer content = new StringBuffer();
+    publishNNodes(monthNodes, 0, content);
+    PublishedFile out = getSite().getPublishedDoc(monthDir + File.separatorChar + "index.html");
+    getDoc().publishContent(out, content.toString(), getUser());
   }
     
   public void publishRSS(Element root) {

@@ -12,10 +12,7 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * TODO Document me!
@@ -46,6 +43,7 @@ public class RenderUtils {
     content.append("<ul>");
     while (allChildren.hasNext()) {
       Element next = (Element) allChildren.next();
+      Date oldDate = cal.getTime();
       try {
         cal.setTime(News.storedFormat.parse(next.getChild("time").getText()));
       } catch (ParseException e) {
@@ -53,21 +51,33 @@ public class RenderUtils {
         continue;
       }
 
-      if (year == cal.get(Calendar.YEAR) || month == cal.get(Calendar.MONTH)) {
+      if (year == cal.get(Calendar.YEAR) && month == cal.get(Calendar.MONTH)) {
         continue;
+      }
+
+      if ( year != 0 )
+      {
+        String link = docPage.getPage().getLink() + year + "/" + (month + 1) + "/";
+
+        content.append("<li><a href=\"" );
+        content.append(link);
+        content.append("\">");
+        content.append( linkFormat.format( oldDate ) );
+        content.append("</a></li>");
       }
 
       year = cal.get(Calendar.YEAR);
       month = cal.get(Calendar.MONTH);
-
-      String link = docPage.getPage().getLink() + year + "/" + (month + 1) + "/";
-
-      content.append("<li><a href=\"" );
-      content.append(link);
-      content.append("\">");
-      content.append(linkFormat.format(cal.getTime()));
-      content.append("</a></li>");
     }
+
+    String link = docPage.getPage().getLink() + year + "/" + (month + 1) + "/";
+
+    content.append("<li><a href=\"" );
+    content.append(link);
+    content.append("\">");
+    content.append(linkFormat.format(cal.getTime()));
+    content.append("</a></li>");
+
     content.append("</ul>");
     return content.toString();
   }
