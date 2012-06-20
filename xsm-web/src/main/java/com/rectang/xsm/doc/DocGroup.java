@@ -26,7 +26,7 @@ public class DocGroup extends DocElement {
     Iterator allChildren = children.iterator();
     while (allChildren.hasNext()) {
       element.view((Element) allChildren.next(), s);
-      s.append("<br />\n");
+      s.append(getNewline());
     }
   }
 
@@ -35,8 +35,12 @@ public class DocGroup extends DocElement {
     Iterator allChildren = children.iterator();
     while (allChildren.hasNext()) {
       element.publish((Element) allChildren.next(), s);
-      s.append("<br />\n");
+      s.append(getNewline());
     }
+  }
+
+  public String getNewline() {
+    return "<br />\n";
   }
 
   public WebMarkupContainer edit(String wicketId, Element node, String path) {

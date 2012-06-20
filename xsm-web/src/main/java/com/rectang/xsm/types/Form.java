@@ -27,7 +27,11 @@ public class Form extends DocList implements PHPFile {
   public Form(String name) {
     super(name, new DocElement[]{new com.rectang.xsm.widget.String("to"),
         new HTMLTextArea("intro"), new HTMLTextArea("response"),
-        new DocGroup("fields", new FormField("field"))});
+        new DocGroup("fields", new FormField("field")) {
+          public String getNewline() {
+            return "\n";
+          }
+        }});
 
     options = new Vector();
     options.add(FROM_EMAIL);
@@ -94,7 +98,7 @@ class FormField extends DocList {
       super(name, new DocElement[] {
           new com.rectang.xsm.widget.String("question"),
           new TextArea("description"),
-          new ComboBox("type", Arrays.asList(new String[]{"text", "textarea", "checkbox"}))
+          new ComboBox("type", Arrays.asList(new String[]{"text", "textarea", "checkbox", "yesno", "yesnomaybe", "hidden"}))
       });
   }
 
@@ -111,16 +115,44 @@ class FormField extends DocList {
     if (!enabled) {
       enabledStr = "disabled=\"disabled\" ";
     }
-    s.append("<tr><td class=\"xsm_form_question\">");
+    String index = node.getAttributeValue( "index" );
+    s.append("<tr><td class=\"xsm_form_question field");
+    s.append(index);
+    s.append( "\">" );
     elements[0].publish(node.getChild("question"), s);
-    s.append("</td><td class=\"xsm_form_answer\">");
+    s.append("</td><td class=\"xsm_form_answer field");
+    s.append(index);
+    s.append("\">");
     String type = node.getChildText("type");
     if (type.equals("text")) {
-      s.append("<input type=\"text\" name=\"field" + node.getAttributeValue("index") + "\" " + enabledStr + " />");
+      s.append("<input type=\"text\" name=\"field" + index + "\" " + enabledStr + " />");
     } else if (type.equals("textarea")) {
-      s.append("<textarea name=\"field" + node.getAttributeValue("index") + "\"" + enabledStr + "></textarea>");
+      s.append("<textarea name=\"field" + index + "\"" + enabledStr + "></textarea>");
     } else if (type.equals("checkbox")) {
-      s.append("<input type=\"checkbox\" name=\"field" + node.getAttributeValue("index") + "\" " + enabledStr + " />");
+      s.append("<input type=\"checkbox\" name=\"field" + index + "\" " + enabledStr + " />");
+    } else if (type.equals("yesno")) {
+      s.append("<input type=\"radio\" name=\"field" + index + "\" " + enabledStr + " value=\"Yes\" /> Yes <input type=\"radio\" name=\"field" + index + "\" " + enabledStr + " value=\"No\" /> No");
+    } else if (type.equals("yesnomaybe")) {
+      s.append("<input type=\"radio\" name=\"field");
+      s.append(index);
+      s.append("\" ");
+      s.append(enabledStr);
+      s.append(" value=\"Yes\" /> Yes ");
+
+      s.append("<input type=\"radio\" name=\"field");
+      s.append(index);
+      s.append("\" ");
+      s.append(enabledStr);
+      s.append(" value=\"No\" /> No ");
+
+      s.append("<input type=\"radio\" name=\"field");
+      s.append(index);
+      s.append("\" ");
+      s.append(enabledStr);
+      s.append(" value=\"Maybe\" /> Maybe");
+    } else {
+      // TODO allow input of a value
+      s.append("<input type=\"hidden\" name=\"field" + index + "\" />");
     }
     s.append("</td></tr>");
 
