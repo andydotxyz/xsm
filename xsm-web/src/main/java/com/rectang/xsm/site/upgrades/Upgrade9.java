@@ -2,6 +2,7 @@ package com.rectang.xsm.site.upgrades;
 
 import com.rectang.xsm.io.XSMDocument;
 import com.rectang.xsm.site.DocumentPage;
+import com.rectang.xsm.site.Page;
 import com.rectang.xsm.site.Site;
 import org.jdom.Element;
 
@@ -25,7 +26,11 @@ public class Upgrade9 implements UpgradeUnit {
   public boolean upgrade(Site site) {
     Iterator pages = site.getAllPages();
     while (pages.hasNext()) {
-      DocumentPage next = (DocumentPage) pages.next();
+      Page nextPage = (Page) pages.next();
+      if (!(nextPage instanceof DocumentPage)) {
+        continue;
+      }
+      DocumentPage next = (DocumentPage) nextPage;
       
       try {
         XSMDocument doc = next.getXSMDocument();
