@@ -206,7 +206,7 @@ class LinkParser extends HTMLEditorKit {
     }
 
     public void handleSimpleTag(HTML.Tag t, MutableAttributeSet a, int pos) {
-      if (a.containsAttribute(IMPLIED, Boolean.TRUE))
+      if (a.containsAttribute(IMPLIED, Boolean.TRUE) || a.containsAttribute(HTML.Attribute.ENDTAG, "true"))
         return;
       absolute.append("<" + t.toString());
       printAttributes(a);
