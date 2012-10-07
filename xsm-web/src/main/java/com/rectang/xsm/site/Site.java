@@ -22,7 +22,7 @@ import com.rectang.xsm.util.StringUtils;
  */
 public class Site implements Serializable {
 
-  private static final int VERSION = 10;
+  private static final int VERSION = 11;
 
   private int version = 1; // all sites more recent than version 1 are tagged
   private String stylesheet, layout, index, id, news, login;

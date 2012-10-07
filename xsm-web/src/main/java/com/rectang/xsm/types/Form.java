@@ -1,12 +1,14 @@
 package com.rectang.xsm.types;
 
-import org.jdom.Element;
-
 import com.rectang.xsm.doc.*;
+import com.rectang.xsm.widget.Boolean;
 import com.rectang.xsm.widget.HTMLTextArea;
 import com.rectang.xsm.widget.ComboBox;
 import com.rectang.xsm.widget.TextArea;
 
+import org.jdom.Element;
+
+import java.lang.String;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Vector;
@@ -67,23 +69,38 @@ public class Form extends DocList implements PHPFile {
         headers = "From: " + from;
     }
 
-    s.append("<?php if ($_POST[\"submit\"]) {\n$headers=\"");
+    s.append("<?php $send=FALSE;\n");
+    s.append("if ($_POST[\"submit\"]) {");
+    s.append("$send=TRUE;\n$headers=\"");
     s.append(headers);
     s.append("\";\n$body=\'Form \"" + getDoc().getPage().getTitle() + "\" submitted as follows:\n\n\';\n");
     Iterator fields = root.getChild("fields").getChildren("field").iterator();
     while (fields.hasNext()) {
-        Element field = (Element) fields.next();
+      Element field = (Element) fields.next();
+      boolean required = "true".equalsIgnoreCase(field.getChildText("required"));
 
-        s.append("$body .= \"" );
-        elements[0].publish(field.getChild("question"), s);
-        s.append("\n\t \".$_POST[\"field" + field.getAttributeValue("index") + "\"].\"\n\";\n");
+      s.append("$value=$_POST[\"field" + field.getAttributeValue("index") + "\"];\n");
+      if (required) {
+        s.append("if (!$value) $send=FALSE;");
+      }
+      s.append("$body .= \"");
+      elements[0].publish(field.getChild("question"), s);
+      s.append("\n\t \".$value.\"\n\";\n");
     }
+
+    s.append("if ($send) {");
     s.append("  mail('");
     elements[0].publish(root.getChild("to"), s);
     s.append("', 'Form \"" + getDoc().getPage().getTitle() + "\" submission results', $body, $headers);\n?>");
     elements[2].publish(root.getChild("response"), s);
-    s.append("<?php } else { ?>\n");
+    s.append("<?php } else { \n");
+    // TODO remove this and have the form below re-render with the correct values input
+    s.append("$send=TRUE;");
 
+    s.append("?><p>Missing required field, please go back and try again.</p>\n");
+    s.append("<?php }} ?>");
+
+    s.append("<?php if (!$send) { ?>");
     s.append("<form action=\"?\" method=\"post\" class=\"xsm_form\">");
     s.append("<table>");
     elements[3].publish(root.getChild("fields"), s);
@@ -98,7 +115,8 @@ class FormField extends DocList {
       super(name, new DocElement[] {
           new com.rectang.xsm.widget.String("question"),
           new TextArea("description"),
-          new ComboBox("type", Arrays.asList(new String[]{"text", "textarea", "checkbox", "yesno", "yesnomaybe", "hidden"}))
+          new ComboBox("type", Arrays.asList(new String[]{"text", "textarea", "checkbox", "yesno", "yesnomaybe", "hidden"})),
+          new Boolean("required")
       });
   }
 
@@ -111,44 +129,56 @@ class FormField extends DocList {
   }
 
   private void draw(Element node, StringBuffer s, boolean enabled) {
+    boolean required = "true".equalsIgnoreCase(node.getChildText("required"));
     String enabledStr = "";
     if (!enabled) {
       enabledStr = "disabled=\"disabled\" ";
     }
-    String index = node.getAttributeValue( "index" );
+    String requiredStr = "";
+    if (required) {
+      requiredStr = "required=\"required\" ";
+    }
+
+    String index = node.getAttributeValue("index");
     s.append("<tr><td class=\"xsm_form_question field");
     s.append(index);
     s.append( "\">" );
     elements[0].publish(node.getChild("question"), s);
+    if (required) {
+      s.append("<span class=\"xsm_form_required\">*</span>");
+    }
     s.append("</td><td class=\"xsm_form_answer field");
     s.append(index);
     s.append("\">");
     String type = node.getChildText("type");
     if (type.equals("text")) {
-      s.append("<input type=\"text\" name=\"field" + index + "\" " + enabledStr + " />");
+      s.append("<input type=\"text\" name=\"field" + index + "\" " + enabledStr + requiredStr + " />");
     } else if (type.equals("textarea")) {
-      s.append("<textarea name=\"field" + index + "\"" + enabledStr + "></textarea>");
+      s.append("<textarea name=\"field" + index + "\" " + enabledStr + requiredStr + "></textarea>");
     } else if (type.equals("checkbox")) {
-      s.append("<input type=\"checkbox\" name=\"field" + index + "\" " + enabledStr + " />");
+      s.append("<input type=\"checkbox\" name=\"field" + index + "\" " + enabledStr + requiredStr + "/>");
     } else if (type.equals("yesno")) {
-      s.append("<input type=\"radio\" name=\"field" + index + "\" " + enabledStr + " value=\"Yes\" /> Yes <input type=\"radio\" name=\"field" + index + "\" " + enabledStr + " value=\"No\" /> No");
+      s.append("<input type=\"radio\" name=\"field" + index + "\" " + enabledStr + requiredStr + " value=\"Yes\" /> Yes <input type=\"radio\" name=\"field" + index + "\" " + enabledStr + requiredStr + " value=\"No\" /> No");
     } else if (type.equals("yesnomaybe")) {
       s.append("<input type=\"radio\" name=\"field");
       s.append(index);
       s.append("\" ");
       s.append(enabledStr);
+      s.append(requiredStr);
       s.append(" value=\"Yes\" /> Yes ");
 
       s.append("<input type=\"radio\" name=\"field");
       s.append(index);
       s.append("\" ");
       s.append(enabledStr);
+      s.append(requiredStr);
       s.append(" value=\"No\" /> No ");
 
       s.append("<input type=\"radio\" name=\"field");
       s.append(index);
       s.append("\" ");
       s.append(enabledStr);
+      s.append(requiredStr);
       s.append(" value=\"Maybe\" /> Maybe");
     } else {
       // TODO allow input of a value
