@@ -11,12 +11,12 @@ import org.codehaus.plexus.util.IOUtil;
 import java.io.*;
 
 /**
- * TODO: Document Me
+ * Page that returns the requested style from the current site
  * <p/>
  * Created: 08/12/2012
  *
  * @author Andrew Williams
- * @since 1.0
+ * @since 2.0
  */
 public class SiteThemeResource extends DynamicWebResource {
   private final String style;
