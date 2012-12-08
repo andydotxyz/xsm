@@ -1,2 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsmsite version="9" admin="manager" newsSource="/News"><title>Rectang.com XSM demo</title><description></description><keywords></keywords><stylesheet>grey</stylesheet><layout>menu-left</layout><pages default="/Home"><page hidden="false"><title>Home</title></page><page hidden="false"><title>News</title></page></pages></xsmsite>
+<xsmsite version="11" admin="manager" edit="" login="" register="false" newsSource="/News">
+  <title>Rectang.com XSM demo</title>
+  <description />
+  <keywords />
+  <stylesheet>grey</stylesheet>
+  <layout>menu-left</layout>
+  <pages default="/Home">
+    <page hidden="false">
+      <title>Home</title>
+    </page>
+    <page hidden="false">
+      <title>News</title>
+    </page>
+  </pages>
+</xsmsite>
+

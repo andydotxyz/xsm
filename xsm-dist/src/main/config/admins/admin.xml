@@ -1,2 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<member><fullname>Manager</fullname><theme>default</theme><htmlEditor>tinymce</htmlEditor><email>webmaster@rectang.com</email><web>http://rectang.com</web><pic></pic><password>21232f297a57a5a743894a0e4a801fc3</password><locale></locale><lastlogin></lastlogin></member>
+<member>
+  <fullname>Manager</fullname>
+  <theme>default</theme>
+  <htmlEditor>tinymce</htmlEditor>
+  <email>webmaster@rectang.com</email>
+  <web>http://rectang.com</web>
+  <pic />
+  <password>21232f297a57a5a743894a0e4a801fc3</password>
+  <locale />
+  <note />
+  <lastlogin>Sat, 08 Dec 2012 00:43:43 +0000</lastlogin>
+</member>
+
