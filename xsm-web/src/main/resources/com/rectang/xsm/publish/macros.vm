@@ -187,7 +187,12 @@
 
 #macro( editheaders )
   #if( $editing )
+    <link rel="stylesheet" type="text/css" href="/sitetheme/layout.css" />
+    <link rel="stylesheet" type="text/css" href="/sitetheme/style.css" />
     <link rel="stylesheet" type="text/css" href="/resources/com.rectang.xsm.XSMApplication/themes/$theme/xsm-editor.css" />
+  #else
+    <link rel="stylesheet" type="text/css" href="${site.rootUrl}/_theme/layout.css" />
+    <link rel="stylesheet" type="text/css" href="${site.rootUrl}/_theme/style.css" />
   #end
 #end
 

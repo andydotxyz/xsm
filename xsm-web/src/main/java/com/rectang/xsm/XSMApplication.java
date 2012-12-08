@@ -1,13 +1,17 @@
 package com.rectang.xsm;
 
+import com.rectang.xsm.wicket.SiteThemeResource;
+import org.apache.wicket.*;
+import org.apache.wicket.markup.html.DynamicWebResource;
+import org.apache.wicket.protocol.http.HttpSessionStore;
+import org.apache.wicket.session.ISessionStore;
 import org.codehaus.plexus.wicket.PlexusWebApplication;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.apache.wicket.Session;
-import org.apache.wicket.Request;
-import org.apache.wicket.Response;
 import org.apache.wicket.extensions.ajax.markup.html.form.upload.UploadWebRequest;
 import org.apache.wicket.protocol.http.WebRequest;
 import org.apache.wicket.request.target.coding.QueryStringUrlCodingStrategy;
@@ -40,8 +44,20 @@ public class XSMApplication extends PlexusWebApplication {
     if (XSM.getConfig() == null) {
       XSM.setConfig(Config.getInstance(this.getWicketFilter().getFilterConfig().getServletContext().getRealPath("/")));
     }
-  }
 
+    this.mountSharedResource("/sitetheme/style.css", new ResourceReference("sitestyle") {
+      @Override
+      protected Resource newResource() {
+        return new SiteThemeResource("style");
+      }
+    }.getSharedResourceKey());
+    this.mountSharedResource("/sitetheme/layout.css", new ResourceReference("sitelayout") {
+      @Override
+      protected Resource newResource() {
+        return new SiteThemeResource("layout");
+      }
+    }.getSharedResourceKey());
+  }
 
   public Session newSession(Request request, Response response) {
     return new XSMSession(request);
@@ -52,7 +68,7 @@ public class XSMApplication extends PlexusWebApplication {
   }
 
   protected WebRequest newWebRequest(HttpServletRequest servletRequest) {
-     return new UploadWebRequest(servletRequest);
+    return new UploadWebRequest(servletRequest);
   }
 
   public void initMount(String url, Class page) {

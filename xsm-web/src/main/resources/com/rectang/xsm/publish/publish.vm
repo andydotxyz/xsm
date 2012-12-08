@@ -48,8 +48,6 @@
 //    ]]>
     </script>
 
-    <link rel="stylesheet" type="text/css" href="${site.rootUrl}/_theme/layout.css" />
-    <link rel="stylesheet" type="text/css" href="${site.rootUrl}/_theme/style.css" />
     #editheaders()
 #if( $hasrss )
     <link id="RSS" title="RSS" type="application/rss+xml" rel="alternate"

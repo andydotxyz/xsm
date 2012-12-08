@@ -21,6 +21,10 @@ body {
   background-color: gray;
 }
 
+#tinymce {
+  background-color: gray;
+}
+
 #xsm_menu {
   padding: 10px;
   background-color: rgb(235, 235, 235);

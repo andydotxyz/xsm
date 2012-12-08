@@ -56,7 +56,7 @@ public class Edit extends DocumentPage {
     "    theme_advanced_statusbar_location : \"bottom\",\n" +
     "    skin : \"o2k7\",\n" +
     "    skin_variant : \"black\",\n" +
-    "    content_css : \"" + user.getSite().getRootUrl() + "/_theme/style.css\",\n" +
+    "    content_css : \"" + XSM.getConfig().getUrl() + "sitetheme/style.css\",\n" +
     "    language : \"" + Locale.getString(user, "tinymce.lang") + "\",\n" +
     "    document_base_url : \"" + getDocumentPage().getLink() + "\",\n" +
     "    convert_urls : true,\n" +
