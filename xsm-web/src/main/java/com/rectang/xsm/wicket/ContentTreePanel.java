@@ -49,7 +49,7 @@ public class ContentTreePanel extends Panel {
         link.add(new Label("page-label", title));
 
         listItem.add(new AttributeModifier("class", new Model() {
-          public Object getObject() {
+          public String getObject() {
             String style = "xsm_menu_item";
             if (page.getPath().equals(current)) {
               style += " xsm_menu_item_selected";

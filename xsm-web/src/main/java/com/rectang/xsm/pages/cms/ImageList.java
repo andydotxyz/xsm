@@ -41,7 +41,7 @@ public class ImageList extends DocumentPage {
           caption = next.getChildText("path");
 
         String line = "  [\"" + caption + "\", \"" + getXSMSession().getSite().getPrefixUrl() + path + "\"]";
-        if (listItem.getIndex() < ((List)listItem.getParent().getModelObject()).size() - 1)
+        if (listItem.getIndex() < ((List)listItem.getParent().getDefaultModelObject()).size() - 1)
           line += ",\n";
 
         listItem.add(new Label("image", line).setEscapeModelStrings(false).setRenderBodyOnly(true));

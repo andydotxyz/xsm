@@ -30,7 +30,7 @@ public class Profile extends XSMPage implements Secure {
     add(new BookmarkablePageLink("edit-profile", getPageClass("edit-profile")));
     add(new BookmarkablePageLink("edit-password", getPageClass("edit-password")));
 
-    setModel(new CompoundPropertyModel(user));
+    setDefaultModel(new CompoundPropertyModel(user));
     add(new Label("name"));
     MarkupContainer link = new ExternalLink("email", user.getEmail());
     link.add(new Label("label", user.getEmail()));

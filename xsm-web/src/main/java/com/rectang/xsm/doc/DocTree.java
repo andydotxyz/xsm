@@ -188,7 +188,7 @@ public class DocTree extends DocGroup {
       add(new Label("name", getName()));
 
       List children = node.getChildren(element.getName());
-      add(new ListView("elements", children) {
+      add(new ListView<Element>("elements", children) {
         protected void populateItem(ListItem listItem) {
           final Element child = (Element) listItem.getModelObject();
           final int i = listItem.getIndex();
@@ -226,7 +226,7 @@ public class DocTree extends DocGroup {
               down(node, element.getName() + "@" + i);
             }
           };
-          listItem.add(down.setVisible(listItem.getIndex() < ((List) listItem.getParent().getModelObject()).size() - 1));
+          listItem.add(down.setVisible(listItem.getIndex() < ((List) listItem.getParent().getDefaultModelObject()).size() - 1));
           down.add(new Image("down-icon", new ResourceReference(XSM.class,
                 "icons/go-down.png")));
 
@@ -237,7 +237,7 @@ public class DocTree extends DocGroup {
           };
           bottom.add(new Image("bottom-icon", new ResourceReference(XSM.class,
                 "icons/go-bottom.png")));
-          listItem.add(bottom.setVisible(listItem.getIndex() < ((List) listItem.getParent().getModelObject()).size() - 1));
+          listItem.add(bottom.setVisible(listItem.getIndex() < ((List) listItem.getParent().getDefaultModelObject()).size() - 1));
           
           listItem.add(element.edit("content", child, path + "/" + element.getName() + "@" + i));
           listItem.add(edit("recurse", child, path + "/" + element.getName() + "@" + i));

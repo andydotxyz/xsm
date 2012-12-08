@@ -27,7 +27,7 @@ public class Preferences extends XSMPage implements Secure {
 
     add(new BookmarkablePageLink("edit", getPageClass("edit-preferences")));
 
-    setModel(new CompoundPropertyModel(user));
+    setDefaultModel(new CompoundPropertyModel(user));
 
     add(new Label("theme"));
     add(new Label("htmlEditor"));

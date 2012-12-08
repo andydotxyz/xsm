@@ -42,9 +42,9 @@ public class Upgrade extends XSMPage implements Secure {
       add(intro);
       Label statusLabel = new Label("status");
       if (success) {
-        statusLabel.setModel(new StringResourceModel("intro.complete", statusLabel, null));
+        statusLabel.setDefaultModel(new StringResourceModel("intro.complete", statusLabel, null));
       } else {
-        statusLabel.setModel(new StringResourceModel("intro.failed", statusLabel, null));
+        statusLabel.setDefaultModel(new StringResourceModel("intro.failed", statusLabel, null));
       }
       add(statusLabel);
 
@@ -59,18 +59,18 @@ public class Upgrade extends XSMPage implements Secure {
 
     Label intro = new Label("intro");
     if (!needsUpgrade) {
-      intro.setModel(new StringResourceModel("intro.noupgrades", intro, null));
+      intro.setDefaultModel(new StringResourceModel("intro.noupgrades", intro, null));
     } else {
-      intro.setModel(new StringResourceModel("intro", intro, new Model(site)));
+      intro.setDefaultModel(new StringResourceModel("intro", intro, new Model(site)));
     }
     add(intro);
 
     Label status = new Label("status");
     if (needsUpgrade) {
       if (canUpgrade) {
-        status.setModel(new StringResourceModel("intro.status.list", status, null));
+        status.setDefaultModel(new StringResourceModel("intro.status.list", status, null));
       } else {
-        status.setModel(new StringResourceModel("intro.status.noaccess", status, null));
+        status.setDefaultModel(new StringResourceModel("intro.status.noaccess", status, null));
       }
     } else {
       status = new Label("status", "");

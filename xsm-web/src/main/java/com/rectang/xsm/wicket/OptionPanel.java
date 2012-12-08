@@ -7,8 +7,6 @@ import org.apache.wicket.model.Model;
 import com.rectang.xsm.doc.SupportedOption;
 import com.rectang.xsm.io.XSMDocument;
 
-import java.io.Serializable;
-
 /**
  * Wicket panels for the SupportedOption elements
  *
@@ -24,12 +22,12 @@ public class OptionPanel {
       super(id);
       this.doc = d;
 
-      add(new CheckBox("value", new Model() {
-        public Object getObject() {
-          return Boolean.valueOf(bool.getBoolean(doc));
+      add(new CheckBox("value", new Model<Boolean>() {
+        public Boolean getObject() {
+          return bool.getBoolean(doc);
         }
 
-        public void setObject(Serializable object) {
+        public void setObject(Boolean object) {
           doc.setOption(bool.getName(), object.toString());
         }
       }));
@@ -43,12 +41,12 @@ public class OptionPanel {
       super(id);
       this.doc = d;
 
-      add(new TextField("value", new Model() {
-        public Object getObject() {
-          return Integer.valueOf(integ.getInteger(doc));
+      add(new TextField<Integer>("value", new Model<Integer>() {
+        public Integer getObject() {
+          return integ.getInteger(doc);
         }
 
-        public void setObject(Serializable object) {
+        public void setObject(Integer object) {
           doc.setOption(integ.getName(), object.toString());
         }
       }));
@@ -62,12 +60,12 @@ public class OptionPanel {
       super(id);
       this.doc = d;
 
-      add(new TextField("value", new Model() {
-        public Object getObject() {
+      add(new TextField<String>("value", new Model<String>() {
+        public String getObject() {
           return str.getString(doc);
         }
 
-        public void setObject(Serializable object) {
+        public void setObject(String object) {
           doc.setOption(str.getName(), object.toString());
         }
       }));

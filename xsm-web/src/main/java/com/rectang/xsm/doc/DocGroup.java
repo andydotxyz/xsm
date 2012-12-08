@@ -222,7 +222,7 @@ public class DocGroup extends DocElement {
           };
           down.add(new Image("down-icon", new ResourceReference(XSM.class,
                 "icons/go-down.png")));
-          listItem.add(down.setVisible(listItem.getIndex() < ((List) listItem.getParent().getModelObject()).size() - 1));
+          listItem.add(down.setVisible(listItem.getIndex() < ((List) listItem.getParent().getDefaultModelObject()).size() - 1));
 
           Link bottom = new Link("bottom") {
             public void onClick() {
@@ -231,7 +231,7 @@ public class DocGroup extends DocElement {
           };
           bottom.add(new Image("bottom-icon", new ResourceReference(XSM.class,
                 "icons/go-bottom.png")));
-          listItem.add(bottom.setVisible(listItem.getIndex() < ((List) listItem.getParent().getModelObject()).size() - 1));
+          listItem.add(bottom.setVisible(listItem.getIndex() < ((List) listItem.getParent().getDefaultModelObject()).size() - 1));
 
           listItem.add(element.edit("content", child, path + "/" + element.getName() + "@" + i));
         }

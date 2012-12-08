@@ -32,16 +32,16 @@ public class LinkList extends DocumentPage {
       }
     }
 
-    add(new ListView("links", files) {
-      protected void populateItem(ListItem listItem) {
-        Element next = (Element) listItem.getModelObject();
+    add(new ListView<Element>("links", files) {
+      protected void populateItem(ListItem<Element> listItem) {
+        Element next = listItem.getModelObject();
         String path = getDocumentPage().getPath() + "/_files/" + next.getChildText("path");
         String caption = next.getChildText("caption");
         if (caption == null || caption.equals(""))
           caption = next.getChildText("path");
 
         String line = "  [\"" + caption + "\", \"" + getXSMSession().getSite().getPrefixUrl() + path + "\"]";
-        if (listItem.getIndex() < ((List)listItem.getParent().getModelObject()).size() - 1)
+        if (listItem.getIndex() < ((List)listItem.getParent().getDefaultModelObject()).size() - 1)
           line += ",\n";
 
         listItem.add(new Label("link", line).setEscapeModelStrings(false).setRenderBodyOnly(true));

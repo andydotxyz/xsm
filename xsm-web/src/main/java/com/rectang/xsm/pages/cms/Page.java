@@ -104,7 +104,7 @@ public abstract class Page extends XSMPage implements Secure {
     final Class page = getPageClass(tabID);
     WebMarkupContainer tabCell = new WebMarkupContainer(id);
     tabCell.add(new AttributeModifier("class", new Model() {
-      public Object getObject() {
+      public String getObject() {
         if (thisClass.equals(page))
           return "xsm-editor-tab-active";
 

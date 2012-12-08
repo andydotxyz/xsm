@@ -31,7 +31,7 @@ public class Permissions extends DocumentPage {
     Site site = getXSMSession().getSite();
 
     Label owner = new Label("owner");
-    owner.setModel(new StringResourceModel("owner", owner,
+    owner.setDefaultModel(new StringResourceModel("owner", owner,
         new Model(new UserData(getDoc().getOwner(), site, false))));
     add(owner);
 

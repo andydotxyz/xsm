@@ -33,11 +33,11 @@ public class Status extends DocumentPage {
 
     Label locked = new Label("locked");
     if (xsmDoc.isLocked()) {
-      locked.setModel(new StringResourceModel("locked.is", locked,
+      locked.setDefaultModel(new StringResourceModel("locked.is", locked,
           new Model(new UserData(xsmDoc.getLocked(),
               getXSMSession().getSite(), false))));
     } else {
-      locked.setModel(new StringResourceModel("locked.not", locked, null));
+      locked.setDefaultModel(new StringResourceModel("locked.not", locked, null));
     }
     add(locked);
 
@@ -49,10 +49,10 @@ public class Status extends DocumentPage {
 
     Label watched = new Label("watched");
     if (watcherList.size() == 0) {
-      watched.setModel(new StringResourceModel("watched.not", watched, null));
+      watched.setDefaultModel(new StringResourceModel("watched.not", watched, null));
       (new WebMarkupContainer("watchers")).setVisible(false);
     } else {
-      watched.setModel(new StringResourceModel("watched.is", watched, null));
+      watched.setDefaultModel(new StringResourceModel("watched.is", watched, null));
 
       watchers.add(new ListView("watcher", watcherList) {
         protected void populateItem(ListItem listItem) {

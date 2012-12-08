@@ -35,7 +35,7 @@ public class StringFileModel extends Model {
     }
   }
 
-  public Object getObject() {
+  public String getObject() {
     StringBuffer content = new StringBuffer();
 
     BufferedReader reader = null;

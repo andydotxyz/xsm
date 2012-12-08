@@ -40,7 +40,7 @@ public class VelocityPanel extends Panel implements IMarkupResourceStreamProvide
   public VelocityPanel(String id, final String template) {
     super(id, new Model(){
       @Override
-      public Object getObject() {
+      public String getObject() {
         return template;
       }
     });
@@ -76,7 +76,7 @@ public class VelocityPanel extends Panel implements IMarkupResourceStreamProvide
     StringWriter out = new StringWriter();
     try {
       // execute the velocity script and capture the output in writer
-      Engine.getVelocityEngine().evaluate( context, out, getClass().getSimpleName(), getModelObjectAsString() );
+      Engine.getVelocityEngine().evaluate( context, out, getClass().getSimpleName(), getDefaultModelObjectAsString() );
   
       // replace the tag's body the Velocity output
       return out.toString();

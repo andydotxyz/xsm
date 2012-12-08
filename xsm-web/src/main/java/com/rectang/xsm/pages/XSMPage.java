@@ -66,7 +66,7 @@ public abstract class XSMPage extends PlexusWebPage implements IMarkupResourceSt
               siteParams.add("sitename", getPageParameters().getString("sitename"));
             }
 
-            Page page = ((PlexusPageFactory) getPageFactory()).getPage("login", siteParams);
+            Page page = ((PlexusPageFactory) getSession().getPageFactory()).getPage("login", siteParams);
             throw new RestartResponseAtInterceptPageException(page);
           }
         }

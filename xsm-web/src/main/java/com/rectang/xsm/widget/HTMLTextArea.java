@@ -47,11 +47,11 @@ public class HTMLTextArea extends TextArea {
       add(new Label("label", name));
       add(new org.apache.wicket.markup.html.form.TextArea("value", new PropertyModel(node, "text"))
           .add(new AttributeModifier("rows", new Model() {
-        public Object getObject() {
+        public java.lang.String getObject() {
           return getProperty("rows", "12");
         }
       })).add(new AttributeModifier("class", new Model() {
-        public Object getObject() {
+        public java.lang.String getObject() {
           if ( wysiwyg ) {
             return "mceEditor";
           }

@@ -111,7 +111,7 @@ public class DocChoice extends DocList {
           add.add(new Image("add-icon", new ResourceReference(XSM.class,
                 "icons/document-new.png")));
           listItem.add(new Label("add-label", getString("add", new Model(elem))));
-          listItem.add(new Label("add-or", getString("or")).setVisible(listItem.getIndex() < ((List) listItem.getParent().getModelObject()).size() - 1));          
+          listItem.add(new Label("add-or", getString("or")).setVisible(listItem.getIndex() < ((List) listItem.getParent().getDefaultModelObject()).size() - 1));
         }
       });
     }

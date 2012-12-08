@@ -96,7 +96,7 @@ public class Contents extends Page {
     subPage.add("page", page.getPath());
 
     panel.add(new WebMarkupContainer("page-icon").add(new AttributeModifier("class", true, new Model() {
-      public Object getObject() {
+      public String getObject() {
         return "contenticon " + page.getType();
       }
     })));
@@ -176,7 +176,7 @@ public class Contents extends Page {
         setResponsePage(getPageClass("page-contents"), getPageNameParams());
       }
     };
-    down.setVisible(canEdit && panel.getIndex() < ((List) panel.getParent().getModelObject()).size() - 1);
+    down.setVisible(canEdit && panel.getIndex() < ((List) panel.getParent().getDefaultModelObject()).size() - 1);
     panel.add(down);
     down.add(new Image("down-icon", new ResourceReference(XSM.class,
           "icons/go-down.png")));
@@ -191,7 +191,7 @@ public class Contents extends Page {
         setResponsePage(getPageClass("page-contents"), getPageNameParams());
       }
     };
-    bottom.setVisible(canEdit && panel.getIndex() < ((List) panel.getParent().getModelObject()).size() - 1);
+    bottom.setVisible(canEdit && panel.getIndex() < ((List) panel.getParent().getDefaultModelObject()).size() - 1);
     panel.add(bottom);
     bottom.add(new Image("bottom-icon", new ResourceReference(XSM.class,
           "icons/go-bottom.png")));

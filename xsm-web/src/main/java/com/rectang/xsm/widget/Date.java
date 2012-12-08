@@ -82,19 +82,19 @@ public class Date extends DocWidget implements Serializable {
         }
       };
 
-      TextField date = DateTextField.withConverter("value", new Model() {
-        public void setObject(Object object) {
-          node.setText(getStoreFormat().format((java.util.Date) object));
+      TextField<java.util.Date> date = DateTextField.withConverter("value", new Model<java.util.Date>() {
+        public void setObject(java.util.Date object) {
+          node.setText(getStoreFormat().format(object));
         }
 
-        public Object getObject() {
+        public java.util.Date getObject() {
           try {
             return getStoreFormat().parse(node.getText());
           } catch (ParseException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
           }
 
-          return "";
+          return null;
         }
       }, conv);
       add(new Label("label", name));

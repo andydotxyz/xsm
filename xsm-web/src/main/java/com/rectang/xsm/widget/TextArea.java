@@ -41,7 +41,7 @@ public class TextArea extends DocWidget implements Serializable {
       add(new Label("label", name));
       add(new org.apache.wicket.markup.html.form.TextArea("value", new PropertyModel(node, "text"))
           .add(new AttributeModifier("rows", new Model() {
-        public Object getObject() {
+        public java.lang.String getObject() {
           return getProperty("rows", "12");
         }
       })));
