@@ -91,11 +91,6 @@ public class Edit extends DocumentPage {
       this.doc = doc;
 
       setModel(new CompoundPropertyModel(doc));
-// TODO allow the Page template to insert these somehow - in another form possibly?
-      add(new TextField("metadata.title"));
-      add(new TextArea("metadata.description"));
-      add(new Label("metadata.type", getDoc().getContentElement().getName()));
-
       add(new UploadProgressBar("progress", this));
 
       add(new PublishButton("publish1"));

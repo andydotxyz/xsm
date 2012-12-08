@@ -4,7 +4,6 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.Component;
 import com.rectang.xsm.doc.SupportedOption;
 import com.rectang.xsm.io.XSMDocument;
 
@@ -19,7 +18,7 @@ import java.io.Serializable;
  */
 public class OptionPanel {
   public static class BooleanOption extends Panel {
-    private final transient XSMDocument doc;
+    private final XSMDocument doc;
 
     public BooleanOption(String id, final SupportedOption bool, XSMDocument d) {
       super(id);
@@ -38,7 +37,7 @@ public class OptionPanel {
   }
 
   public static class IntegerOption extends Panel {
-    private final transient XSMDocument doc;
+    private final XSMDocument doc;
 
     public IntegerOption(String id, final SupportedOption integ, XSMDocument d) {
       super(id);
@@ -57,7 +56,7 @@ public class OptionPanel {
   }
 
   public static class StringOption extends Panel {
-    private final transient XSMDocument doc;
+    private final XSMDocument doc;
 
     public StringOption(String id, final SupportedOption str, XSMDocument d) {
       super(id);

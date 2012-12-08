@@ -20,10 +20,6 @@ public class View extends DocumentPage {
 
     getDoc().unlock(getXSMSession().getUser());
 
-    MetaData meta = getDoc().getMetadata();
-    add(new Label("title", meta.getTitle()).setEscapeModelStrings(false));
-    add(new Label("description", meta.getDescription()).setEscapeModelStrings(false));
-
     add(new Label("content", getDoc().view("", getXSMSession().getUser()))
         .setEscapeModelStrings(false));
   }

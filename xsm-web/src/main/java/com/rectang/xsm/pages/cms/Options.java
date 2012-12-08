@@ -1,9 +1,11 @@
 package com.rectang.xsm.pages.cms;
 
+import com.rectang.xsm.MetaData;
 import com.rectang.xsm.io.XSMDocument;
 import com.rectang.xsm.site.Site;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -27,12 +29,14 @@ import java.io.File;
  */
 public class Options extends DocumentPage {
   private String oldPath;
+  private MetaData metadata;
 
   public void layout() {
     super.layout();
     if (hasError()) return;
 
     oldPath = getDocumentPage().getPublishedPath();
+    metadata = getDoc().getMetadata();
     add(new OptionsForm("optionsform"));
   }
 
@@ -40,7 +44,10 @@ public class Options extends DocumentPage {
     public OptionsForm(String id) {
       super(id);
       final boolean canEdit = getDoc().canEdit(getXSMSession().getUser());
-        
+
+      add(new TextField("title", new PropertyModel(metadata, "title")));
+      add(new TextArea("description", new PropertyModel(metadata, "description")));
+
       add(new TextField("slug", new PropertyModel(this, "slug")));
 
       add(new ListView("options", getDoc().getSupportedOptions(getXSMSession().getUser())) {
@@ -97,6 +104,7 @@ public class Options extends DocumentPage {
       super.onSubmit();
 
       // TODO should we sanity check the slug (i.e. unique...)
+      metadata.save();
       getDoc().save();
       if (!oldPath.equals(getDocumentPage().getPublishedPath())) {
           getDocumentPage().getSite().save();
