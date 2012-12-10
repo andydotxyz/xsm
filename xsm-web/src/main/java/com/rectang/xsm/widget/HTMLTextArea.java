@@ -44,7 +44,6 @@ public class HTMLTextArea extends TextArea {
     public HTMLTextAreaPanel(java.lang.String id, Element node) {
       super(id);
 
-      add(new Label("label", name));
       add(new org.apache.wicket.markup.html.form.TextArea("value", new PropertyModel(node, "text"))
           .add(new AttributeModifier("rows", new Model() {
         public java.lang.String getObject() {

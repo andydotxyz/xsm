@@ -105,7 +105,6 @@ public class DocList extends DocElement {
   class ListPanel extends Panel {
     public ListPanel(final String wicketId, final Element node, final String path, final String hint) {
       super(wicketId);
-      add(new Label("name", getName()));
       add(new Label("hint", hint).setVisible(hint != null));
 
       // TODO don't reconstruct this all the time

@@ -71,7 +71,6 @@ public class DocChoice extends DocList {
   class ChoicePanel extends Panel {
     public ChoicePanel(final String wicketId, final Element node, final String path) {
       super(wicketId);
-      add(new Label("name", getName()));
 
       boolean added = false;
       for (int i = 0; i < elements.length; i++) {

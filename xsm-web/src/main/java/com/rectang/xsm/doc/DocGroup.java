@@ -164,7 +164,6 @@ public class DocGroup extends DocElement {
     public GroupPanel(final String wicketId, final Element node,
                       final String path, final int childCount) {
       super(wicketId);
-      add(new Label("name", getName()));
 
       List children = node.getChildren(element.getName());
       add(new ListView("elements", children) {

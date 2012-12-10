@@ -185,7 +185,6 @@ public class DocTree extends DocGroup {
   class TreePanel extends Panel {
     public TreePanel(final String wicketId, final Element node, final String path) {
       super(wicketId);
-      add(new Label("name", getName()));
 
       List children = node.getChildren(element.getName());
       add(new ListView<Element>("elements", children) {

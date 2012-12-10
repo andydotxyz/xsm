@@ -332,7 +332,6 @@ public class News extends DocGroup {
     public NewsPanel(final String wicketId, final Element node,
                       final String path, final int childCount) {
       super(wicketId);
-      add(new Label("name", getName()));
 
       Link add = new Link("add") {
         public void onClick() {

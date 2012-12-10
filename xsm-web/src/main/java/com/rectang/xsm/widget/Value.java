@@ -43,7 +43,7 @@ public class Value extends DocWidget implements Serializable {
   
   public WebMarkupContainer edit(java.lang.String wicketId, Element node, java.lang.String path) {
     /* cannot edit values */
-    return new ValuePanel(wicketId, node.getValue());
+    return new ValuePanel(wicketId, name, node.getValue());
   }
   
   public void create(Element node) {
@@ -65,9 +65,10 @@ public class Value extends DocWidget implements Serializable {
   }
 
   class ValuePanel extends Panel {
-    public ValuePanel(java.lang.String id, java.lang.String value) {
+    public ValuePanel(java.lang.String id, java.lang.String key, java.lang.String value) {
       super(id);
 
+      add(new Label("key", key));
       add(new Label("value", value));
     }
   }
