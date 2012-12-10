@@ -7,4 +7,5 @@ Features:
 * Add "required" option to form fields
 
 Bug fixes:
+* Fix styling of editing when final site is offline over over https
 
