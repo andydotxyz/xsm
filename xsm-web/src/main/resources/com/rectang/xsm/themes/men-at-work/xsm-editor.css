@@ -79,15 +79,14 @@ textarea, .metadata, .metadata_value, .metadata_title, .metadata_description {
 }
 
 #xsm_content .xsm-editor-message, #xsm_content .xsm-editor-message-wide {
-  border: 1px ridge #fde300;
-
-  margin-bottom: 10px;
-}
-
-#xsm_content .xsm-editor-message-wide .xsm-editor-message-wide {
-  border: 1px solid #fde300;
-
-  margin-bottom: 2px;
+  border: 1px solid black;
+  background-color: lightgrey;
+  
+  opacity: 0.9;
+  color: black;
+  
+  position: fixed;
+  top: 32;
 }
 
 #xsm_content .xsm-editor-message-wide {
@@ -96,50 +95,39 @@ textarea, .metadata, .metadata_value, .metadata_title, .metadata_description {
 
 #xsm_content .xsm-editor-message-title {
   text-align: left;
-  background-image: url( xsm-editor-bg.png );
   font-family: arial, sans-serif;
   font-size: 12px;
   font-weight: bold;
-  color: #ffffff;
 
-  border-bottom: 1px solid #fde300;
-  padding: 2px;
-}
-
-#xsm_content .xsm-editor-message-wide .xsm-editor-message-wide .xsm-editor-message-title {
-  background-image: none;
+  border-bottom: 1px solid black;
+  padding: 3px;
 }
 
 #xsm_content .xsm-editor-message-main {
-  background-color: #000000;
-  color: #ffffff;
+  color: black;
   
-  padding: 2px;
+  padding: 3px;
 }
 
 #xsm_content .xsm-editor-message-main a {
-  color: #ffffff;
+  color: black;
   text-decoration: none;
   font-weight: bold;
 }
 
 #xsm_content .xsm-editor-message-main a:hover {
-  color: #ffffff;
+  color: black;
   text-decoration: underline;
   font-weight: bold;
 }
 
-#xsm_content .xsm-editor-message-main input, #xsm_content .xsm-editor-message-main textarea {
+/* grouping of edit cells */
+
+#xsm_content .xsm-editor-group-main input, #xsm_content .xsm-editor-group-main textarea {
   width: 99%;
 }
 
 /* overriding themes */
-
-.xsm_menu_item a {
-  padding-right: 20px;
-  background-position: right center;
-  background-repeat: no-repeat;
-}
 
 .contenticon {
   width: 16px;
@@ -148,14 +136,11 @@ textarea, .metadata, .metadata_value, .metadata_title, .metadata_description {
   background-repeat: no-repeat;
 }
 
-.xsm_menu_item.page a, .contenticon.page {
-  background-image: url(../../icons/text-x-generic.png);
+.xsm_menu_item.addpage a, .xsm_menu_item.addlink a {
+  padding-left: 20px;
+  background-position: left center;
+  background-repeat: no-repeat;
 }
-
-.xsm_menu_item.link a, .contenticon.link {
-  background-image: url(../../icons/text-html.png);
-}
-
 .xsm_menu_item.addpage a {
   background-image: url(../../icons/document-new.png);
 }

@@ -1,53 +1,64 @@
 #xsm-editor-toolbar {
-  position: absolute;
-  top: 90px;
-  left: 0;
-}
-
-#xsm_page > #xsm-editor-toolbar {
   position: fixed;
+  top: 0;
+  left: 0;
+  
+  opacity: 0.9;
 }
 
 #xsm-editor-toolbar {
-  width: 38px;
+  width: 100%;
+  height: 30px;
 
-  background-image: url( xsm-editor-bg.png );
-  border-top: 1px ridge #fde300;
-  border-bottom: 1px ridge #fde300;
-  border-right: 1px ridge #fde300;
-  padding: 1px 0;
+  background-color: lightgrey;
+  border-bottom: 1px solid black;
+  padding: 2px 0 0 0;
 }
 
 #xsm-editor-toolbar img {
-  border: none;
+  width: 24px;
 }
 
 #xsm-editor-toolbar ul {
   list-style: none;
   padding: 1px 2px;
   margin: 0;
+  margin-right: 20px;
+  display: inline;
 }
 
-#xsm-editor-toolbar ul.xsm-editor-buttons-user, #xsm-editor-toolbar ul.xsm-editor-buttons-admin,
-#xsm-editor-toolbar ul.xsm-editor-buttons-xsmadmin {
-  padding-bottom: 10px;
+#xsm-editor-toolbar li {
+  display: inline-block;
 }
 
 #xsm-editor-toolbar a.xsm-editor-button {
   display: block;
   padding: 1px;
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
+}
+
+#xsm-editor-toolbar .xsm-editor-buttons-user {
+  float: right;
+  margin-right: 1px;
 }
 
 #xsm-editor-toolbar a.xsm-editor-button:hover {
-  background-color: #463f00;
+  background-color: gray;
   padding: 0px;
-  border: 1px outset #fde300;
+  border: 1px solid black;
 }
 
 #xsm-editor-logo {
-  display: none;
+  display: inline;
+  padding: 5px 2px;
+  margin-left: 3px;
+  margin-top: -2px;
+  
+  color: gray;
+  font-size: 28px;
+  font-family: "gill sans";
+  font-weight: bold;
 }
 
 #xsm-editor-toolbar .xsm-editor-button-caption {

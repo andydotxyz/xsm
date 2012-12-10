@@ -214,7 +214,7 @@
   #if( $editing )
             <div id="xsm-editor-toolbar">
 
-              <div id="xsm-editor-logo">&nbsp;</div>
+              <div id="xsm-editor-logo">XSM</div>
 
               <ul class="xsm-editor-buttons-user" wicket:id="user-buttons">
 
