@@ -5,6 +5,7 @@ import com.rectang.xsm.pages.Secure;
 import com.rectang.xsm.AccessControl;
 import com.rectang.xsm.XSM;
 import com.rectang.xsm.io.PublishedFile;
+import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
@@ -13,6 +14,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.model.PropertyModel;
 
 /**
  * Page for editing the output site settings
@@ -20,10 +22,11 @@ import org.apache.wicket.AttributeModifier;
  * @author Andrew Williams
  * @version $Id: Site.java 818 2010-05-30 14:04:21Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="site"
  */
 public class Site extends XSMPage implements Secure {
+  public Site(PageParameters parameters) {
+    super(parameters);
+  }
 
   public int getLevel() {
     return AccessControl.MANAGER;
@@ -37,6 +40,7 @@ public class Site extends XSMPage implements Secure {
 
   class SiteForm extends Form {
     FileUploadField faviconField;
+    FileUpload favicon;
 
     public SiteForm(String id) {
       super(id);
@@ -44,6 +48,7 @@ public class Site extends XSMPage implements Secure {
       setMultiPart(true);
 
       setModel(new CompoundPropertyModel(site));
+      setMultiPart(true);
 
       add(new TextField("title"));
       add(new TextField("keywords"));
@@ -54,7 +59,7 @@ public class Site extends XSMPage implements Secure {
           new Model(site.getRootUrl() + "/favicon.ico")));
       add(favicon);
       // TODO add ability to delete favicon.ico
-      add(faviconField = new FileUploadField("favicon"));
+      add(faviconField = new FileUploadField("favicon", new PropertyModel(this, "favicon")));
     }
 
     public void onSubmit() {

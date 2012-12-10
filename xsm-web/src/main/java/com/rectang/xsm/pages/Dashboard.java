@@ -2,6 +2,7 @@ package com.rectang.xsm.pages;
 
 import com.rectang.xsm.UserData;
 import com.rectang.xsm.AccessControl;
+import com.rectang.xsm.pages.cms.Edit;
 import com.rectang.xsm.types.News;
 import com.rectang.xsm.site.DocumentPage;
 import com.rectang.xsm.site.Page;
@@ -25,12 +26,14 @@ import java.util.Iterator;
  * @author Andrew Williams
  * @version $Id: Dashboard.java 819 2010-05-30 14:21:32Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="dashboard"
  */
 public class Dashboard extends XSMPage implements Secure {
   DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
   DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
+
+  public Dashboard(PageParameters parameters) {
+    super(parameters);
+  }
 
   public int getLevel() {
     return AccessControl.MEMBER;
@@ -66,7 +69,7 @@ public class Dashboard extends XSMPage implements Secure {
 
               PageParameters params = new PageParameters();
               params.add("page", next.getPath());
-              setResponsePage(getPageClass("page-edit"), params);
+              setResponsePage(Edit.class, params);
             }
           }
         };
@@ -80,7 +83,7 @@ public class Dashboard extends XSMPage implements Secure {
         PageParameters params = new PageParameters();
         params.add("page", next.getPath());
         BookmarkablePageLink link = new BookmarkablePageLink("recentPage",
-            getPageClass("page-edit"), params);
+            Edit.class, params);
         link.add(new Label("recentPageLabel", next.getTitle()));
         item.add(link);
       }

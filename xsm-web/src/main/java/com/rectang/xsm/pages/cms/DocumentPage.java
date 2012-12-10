@@ -3,6 +3,7 @@ package com.rectang.xsm.pages.cms;
 import com.rectang.xsm.pages.Secure;
 import com.rectang.xsm.AccessControl;
 import com.rectang.xsm.io.XSMDocument;
+import org.apache.wicket.PageParameters;
 
 /**
  * The main CMS pages parent
@@ -12,14 +13,16 @@ import com.rectang.xsm.io.XSMDocument;
  * @since 2.0
  */
 public abstract class DocumentPage extends Page implements Secure {
-  public DocumentPage() {
-    addTab("page-view");
-    addTab("page-edit");
-    addTab("page-permissions");
-    addTab("page-status");
-    addTab("page-options");
+  protected DocumentPage(PageParameters parameters) {
+    super(parameters);
+
+    addTab(View.class);
+    addTab(Edit.class);
+    addTab(Permissions.class);
+    addTab(Status.class);
+    addTab(Options.class);
     if (getXSMSession().getSite().getTechnologies().contains("apache")) {
-      addTab("page-security");
+      addTab(Security.class);
     }
   }
 

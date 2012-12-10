@@ -6,6 +6,7 @@ import com.rectang.xsm.AccessControl;
 import com.rectang.xsm.XSM;
 import com.rectang.xsm.UserData;
 import com.rectang.xsm.wicket.StringFileModel;
+import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.Button;
@@ -13,7 +14,8 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
-import org.codehaus.plexus.util.IOUtil;
+
+import org.headsupdev.support.java.IOUtil;
 
 import java.io.*;
 
@@ -23,10 +25,11 @@ import java.io.*;
  * @author Andrew Williams
  * @version $Id: EditTemplate.java 818 2010-05-30 14:04:21Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="edit-template"
  */
 public class EditTemplate extends XSMPage implements Secure {
+  public EditTemplate(PageParameters parameters) {
+    super(parameters);
+  }
 
   public int getLevel() {
     return AccessControl.MANAGER;
@@ -62,7 +65,7 @@ public class EditTemplate extends XSMPage implements Secure {
           try {
             in = getDefault(section, user.getSite());
             out = new FileOutputStream(getCustomFile(section));
-            IOUtil.copy(in, out);
+            IOUtil.copyStream(in, out);
 
             if (section.equals("layout")) {
               site.setLayout("custom");
@@ -73,7 +76,7 @@ public class EditTemplate extends XSMPage implements Secure {
             }
 
             // Here we need to redirect back to this page to refresh the models - not sure why...
-            setResponsePage(getPageClass("edit-template"), getPageParameters());
+            setResponsePage(EditTemplate.class, getPageParameters());
           } catch (IOException e) {
             error("Unable to create custom copy of template " + section);
           } finally {
@@ -111,7 +114,7 @@ public class EditTemplate extends XSMPage implements Secure {
               site.publishTheme();
             }
             // Here we need to redirect back to this page to refresh the models - not sure why...
-            setResponsePage(getPageClass("edit-template"), getPageParameters());
+            setResponsePage(EditTemplate.class, getPageParameters());
           } else {
             error("Unable to delete custom template " + section);
           }
@@ -156,7 +159,7 @@ public class EditTemplate extends XSMPage implements Secure {
       }
 
       BookmarkablePageLink back;
-      back = new BookmarkablePageLink("back", getPageClass("theme"));
+      back = new BookmarkablePageLink("back", Theme.class);
       back.add(new Label("back-label", "Back to Theme page"));
       add(back);
     }
@@ -171,7 +174,7 @@ public class EditTemplate extends XSMPage implements Secure {
         user.getSite().publishTheme();
       }
       // Here we need to redirect back to this page to refresh the models - not sure why...
-      setResponsePage(getPageClass("edit-template"), getPageParameters());
+      setResponsePage(EditTemplate.class, getPageParameters());
     }
   }
 

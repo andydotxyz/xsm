@@ -1,5 +1,6 @@
 package com.rectang.xsm.pages.cms;
 
+import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -18,10 +19,11 @@ import java.util.List;
  * @author Andrew Williams
  * @version $Id: Permissions.java 802 2009-05-16 17:25:24Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="page-permissions"
  */
 public class Permissions extends DocumentPage {
+  public Permissions(PageParameters parameters) {
+    super(parameters);
+  }
 
   public void layout() {
     super.layout();
@@ -32,10 +34,10 @@ public class Permissions extends DocumentPage {
 
     Label owner = new Label("owner");
     owner.setDefaultModel(new StringResourceModel("owner", owner,
-        new Model(new UserData(getDoc().getOwner(), site, false))));
+            new Model(new UserData(getDoc().getOwner(), site, false))));
     add(owner);
 
-    add(new ListView("editors", Users.getUserList(site)){
+    add(new ListView<UserData>("editors", Users.getUserList(site)){
       protected void populateItem(ListItem listItem) {
         final UserData next = (UserData) listItem.getModelObject();
         CheckBox edit = new CheckBox("edit"){

@@ -1,6 +1,7 @@
 package com.rectang.xsm.pages;
 
 import com.rectang.xsm.UserData;
+import org.apache.wicket.PageParameters;
 
 /**
  * Created by IntelliJ IDEA.
@@ -8,11 +9,11 @@ import com.rectang.xsm.UserData;
  * @author Andrew Williams
  * @version $Id: Logout.java 806 2010-05-26 21:55:04Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="logout"
  */
-public class Logout
-    extends XSMPage {
+public class Logout extends XSMPage {
+  public Logout(PageParameters parameters) {
+    super(parameters);
+  }
 
   public void layout() {
     /* userdata can be null if we just restarted, quietly pretend that we

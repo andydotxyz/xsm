@@ -23,16 +23,18 @@ import java.io.File;
  * @author Andrew Williams
  * @version $Id: Rename.java 831 2011-09-25 12:59:18Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="page-rename"
  */
 public class Rename extends Page {
+  public Rename(PageParameters parameters) {
+    super(parameters);
+  }
+
   public void layout() {
     super.layout();
 
     if (!canEdit()) {
       warn("You do not have permission to rename this page");
-      setResponsePage(getPageClass("page-contents"), getPageNameParams());
+      setResponsePage(Contents.class, getPageNameParams());
       return;
     }
 
@@ -50,7 +52,7 @@ public class Rename extends Page {
 
       Button cancel = new Button("cancel") {
         public void onSubmit() {
-          setResponsePage(getPageClass("page-contents"), getPageNameParams());
+          setResponsePage(Contents.class, getPageNameParams());
         }
       };
       cancel.setDefaultFormProcessing(false);
@@ -116,10 +118,10 @@ public class Rename extends Page {
 
             PageParameters newPage = new PageParameters();
             newPage.add("page", path);
-            setResponsePage(getPageClass("page-contents"), newPage);
+            setResponsePage(Contents.class, newPage);
           } else {
             getSession().info("Failed to rename page \"" + oldTitle + "\"");
-            setResponsePage(getPageClass("page-contents"), getPageNameParams());
+            setResponsePage(Contents.class, getPageNameParams());
           }
         }
       }

@@ -24,10 +24,12 @@ import java.io.File;
  * @author Andrew Williams
  * @version $Id: NewLink.java 831 2011-09-25 12:59:18Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="link-new"
  */
 public class NewLink extends Page {
+  public NewLink(PageParameters parameters) {
+    super(parameters);
+  }
+
   public void layout() {
     super.layout();
 
@@ -116,7 +118,7 @@ public class NewLink extends Page {
 
       PageParameters params = new PageParameters();
       params.add("page", newPath);
-      setResponsePage(getPageClass("link-view"), params);
+      setResponsePage(LinkView.class, params);
     }
 
     public String getUrl() {

@@ -3,7 +3,7 @@ package com.rectang.xsm.pages;
 import com.rectang.xsm.UserData;
 import com.rectang.xsm.Theme;
 import com.rectang.xsm.AccessControl;
-import com.rectang.xsm.wicket.LangDropDownChoice;
+import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
@@ -17,11 +17,12 @@ import java.util.*;
  * @author Andrew Williams
  * @version $Id: EditPreferences.java 826 2011-09-25 12:17:36Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="edit-preferences"
  */
-public class EditPreferences
-    extends XSMPage implements Secure {
+public class EditPreferences extends XSMPage implements Secure {
+  public EditPreferences(PageParameters parameters) {
+    super(parameters);
+  }
+
   public int getLevel() {
     return AccessControl.MEMBER;
   }
@@ -54,7 +55,7 @@ public class EditPreferences
       }
 
       if (user.save())
-        this.setResponsePage(getPageClass("preferences"));
+        this.setResponsePage(Preferences.class);
     }
   }
 }

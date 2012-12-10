@@ -5,7 +5,8 @@ import com.rectang.xsm.pages.XSMSession;
 import com.rectang.xsm.XSM;
 
 import org.apache.wicket.Session;
-import org.codehaus.plexus.util.FileUtils;
+
+import org.headsupdev.support.java.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,7 +61,7 @@ public class Upgrade6 implements UpgradeUnit {
 
       File oldLayoutCache = new File(XSM.getConfig().getRootDir(), "/custom/" + site.getId());
       try {
-        FileUtils.deleteDirectory(oldLayoutCache);
+        FileUtil.delete(oldLayoutCache, true);
       } catch (IOException e) {
         // no matter, will get cleared out on next restart
       }

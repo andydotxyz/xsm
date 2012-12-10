@@ -17,7 +17,7 @@ import com.rectang.xsm.site.Page;
 import com.rectang.xsm.util.*;
 import org.apache.wicket.Component;
 import org.apache.velocity.VelocityContext;
-import org.codehaus.plexus.util.IOUtil;
+import org.headsupdev.support.java.IOUtil;
 
 public class XSMDocument implements Serializable {
 

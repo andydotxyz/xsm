@@ -6,7 +6,8 @@ import com.rectang.xsm.site.Site;
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.DynamicWebResource;
 import org.apache.wicket.util.time.Time;
-import org.codehaus.plexus.util.IOUtil;
+
+import org.headsupdev.support.java.IOUtil;
 
 import java.io.*;
 
@@ -33,11 +34,7 @@ public class SiteThemeResource extends DynamicWebResource {
         InputStream file = getFile();
         if (file == null) return new byte[0];
 
-        try {
-          return IOUtil.toByteArray(file);
-        } catch (IOException e) {
-          return new byte[0];
-        }
+        return IOUtil.toString(file).getBytes();
       }
 
       @Override

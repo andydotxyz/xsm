@@ -3,6 +3,7 @@ package com.rectang.xsm.pages.cms;
 import com.rectang.xsm.AccessControl;
 import com.rectang.xsm.pages.XSMPage;
 import com.rectang.xsm.pages.Secure;
+import com.rectang.xsm.pages.nav.Contents;
 import com.rectang.xsm.site.HierarchicalPage;
 
 import org.apache.wicket.markup.html.basic.Label;
@@ -26,16 +27,19 @@ import java.util.Vector;
  * @since 2.0
  */
 public abstract class Page extends XSMPage implements Secure {
-  private List tabs;
+  private List<Class<? extends Page>> tabs;
   private boolean error = false;
+  private String pageName;
 
-  public Page() {
-    tabs = new Vector();
+  public Page(PageParameters parameters) {
+    super(parameters);
+    tabs = new Vector<Class<? extends Page>>();
 
-    tabs.add("page-contents");
+    tabs.add(Contents.class);
+    pageName = parameters.getString("page");
   }
 
-  public void addTab(String tab) {
+  public void addTab(Class<? extends Page> tab) {
     tabs.add(tab);
   }
 
@@ -53,27 +57,27 @@ public abstract class Page extends XSMPage implements Secure {
     String pageName = getPageName();
     if (pageName == null) {
       error("You must specify a page");
-      setResponsePage(getPageClass("error"));
+      setResponsePage(com.rectang.xsm.pages.Error.class);
       error = true;
       return;
     }
     if (getXSMPage() == null) {
       error("Page " + pageName + " does not exist");
-      setResponsePage(getPageClass("error"));
+      setResponsePage(com.rectang.xsm.pages.Error.class);
       error = true;
       return;
     }
 
-    add(new ListView("tabs", tabs) {
-      protected void populateItem(ListItem listItem) {
-        String tabId = (String) listItem.getModelObject();
-        listItem.add(addWicketTab(tabId));
+    add(new ListView<Class<? extends Page>>("tabs", tabs) {
+      protected void populateItem(ListItem<Class<? extends Page>> listItem) {
+        String tabId = listItem.getModelObject().getSimpleName();
+        listItem.add(addWicketTab(listItem.getModelObject(), tabId));
         listItem.setRenderBodyOnly(true);
       }
     });
 
     // TODO - figure what we should be doing with this new tab thingy
-    add(addWicketTab("page-new", "tab-new").setVisible((getXSMPage() instanceof HierarchicalPage) && canEdit()));
+    add(addWicketTab(New.class, "New", "tab-new").setVisible((getXSMPage() instanceof HierarchicalPage) && canEdit()));
     WebMarkupContainer space = new WebMarkupContainer("tab-new-spacer");
     space.setVisible((getXSMPage() instanceof HierarchicalPage) && canEdit());
     add(space);
@@ -85,7 +89,7 @@ public abstract class Page extends XSMPage implements Secure {
   }
 
   protected String getPageName() {
-    return getPageParameters().getString("page");
+    return pageName;
   }
 
   public com.rectang.xsm.site.Page getXSMPage() {
@@ -95,13 +99,12 @@ public abstract class Page extends XSMPage implements Secure {
     return getXSMSession().getSite().getPage(getPageName());
   }
 
-  private WebMarkupContainer addWicketTab(final String title) {
-    return addWicketTab(title, "tab-cell");
+  private WebMarkupContainer addWicketTab(final Class page, final String title) {
+    return addWicketTab(page, title, "tab-cell");
   }
 
-  private WebMarkupContainer addWicketTab(final String tabID, String id) {
+  private WebMarkupContainer addWicketTab(final Class page, final String tabID, String id) {
     final Class thisClass = this.getClass();
-    final Class page = getPageClass(tabID);
     WebMarkupContainer tabCell = new WebMarkupContainer(id);
     tabCell.add(new AttributeModifier("class", new Model() {
       public String getObject() {

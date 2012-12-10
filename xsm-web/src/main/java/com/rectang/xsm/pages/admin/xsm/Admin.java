@@ -5,7 +5,7 @@ import com.rectang.xsm.XSM;
 import com.rectang.xsm.pages.Secure;
 import com.rectang.xsm.pages.XSMPage;
 import com.rectang.xsm.site.Site;
-import com.rectang.xsm.util.StreamGobbler;
+import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -20,10 +20,11 @@ import java.util.List;
  * @author Andrew Williams
  * @version $Id: Admin.java 832 2011-09-26 21:45:04Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="admin"
  */
 public class Admin extends XSMPage implements Secure {
+  public Admin(PageParameters parameters) {
+    super(parameters);
+  }
 
   public int getLevel() {
     return AccessControl.ADMIN;
@@ -35,7 +36,7 @@ public class Admin extends XSMPage implements Secure {
     File[] siteArray = new File(XSM.getConfig().getDataDir()).listFiles();
     List sites = Arrays.asList(siteArray);
 
-    add(new ListView("site", sites) {
+    add(new ListView<File>("site", sites) {
       protected void populateItem(ListItem listItem) {
         File siteFile = ((File) listItem.getModelObject());
         Site site = new Site(siteFile.getName());

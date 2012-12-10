@@ -1,5 +1,6 @@
 package com.rectang.xsm.pages.cms;
 
+import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -24,12 +25,14 @@ import java.util.Iterator;
  * @author Andrew Williams
  * @version $Id: Security.java 816 2010-05-30 14:02:03Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="page-security"
  */
 public class Security extends DocumentPage {
   private static final SupportedOption VISITORS = new SupportedOption("SECURITY_VISITORS", "allowed users", "");
   private static final SupportedOption ALL_USERS = new SupportedOption("SECURITY_ALL_USERS", "allow all users", true);
+
+  public Security(PageParameters parameters) {
+    super(parameters);
+  }
 
   public void layout() {
     super.layout();

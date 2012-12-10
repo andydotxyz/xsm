@@ -8,8 +8,6 @@ import com.rectang.xsm.util.EmailUtils;
 import com.rectang.xsm.io.XSMDocument;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.extensions.ajax.markup.html.form.upload.UploadProgressBar;
@@ -25,10 +23,12 @@ import java.util.Iterator;
  * @author Andrew Williams
  * @version $Id: Edit.java 818 2010-05-30 14:04:21Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="page-edit"
  */
 public class Edit extends DocumentPage {
+  public Edit(PageParameters parameters) {
+    super(parameters);
+  }
+
   public void layout() {
     super.layout();
     if (hasError()) return;
@@ -36,7 +36,7 @@ public class Edit extends DocumentPage {
     if (!getDoc().lock(getXSMSession().getUser())) {
       getSession().warn("Could not lock file :(\n Perhaps you do not have suffcient permissions");
 
-      setResponsePage(getPageClass("page-view"), getPageParameters());
+      setResponsePage(View.class, getPageParameters());
     }
 
     add(new Label("activateEditor", activateEditor()).setEscapeModelStrings(false)
@@ -131,7 +131,7 @@ public class Edit extends DocumentPage {
             getDocumentPage().publish(getXSMSession().getUser());
           }
 
-          setResponsePage(getPageClass("page-view"), getPageNameParams());
+          setResponsePage(View.class, getPageNameParams());
         }
       } else {
         error("Failed to save page " + getDocumentPage().getTitle());

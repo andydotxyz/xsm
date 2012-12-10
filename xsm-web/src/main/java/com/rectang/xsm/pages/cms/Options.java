@@ -1,7 +1,6 @@
 package com.rectang.xsm.pages.cms;
 
 import com.rectang.xsm.MetaData;
-import com.rectang.xsm.io.XSMDocument;
 import com.rectang.xsm.site.Site;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.Button;
@@ -16,20 +15,20 @@ import com.rectang.xsm.doc.SupportedOption;
 import com.rectang.xsm.wicket.OptionPanel;
 import org.apache.wicket.model.PropertyModel;
 
-import java.io.File;
-
 /**
  * The main CMS options tab
  *
  * @author Andrew Williams
  * @version $Id: Options.java 818 2010-05-30 14:04:21Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="page-options"
  */
 public class Options extends DocumentPage {
   private String oldPath;
   private MetaData metadata;
+
+  public Options(PageParameters parameters) {
+    super(parameters);
+  }
 
   public void layout() {
     super.layout();
@@ -50,7 +49,7 @@ public class Options extends DocumentPage {
 
       add(new TextField("slug", new PropertyModel(this, "slug")));
 
-      add(new ListView("options", getDoc().getSupportedOptions(getXSMSession().getUser())) {
+      add(new ListView<SupportedOption>("options", getDoc().getSupportedOptions(getXSMSession().getUser())) {
         protected void populateItem(ListItem listItem) {
           SupportedOption option = (SupportedOption) listItem.getModelObject();
 

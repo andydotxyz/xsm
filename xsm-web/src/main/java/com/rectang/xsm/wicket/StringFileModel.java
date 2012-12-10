@@ -5,7 +5,7 @@ import org.apache.wicket.Session;
 
 import java.io.*;
 
-import org.codehaus.plexus.util.IOUtil;
+import org.headsupdev.support.java.IOUtil;
 
 /**
  * A wicket model that uses a file as the store.

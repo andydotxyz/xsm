@@ -25,8 +25,6 @@ import com.rectang.xsm.AccessControl;
  * @author Andrew Williams
  * @version $Id: Help.java 672 2007-10-06 21:42:14Z aje $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="help"
  */
 public class Help extends XSMPage {
   private Element rootElement;
@@ -36,7 +34,8 @@ public class Help extends XSMPage {
     return AccessControl.MEMBER;
   }
 
-  public Help() throws Exception {
+  public Help(PageParameters parameters) throws Exception {
+    super(parameters);
     Document doc = new SAXBuilder().build(
         getClass().getClassLoader().getResourceAsStream("/com/rectang/xsm/help/structure.xml"));
     rootElement = doc.getRootElement();
@@ -80,7 +79,7 @@ public class Help extends XSMPage {
           PageParameters params = new PageParameters();
           params.add("section", page.getAttributeValue("section"));
 
-          link = new BookmarkablePageLink("helpPage", getPageClass("help"), params);
+          link = new BookmarkablePageLink("helpPage", Help.class, params);
         }
 
         link.add(new Label("helpPageLabel", page.getChildText("title")));
@@ -96,7 +95,7 @@ public class Help extends XSMPage {
         PageParameters params = new PageParameters();
         params.add("section", page.getSection());
 
-        Link link = new BookmarkablePageLink("childPage", getPageClass("help"), params);
+        Link link = new BookmarkablePageLink("childPage", Help.class, params);
         link.add(new Label("childPageLabel", page.getTitle()));
         listItem.add(link);
       }

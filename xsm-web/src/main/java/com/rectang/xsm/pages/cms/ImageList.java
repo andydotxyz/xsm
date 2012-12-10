@@ -1,5 +1,6 @@
 package com.rectang.xsm.pages.cms;
 
+import org.apache.wicket.PageParameters;
 import org.jdom.Element;
 
 import java.util.List;
@@ -15,10 +16,12 @@ import org.apache.wicket.markup.html.basic.Label;
  * @author Andrew Williams
  * @version $Id: ImageList.java 802 2009-05-16 17:25:24Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="page-imagelist"
  */
 public class ImageList extends DocumentPage {
+  public ImageList(PageParameters parameters) {
+    super(parameters);
+  }
+
   public void layout() {
     List files = new Vector();
 

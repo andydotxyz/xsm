@@ -4,6 +4,7 @@ import com.rectang.xsm.pages.XSMPage;
 import com.rectang.xsm.pages.Secure;
 import com.rectang.xsm.AccessControl;
 import com.rectang.xsm.site.upgrades.UpgradeUnit;
+import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.list.ListView;
@@ -19,10 +20,11 @@ import java.util.Iterator;
  * @author Andrew Williams
  * @version $Id: Upgrade.java 802 2009-05-16 17:25:24Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="upgrade"
  */
 public class Upgrade extends XSMPage implements Secure {
+  public Upgrade(PageParameters parameters) {
+    super(parameters);
+  }
 
   public int getLevel() {
     return AccessControl.MEMBER;

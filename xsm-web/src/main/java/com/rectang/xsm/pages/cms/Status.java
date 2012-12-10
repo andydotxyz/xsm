@@ -5,6 +5,7 @@ import com.rectang.xsm.UserData;
 
 import java.util.List;
 
+import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Button;
@@ -20,10 +21,11 @@ import org.apache.wicket.model.StringResourceModel;
  * @author Andrew Williams
  * @version $Id: Status.java 802 2009-05-16 17:25:24Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="page-status"
  */
 public class Status extends DocumentPage {
+  public Status(PageParameters parameters) {
+    super(parameters);
+  }
 
   public void layout() {
     super.layout();
@@ -34,8 +36,8 @@ public class Status extends DocumentPage {
     Label locked = new Label("locked");
     if (xsmDoc.isLocked()) {
       locked.setDefaultModel(new StringResourceModel("locked.is", locked,
-          new Model(new UserData(xsmDoc.getLocked(),
-              getXSMSession().getSite(), false))));
+              new Model(new UserData(xsmDoc.getLocked(),
+                      getXSMSession().getSite(), false))));
     } else {
       locked.setDefaultModel(new StringResourceModel("locked.not", locked, null));
     }
@@ -72,7 +74,7 @@ public class Status extends DocumentPage {
         } else {
           watchers.add(userdata.getUsername());
           if (getDoc().setWatchers(watchers, userdata)) {
-            setResponsePage(getPageClass("page-status"), getPageNameParams());
+            setResponsePage(Status.class, getPageNameParams());
           } else {
             info("Failed to add user " + userdata.getUsername() +
                 " to watchers of page " + getDocumentPage().getPath());
@@ -90,7 +92,7 @@ public class Status extends DocumentPage {
         else {
           watchers.remove(userdata.getUsername());
           if (getDoc().setWatchers(watchers, userdata)) {
-            setResponsePage(getPageClass("page-status"), getPageNameParams());
+            setResponsePage(Status.class, getPageNameParams());
           } else {
             info("Failed to remove user " + userdata.getUsername() +
                 " from watchers of page " + getDocumentPage().getPath());

@@ -66,7 +66,7 @@ public class OptionPanel {
         }
 
         public void setObject(String object) {
-          doc.setOption(str.getName(), object.toString());
+          doc.setOption(str.getName(), object);
         }
       }));
     }

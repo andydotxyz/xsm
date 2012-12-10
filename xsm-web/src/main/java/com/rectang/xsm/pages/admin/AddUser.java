@@ -5,6 +5,7 @@ import com.rectang.xsm.pages.XSMPage;
 import com.rectang.xsm.pages.Secure;
 import com.rectang.xsm.*;
 import com.rectang.xsm.io.RemoteDocument;
+import com.rectang.xsm.pages.cms.View;
 import com.rectang.xsm.site.Visitor;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.form.Form;
@@ -20,10 +21,11 @@ import org.apache.wicket.model.CompoundPropertyModel;
  * @author Andrew Williams
  * @version $Id: AddUser.java 823 2010-12-15 23:59:49Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="add-user"
  */
 public class AddUser extends XSMPage implements Secure {
+  public AddUser(PageParameters parameters) {
+    super(parameters);
+  }
 
   public int getLevel() {
     return AccessControl.MANAGER;
@@ -83,9 +85,9 @@ public class AddUser extends XSMPage implements Secure {
           PageParameters siteParams = new PageParameters();
           siteParams.add("sitename", getSite().getId());
           siteParams.add("page", getSite().getDefault());
-          setResponsePage(getPageClass("page-view"), siteParams);
+          setResponsePage(View.class, siteParams);
         } else {
-          setResponsePage(getPageClass("users"));
+          setResponsePage(Users.class);
         }
       } else {
         error("Could not save user file for " + username);

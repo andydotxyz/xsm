@@ -4,6 +4,7 @@ import com.rectang.xsm.pages.XSMPage;
 import com.rectang.xsm.pages.Secure;
 import com.rectang.xsm.AccessControl;
 import com.rectang.xsm.pages.XSMSession;
+import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.basic.Label;
 
 /**
@@ -12,10 +13,11 @@ import org.apache.wicket.markup.html.basic.Label;
  * @author Andrew Williams
  * @version $Id: System.java 663 2007-10-04 22:50:25Z aje $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="system"
  */
 public class System extends XSMPage implements Secure {
+  public System(PageParameters parameters) {
+    super(parameters);
+  }
 
   public int getLevel() {
     return AccessControl.MANAGER;

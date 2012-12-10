@@ -98,38 +98,14 @@
       <version>1.1</version>
     </dependency>
     <dependency>
-      <groupId>org.codehaus.plexus</groupId>
-      <artifactId>plexus-wicket</artifactId>
-      <version>1.0-beta-2</version>
-    </dependency>
-    <dependency>
-      <groupId>org.codehaus.plexus</groupId>
-      <artifactId>plexus-utils</artifactId>
-      <version>1.4.5</version>
+      <groupId>org.headsupdev.support</groupId>
+      <artifactId>java-support</artifactId>
+      <version>1.2</version>
     </dependency>
   </dependencies>
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.codehaus.plexus</groupId>
-        <artifactId>plexus-maven-plugin</artifactId>
-        <configuration>
-          <roleDefaults>
-            <roleDefault>
-              <role>org.apache.wicket.Page</role>
-              <instantiation-strategy>per-lookup</instantiation-strategy>
-            </roleDefault>
-          </roleDefaults>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>descriptor</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.mortbay.jetty</groupId>
         <artifactId>maven-jetty-plugin</artifactId>

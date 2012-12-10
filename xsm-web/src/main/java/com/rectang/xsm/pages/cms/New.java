@@ -32,10 +32,12 @@ import org.jdom.Element;
  * @author Andrew Williams
  * @version $Id: New.java 831 2011-09-25 12:59:18Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="page-new"
  */
 public class New extends Page {
+  public New(PageParameters parameters) {
+    super(parameters);
+  }
+
   public void layout() {
     super.layout();
     if (hasError()) return;
@@ -171,7 +173,7 @@ public class New extends Page {
 
       PageParameters params = new PageParameters();
       params.add("page", newPath);
-      setResponsePage(getPageClass("page-edit"), params);
+      setResponsePage(Edit.class, params);
     }
 
     public String getType() {

@@ -6,6 +6,7 @@ import com.rectang.xsm.XSM;
 
 import com.rectang.xsm.pages.Secure;
 import com.rectang.xsm.pages.XSMPage;
+import org.apache.wicket.PageParameters;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.image.Image;
@@ -20,10 +21,11 @@ import java.util.*;
  * @author Andrew Williams
  * @version $Id: Publish.java 832 2011-09-26 21:45:04Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="site-publish"
  */
 public class Publish extends XSMPage implements Secure {
+  public Publish(PageParameters parameters) {
+    super(parameters);
+  }
 
   public int getLevel() {
     return AccessControl.MANAGER;
@@ -38,7 +40,7 @@ public class Publish extends XSMPage implements Secure {
     List paths = new LinkedList(results.keySet());
     Collections.sort(paths);
 
-    add(new ListView("status-output", paths) {
+    add(new ListView<String>("status-output", paths) {
       protected void populateItem(ListItem listItem) {
         String path = (String) listItem.getModelObject();
         listItem.add(new Label("path", path));

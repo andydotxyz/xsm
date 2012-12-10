@@ -7,7 +7,11 @@
 
   <filter>
     <filter-name>wicket</filter-name>
-    <filter-class>org.codehaus.plexus.wicket.PlexusWicketFilter</filter-class>
+    <filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+    <init-param>
+      <param-name>applicationClassName</param-name>
+      <param-value>com.rectang.xsm.XSMApplication</param-value>
+    </init-param>
   </filter>
 
   <filter-mapping>

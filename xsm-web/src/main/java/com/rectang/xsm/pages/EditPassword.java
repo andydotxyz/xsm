@@ -4,6 +4,7 @@ import com.rectang.xsm.UserData;
 import com.rectang.xsm.AccessControl;
 import com.rectang.xsm.site.Visitor;
 import com.twmacinta.util.MD5;
+import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.model.PropertyModel;
@@ -14,10 +15,12 @@ import org.apache.wicket.model.PropertyModel;
  * @author Andrew Williams
  * @version $Id: EditPassword.java 816 2010-05-30 14:02:03Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="edit-password"
  */
 public class EditPassword extends XSMPage implements Secure {
+  public EditPassword(PageParameters parameters) {
+    super(parameters);
+  }
+
   public int getLevel() {
     return AccessControl.MEMBER;
   }
@@ -64,7 +67,7 @@ public class EditPassword extends XSMPage implements Secure {
           user.getSite().setVisitor(new Visitor(user.getUsername(), password));
         }
 
-        this.setResponsePage(getPageClass("profile"));
+        this.setResponsePage(Profile.class);
       }
     }
 

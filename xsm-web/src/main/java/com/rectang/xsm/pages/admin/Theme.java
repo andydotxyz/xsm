@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Vector;
 import java.io.File;
 
+import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.model.CompoundPropertyModel;
@@ -20,10 +21,11 @@ import org.apache.wicket.model.CompoundPropertyModel;
  * @author Andrew Williams
  * @version $Id: Theme.java 802 2009-05-16 17:25:24Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="theme"
  */
 public class Theme extends XSMPage implements Secure {
+  public Theme(PageParameters parameters) {
+    super(parameters);
+  }
 
   public int getLevel() {
     return AccessControl.MANAGER;

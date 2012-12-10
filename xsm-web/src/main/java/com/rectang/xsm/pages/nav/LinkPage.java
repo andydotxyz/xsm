@@ -3,6 +3,7 @@ package com.rectang.xsm.pages.nav;
 import com.rectang.xsm.pages.cms.Page;
 import com.rectang.xsm.pages.Secure;
 import com.rectang.xsm.AccessControl;
+import org.apache.wicket.PageParameters;
 
 /**
  * The main CMS pages parent
@@ -12,9 +13,11 @@ import com.rectang.xsm.AccessControl;
  * @since 2.0
  */
 public abstract class LinkPage extends Page implements Secure {
-  public LinkPage() {
-    addTab("link-view");
-    addTab("link-edit");
+  protected LinkPage(PageParameters parameters) {
+    super(parameters);
+
+    addTab(LinkView.class);
+    addTab(LinkEdit.class);
   }
 
   public int getLevel() {

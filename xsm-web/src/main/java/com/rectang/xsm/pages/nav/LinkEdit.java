@@ -1,7 +1,6 @@
 package com.rectang.xsm.pages.nav;
 
-import org.apache.wicket.markup.html.link.ExternalLink;
-import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.PropertyModel;
@@ -12,10 +11,11 @@ import org.apache.wicket.model.PropertyModel;
  * @author Andrew Williams
  * @version $Id: LinkEdit.java 818 2010-05-30 14:04:21Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="link-edit"
  */
 public class LinkEdit extends LinkPage {
+  public LinkEdit(PageParameters parameters) {
+    super(parameters);
+  }
 
   public void layout() {
     super.layout();
@@ -38,7 +38,7 @@ public class LinkEdit extends LinkPage {
       if (!getXSMPage().getHidden()) {
         getXSMSession().getSite().publish(getXSMSession().getUser());
       }
-      setResponsePage(getPageClass("link-view"), getPageNameParams());
+      setResponsePage(LinkView.class, getPageNameParams());
     }
   }
 }

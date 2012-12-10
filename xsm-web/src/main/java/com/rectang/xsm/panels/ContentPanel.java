@@ -25,7 +25,7 @@ public class ContentPanel extends Panel {
     super(id);
 
     Site site = session.getSite();
-    add(new ContentTreePanel("content", site.getRootPage(), page, "view"));
+    add(new ContentTreePanel("content", site.getRootPage(), page));
 
     PageParameters params = new PageParameters();
     params.add("page", site.getDefault());

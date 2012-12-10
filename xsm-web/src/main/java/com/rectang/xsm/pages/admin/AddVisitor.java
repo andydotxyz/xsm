@@ -4,7 +4,7 @@ import com.rectang.xsm.pages.XSMPage;
 import com.rectang.xsm.pages.Secure;
 import com.rectang.xsm.*;
 import com.rectang.xsm.site.Visitor;
-import com.rectang.xsm.io.RemoteDocument;
+import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.PasswordTextField;
@@ -18,10 +18,11 @@ import org.apache.wicket.model.CompoundPropertyModel;
  * @author Andrew Williams
  * @version $Id: AddVisitor.java 802 2009-05-16 17:25:24Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="add-visitor"
  */
 public class AddVisitor extends XSMPage implements Secure {
+  public AddVisitor(PageParameters parameters) {
+    super(parameters);
+  }
 
   public int getLevel() {
     return AccessControl.MANAGER;
@@ -66,7 +67,7 @@ public class AddVisitor extends XSMPage implements Secure {
       Visitor visitor = new Visitor(username, password);
       site.setVisitor(visitor);
       getSession().info("Successfully added visitor " + username);
-      this.setResponsePage(getPageClass("users"));
+      this.setResponsePage(Users.class);
     }
 
     public String getUsername() {

@@ -9,11 +9,13 @@ import java.io.*;
 
 import com.rectang.xsm.util.StreamGobbler;
 import org.jdom.*;
-import org.codehaus.plexus.util.IOUtil;
 
 import com.rectang.xsm.*;
 import com.rectang.xsm.io.*;
 import com.rectang.xsm.util.StringUtils;
+
+import org.headsupdev.support.java.IOUtil;
+
 
 /**
  * @author aje
@@ -201,7 +203,7 @@ public class Site implements Serializable {
             "/com/rectang/xsm/publish/style/" + getStylesheet() + ".css");
         out = getPublishedDoc("_theme/style.css").getOutputStream();
 
-        IOUtil.copy(style, out);
+        IOUtil.copyStream(style, out);
       } catch (IOException e) {
         e.printStackTrace();
         return false;
@@ -222,7 +224,7 @@ public class Site implements Serializable {
             "/com/rectang/xsm/publish/layout/" + getLayout() + ".css");
         out = getPublishedDoc("_theme/layout.css").getOutputStream();
 
-        IOUtil.copy(style, out);
+        IOUtil.copyStream(style, out);
       } catch (IOException e) {
         e.printStackTrace();
         return false;

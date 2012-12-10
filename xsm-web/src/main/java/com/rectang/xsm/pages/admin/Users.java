@@ -1,5 +1,6 @@
 package com.rectang.xsm.pages.admin;
 
+import com.rectang.xsm.pages.EditProfile;
 import com.rectang.xsm.pages.XSMPage;
 import com.rectang.xsm.pages.Secure;
 import com.rectang.xsm.AccessControl;
@@ -39,10 +40,11 @@ import java.io.File;
  * @author Andrew Williams
  * @version $Id: Users.java 816 2010-05-30 14:02:03Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="users"
  */
 public class Users extends XSMPage implements Secure {
+  public Users(PageParameters parameters) {
+    super(parameters);
+  }
 
   public int getLevel() {
     return AccessControl.MANAGER;
@@ -163,7 +165,7 @@ public class Users extends XSMPage implements Secure {
       params.add("username", username);
 
       // don't allow non-XSMAdmins to edit XSMAdmin accounts
-      BookmarkablePageLink edit = new BookmarkablePageLink("edit", getPageClass("edit-profile"), params);
+      BookmarkablePageLink edit = new BookmarkablePageLink("edit", EditProfile.class, params);
       if (user.isXSMAdmin() && !iAmXSMAdmin) {
         edit.setVisible(false);
       }

@@ -18,17 +18,18 @@ import java.util.Iterator;
  * @author Andrew Williams
  * @version $Id: Delete.java 831 2011-09-25 12:59:18Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="page-delete"
  */
 public class Delete extends Page {
+  public Delete(PageParameters parameters) {
+    super(parameters);
+  }
 
   public void layout() {
     super.layout();
 
     if (!canEdit()) {
       warn("You do not have permission to delete this page");
-      setResponsePage(getPageClass("page-contents"), getPageNameParams());
+      setResponsePage(Contents.class, getPageNameParams());
       return;
     }
 
@@ -76,7 +77,7 @@ public class Delete extends Page {
 
             PageParameters newPage = new PageParameters();
             newPage.add("page", requestedPage.getPath());
-            setResponsePage(getPageClass("page-contents"), newPage);
+            setResponsePage(Contents.class, newPage);
 
           } else {
             error("Failed to deleted page " + pagePath);
@@ -86,7 +87,7 @@ public class Delete extends Page {
 
       add(new Button("no") {
         public void onSubmit() {
-          setResponsePage(getPageClass("page-contents"), getPageNameParams());
+          setResponsePage(Contents.class, getPageNameParams());
         }
       });
     }

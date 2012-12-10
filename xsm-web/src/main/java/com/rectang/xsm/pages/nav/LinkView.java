@@ -1,5 +1,6 @@
 package com.rectang.xsm.pages.nav;
 
+import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.ExternalLink;
 
@@ -9,10 +10,11 @@ import org.apache.wicket.markup.html.link.ExternalLink;
  * @author Andrew Williams
  * @version $Id: LinkView.java 802 2009-05-16 17:25:24Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="link-view"
  */
 public class LinkView extends LinkPage {
+  public LinkView(PageParameters parameters) {
+    super(parameters);
+  }
 
   public void layout() {
     super.layout();

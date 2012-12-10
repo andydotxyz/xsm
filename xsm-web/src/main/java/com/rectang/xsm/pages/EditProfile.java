@@ -2,6 +2,7 @@ package com.rectang.xsm.pages;
 
 import com.rectang.xsm.UserData;
 import com.rectang.xsm.AccessControl;
+import com.rectang.xsm.pages.admin.Users;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -14,10 +15,12 @@ import org.apache.wicket.PageParameters;
  * @author Andrew Williams
  * @version $Id: EditProfile.java 663 2007-10-04 22:50:25Z aje $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="edit-profile"
  */
 public class EditProfile extends XSMPage implements Secure {
+  public EditProfile(PageParameters parameters) {
+    super(parameters);
+  }
+
   public int getLevel() {
     return AccessControl.MEMBER;
   }
@@ -53,9 +56,9 @@ public class EditProfile extends XSMPage implements Secure {
         if (user.getUsername().equals(getXSMSession().getUser().getUsername())) {
           // TODO make the userdata singleton, so this is not needed
           getXSMSession().setUser(user);
-          this.setResponsePage(getPageClass("profile"));
+          this.setResponsePage(Profile.class);
         } else {
-          this.setResponsePage(getPageClass("users"));
+          this.setResponsePage(Users.class);
         }
       }
     }

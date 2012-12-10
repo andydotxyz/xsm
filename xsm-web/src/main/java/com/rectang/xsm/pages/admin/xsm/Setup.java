@@ -4,6 +4,7 @@ import com.rectang.xsm.AccessControl;
 import com.rectang.xsm.XSM;
 import com.rectang.xsm.pages.Secure;
 import com.rectang.xsm.pages.XSMPage;
+import org.apache.wicket.PageParameters;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.image.Image;
@@ -18,8 +19,6 @@ import java.util.*;
  * @author Andrew Williams
  * @version $Id: Setup.java 833 2011-09-26 22:00:00Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="setup"
  */
 public class Setup extends XSMPage implements Secure {
 
@@ -36,6 +35,10 @@ public class Setup extends XSMPage implements Secure {
       }
     });
 
+  }
+
+  public Setup(PageParameters parameters) {
+    super(parameters);
   }
 
   static abstract class SetupTask {

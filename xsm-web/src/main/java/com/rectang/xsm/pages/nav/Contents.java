@@ -27,10 +27,12 @@ import org.apache.wicket.AttributeModifier;
  * @author Andrew Williams
  * @version $Id: Contents.java 831 2011-09-25 12:59:18Z andy $
  * @since 2.0
- *
- * @plexus.component role="org.apache.wicket.Page" role-hint="page-contents"
  */
 public class Contents extends Page {
+  public Contents(PageParameters parameters) {
+    super(parameters);
+  }
+
   public void layout() {
     super.layout();
 
@@ -143,7 +145,7 @@ public class Contents extends Page {
         if (!page.getHidden()) {
           getXSMSession().getSite().publish(getXSMSession().getUser());
         }
-        setResponsePage(getPageClass("page-contents"), getPageNameParams());
+        setResponsePage(Contents.class, getPageNameParams());
       }
     };
     top.setVisible(canEdit && panel.getIndex() > 0);
@@ -158,7 +160,7 @@ public class Contents extends Page {
         if (!page.getHidden()) {
           getXSMSession().getSite().publish(getXSMSession().getUser());
         }
-        setResponsePage(getPageClass("page-contents"), getPageNameParams());
+        setResponsePage(Contents.class, getPageNameParams());
       }
     };
     up.setVisible(canEdit && panel.getIndex() > 0);
@@ -173,7 +175,7 @@ public class Contents extends Page {
         if (!page.getHidden()) {
           getXSMSession().getSite().publish(getXSMSession().getUser());
         }
-        setResponsePage(getPageClass("page-contents"), getPageNameParams());
+        setResponsePage(Contents.class, getPageNameParams());
       }
     };
     down.setVisible(canEdit && panel.getIndex() < ((List) panel.getParent().getDefaultModelObject()).size() - 1);
@@ -188,7 +190,7 @@ public class Contents extends Page {
         if (!page.getHidden()) {
           getXSMSession().getSite().publish(getXSMSession().getUser());
         }
-        setResponsePage(getPageClass("page-contents"), getPageNameParams());
+        setResponsePage(Contents.class, getPageNameParams());
       }
     };
     bottom.setVisible(canEdit && panel.getIndex() < ((List) panel.getParent().getDefaultModelObject()).size() - 1);
@@ -196,14 +198,14 @@ public class Contents extends Page {
     bottom.add(new Image("bottom-icon", new ResourceReference(XSM.class,
           "icons/go-bottom.png")));
 
-    Link delete = new BookmarkablePageLink("delete", getPageClass("page-delete"),
+    Link delete = new BookmarkablePageLink("delete", Delete.class,
         subPage);
     delete.setVisible(canEdit);
     panel.add(delete);
     delete.add(new Image("delete-icon", new ResourceReference(XSM.class,
           "icons/edit-delete.png")));
 
-    Link rename = new BookmarkablePageLink("rename", getPageClass("page-rename"),
+    Link rename = new BookmarkablePageLink("rename", Rename.class,
         subPage);
     rename.setVisible(canEdit);
     panel.add(rename);
