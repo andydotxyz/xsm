@@ -1,15 +1,10 @@
 package com.rectang.xsm;
 
-import javax.servlet.http.*;
 import java.io.*;
 
-public class XSM extends HttpServlet {
+public class XSM {
 
   private static Config config;
-
-  public void init() {
-    config = Config.getInstance(this.getServletContext().getRealPath("/"));
-  }
 
   public static Config getConfig() {
     return config;
