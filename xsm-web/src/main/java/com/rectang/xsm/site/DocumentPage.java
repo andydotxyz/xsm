@@ -23,7 +23,12 @@ public class DocumentPage extends HierarchicalPage {
   }
 
   public XSMDocument getXSMDocument() {
-    return XSMDocument.getXSMDoc(getSite(), this);
+    try {
+      return XSMDocument.getXSMDoc(getSite(), this);
+    } catch (RuntimeException e) {
+      System.err.println("Error reading file" + getTitle());
+      throw e;
+    }
   }
 
   public boolean publish(UserData user) {
