@@ -53,59 +53,59 @@ public class XSMApplication extends WebApplication {
   }
 
   private void mountFramework() {
-    mountBookmarkablePage("denied", AccessDenied.class);
-    mountBookmarkablePage("error", Error.class);
-    mountBookmarkablePage("error404", Error404.class);
-    mountBookmarkablePage("expired", ErrorExpired.class);
-    mountBookmarkablePage("login", Login.class);
-    mountBookmarkablePage("logout", Logout.class);
-    mountBookmarkablePage("register", Register.class);
+    initMount("denied", AccessDenied.class);
+    initMount("error", Error.class);
+    initMount("error404", Error404.class);
+    initMount("expired", ErrorExpired.class);
+    initMount("login", Login.class);
+    initMount("logout", Logout.class);
+    initMount("register", Register.class);
   }
 
   private void mountAdmin() {
-    mountBookmarkablePage("add-user", AddUser.class);
-    mountBookmarkablePage("add-visitor", AddVisitor.class);
-    mountBookmarkablePage("backup", Backup.class);
-    mountBookmarkablePage("edit-template", EditTemplate.class);
-    mountBookmarkablePage("site-publish", Publish.class);
-    mountBookmarkablePage("site", Site.class);
-    mountBookmarkablePage("system", System.class);
-    mountBookmarkablePage("theme", com.rectang.xsm.pages.admin.Theme.class);
-    mountBookmarkablePage("upgrade", Upgrade.class);
-    mountBookmarkablePage("users", Users.class);
+    initMount("add-user", AddUser.class);
+    initMount("add-visitor", AddVisitor.class);
+    initMount("backup", Backup.class);
+    initMount("edit-template", EditTemplate.class);
+    initMount("site-publish", Publish.class);
+    initMount("site", Site.class);
+    initMount("system", System.class);
+    initMount("theme", com.rectang.xsm.pages.admin.Theme.class);
+    initMount("upgrade", Upgrade.class);
+    initMount("users", Users.class);
   }
 
   private void mountXSMAdmin() {
-    mountBookmarkablePage("admin", Admin.class);
-    mountBookmarkablePage("setup", Setup.class);
+    initMount("admin", Admin.class);
+    initMount("setup", Setup.class);
   }
 
   private void mountPages() {
-    mountBookmarkablePage("edit-password", EditPassword.class);
-    mountBookmarkablePage("edit-preferences", EditPreferences.class);
-    mountBookmarkablePage("edit-profile", EditProfile.class);
-    mountBookmarkablePage("help", Help.class);
-    mountBookmarkablePage("preferences", Preferences.class);
-    mountBookmarkablePage("profile", Preferences.class);
+    initMount("edit-password", EditPassword.class);
+    initMount("edit-preferences", EditPreferences.class);
+    initMount("edit-profile", EditProfile.class);
+    initMount("help", Help.class);
+    initMount("preferences", Preferences.class);
+    initMount("profile", Preferences.class);
   }
 
   private void mountCMS() {
-    mountBookmarkablePage("page-edit", Edit.class);
-    mountBookmarkablePage("page-imagelist", ImageList.class);
-    mountBookmarkablePage("page-linklist", LinkList.class);
-    mountBookmarkablePage("page-new", New.class);
-    mountBookmarkablePage("page-options", Options.class);
-    mountBookmarkablePage("page-permissions", Permissions.class);
-    mountBookmarkablePage("page-security", Security.class);
-    mountBookmarkablePage("page-status", Status.class);
-    mountBookmarkablePage("page-view", View.class);
+    initMount("page-edit", Edit.class);
+    initMount("page-imagelist", ImageList.class);
+    initMount("page-linklist", LinkList.class);
+    initMount("page-new", New.class);
+    initMount("page-options", Options.class);
+    initMount("page-permissions", Permissions.class);
+    initMount("page-security", Security.class);
+    initMount("page-status", Status.class);
+    initMount("page-view", View.class);
 
-    mountBookmarkablePage("page-contents", Contents.class);
-    mountBookmarkablePage("page-delete", Delete.class);
-    mountBookmarkablePage("link-edit", LinkEdit.class);
-    mountBookmarkablePage("link-view", LinkView.class);
-    mountBookmarkablePage("link-new", NewLink.class);
-    mountBookmarkablePage("page-rename", Rename.class);
+    initMount("page-contents", Contents.class);
+    initMount("page-delete", Delete.class);
+    initMount("link-edit", LinkEdit.class);
+    initMount("link-view", LinkView.class);
+    initMount("link-new", NewLink.class);
+    initMount("page-rename", Rename.class);
   }
 
   private void mountResources() {
@@ -132,11 +132,12 @@ public class XSMApplication extends WebApplication {
     return new XSMSession(request);
   }
 
-  public boolean isDeployment() {
-    return false;
+  @Override
+  public String getConfigurationType() {
+    return WebApplication.DEVELOPMENT;
   }
 
-  protected WebRequest newWebRequest(HttpServletRequest servletRequest) {
+    protected WebRequest newWebRequest(HttpServletRequest servletRequest) {
     return new UploadWebRequest(servletRequest);
   }
 
