@@ -30,7 +30,7 @@ public class OptionPanel {
         public void setObject(Boolean object) {
           doc.setOption(bool.getName(), object.toString());
         }
-      }));
+      }).setType(Boolean.class));
     }
   }
 
@@ -49,7 +49,7 @@ public class OptionPanel {
         public void setObject(Integer object) {
           doc.setOption(integ.getName(), object.toString());
         }
-      }));
+      }).setType(Integer.class));
     }
   }
 
