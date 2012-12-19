@@ -13,7 +13,6 @@ import com.rectang.xsm.wicket.VelocityPanel;
 import org.apache.velocity.VelocityContext;
 import org.apache.wicket.authorization.AuthorizationException;
 import org.apache.wicket.behavior.HeaderContributor;
-import org.apache.wicket.devutils.debugbar.DebugBar;
 import org.apache.wicket.markup.DefaultMarkupResourceStreamProvider;
 import org.apache.wicket.markup.IMarkupCacheKeyProvider;
 import org.apache.wicket.markup.IMarkupResourceStreamProvider;
@@ -91,6 +90,7 @@ public abstract class XSMPage extends WebPage implements IMarkupResourceStreamPr
         throw new AuthorizationException("You must be a site admin to access this page"){};
       }
     }
+  }
 
   public PageParameters getPageParameters() {
     return parameters;
