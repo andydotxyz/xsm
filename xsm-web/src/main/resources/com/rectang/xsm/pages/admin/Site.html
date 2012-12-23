@@ -1,33 +1,36 @@
 <html>
-  <body>
-    <wicket:extend>
-      <h1>Site Settings</h1>
+<body>
+<wicket:extend>
+  <h1>Site Settings</h1>
 
-      <form wicket:id="site" action="#">
-        <table>
-          <tr>
-            <td><label for="title" class="label">Site title</label></td>
-            <td><input wicket:id="title" id="title"/></td>
-          </tr>
-          <tr>
-            <td><label for="keywords" class="label">Site keywords</label></td>
-            <td><input wicket:id="keywords" id="keywords"/></td>
-          </tr>
-          <tr>
-            <td><label for="description" class="label">Site description</label></td>
-            <td><input wicket:id="description" id="description"/></td>
-          </tr>
-          <tr>
-            <td><label for="favicon">Favicon file</label></td>
-            <td><img wicket:id="favicon-img" src="#" alt="favicon" />
-              <input wicket:id="favicon" id="favicon" type="file"/></td>
-          </tr>
-          <tr>
-            <td colspan="2"><div align="right"><input type="submit" value="Save Settings" /></div></td>
-          </tr>
-        </table>
-      </form>
+  <ul>
+  <li><span class="xsm-editor-button-background">
+                  <a wicket:id="settingsPlugin" href="#" class="xsm-editor-button">
+                    <img wicket:id="pluginImage" class="xsm-editor-button-icon"
+                         alt="Site Settings" title="Site Settings" />
+                    <span class="xsm-editor-button-caption">Site Settings</span></a></span></li>
+  <li><span class="xsm-editor-button-background">
+                  <a wicket:id="themePlugin" href="#" class="xsm-editor-button">
+                    <img wicket:id="pluginImage" class="xsm-editor-button-icon"
+                         alt="Site Theme" title="Site Theme" />
+                    <span class="xsm-editor-button-caption">Site Theme</span></a></span></li>
+  <li><span class="xsm-editor-button-background">
+                  <a wicket:id="usersPlugin" href="#" class="xsm-editor-button">
+                    <img wicket:id="pluginImage" class="xsm-editor-button-icon"
+                         alt="Users" title="Users" />
+                    <span class="xsm-editor-button-caption">Users</span></a></span></li>
+  <li><span class="xsm-editor-button-background">
+                  <a wicket:id="backupPlugin" href="#" class="xsm-editor-button">
+                    <img wicket:id="pluginImage" class="xsm-editor-button-icon"
+                         alt="Backup" title="Backup" />
+                    <span class="xsm-editor-button-caption">Backup</span></a></span></li>
+  <li><span class="xsm-editor-button-background">
+                  <a wicket:id="systemPlugin" href="#" class="xsm-editor-button">
+                    <img wicket:id="pluginImage" class="xsm-editor-button-icon"
+                         alt="System" title="System" />
+                    <span class="xsm-editor-button-caption">System</span></a></span></li>
+  </ul>
 
-    </wicket:extend>
-  </body>
+</wicket:extend>
+</body>
 </html>

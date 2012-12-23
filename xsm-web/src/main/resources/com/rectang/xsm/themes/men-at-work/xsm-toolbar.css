@@ -45,7 +45,7 @@
 
 #xsm-editor-toolbar a.xsm-editor-button:hover {
   background-color: gray;
-  padding: 0px;
+  padding: 0;
   border: 1px solid black;
 }
 
@@ -57,7 +57,7 @@
   
   color: gray;
   font-size: 28px;
-  font-family: "gill sans";
+  font-family: "gill sans", sans-serif;
   font-weight: bold;
 }
 

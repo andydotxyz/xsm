@@ -69,6 +69,7 @@ public class XSMApplication extends WebApplication {
     initMount("edit-template", EditTemplate.class);
     initMount("site-publish", Publish.class);
     initMount("site", Site.class);
+    initMount("settings", Settings.class);
     initMount("system", System.class);
     initMount("theme", com.rectang.xsm.pages.admin.Theme.class);
     initMount("upgrade", Upgrade.class);

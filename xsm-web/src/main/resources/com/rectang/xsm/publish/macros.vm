@@ -238,30 +238,10 @@
 
               <ul class="xsm-editor-buttons-admin" wicket:id="admin-buttons">
                 <li><span class="xsm-editor-button-background">
-                  <a wicket:id="settingsPlugin" href="#" class="xsm-editor-button">
+                  <a wicket:id="sitePlugin" href="#" class="xsm-editor-button">
                     <img wicket:id="pluginImage" class="xsm-editor-button-icon"
                         alt="Site Settings" title="Site Settings" />
-                  <span class="xsm-editor-button-caption">Site Settings</span></a></span></li>
-                <li><span class="xsm-editor-button-background">
-                  <a wicket:id="themePlugin" href="#" class="xsm-editor-button">
-                    <img wicket:id="pluginImage" class="xsm-editor-button-icon"
-                        alt="Site Theme" title="Site Theme" />
-                  <span class="xsm-editor-button-caption">Site Theme</span></a></span></li>
-                <li><span class="xsm-editor-button-background">
-                  <a wicket:id="usersPlugin" href="#" class="xsm-editor-button">
-                    <img wicket:id="pluginImage" class="xsm-editor-button-icon"
-                        alt="Users" title="Users" />
-                  <span class="xsm-editor-button-caption">Users</span></a></span></li>
-                <li><span class="xsm-editor-button-background">
-                  <a wicket:id="backupPlugin" href="#" class="xsm-editor-button">
-                    <img wicket:id="pluginImage" class="xsm-editor-button-icon"
-                        alt="Backup" title="Backup" />
-                  <span class="xsm-editor-button-caption">Backup</span></a></span></li>
-                <li><span class="xsm-editor-button-background">
-                  <a wicket:id="systemPlugin" href="#" class="xsm-editor-button">
-                    <img wicket:id="pluginImage" class="xsm-editor-button-icon"
-                        alt="System" title="System" />
-                  <span class="xsm-editor-button-caption">System</span></a></span></li>
+                  <span class="xsm-editor-button-caption">Site</span></a></span></li>
               </ul>
 
               <ul class="xsm-editor-buttons-xsmadmin" wicket:id="xsmadmin-buttons">

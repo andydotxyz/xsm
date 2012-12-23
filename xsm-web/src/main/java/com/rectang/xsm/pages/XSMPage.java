@@ -185,15 +185,7 @@ public abstract class XSMPage extends WebPage implements IMarkupResourceStreamPr
     container.setVisible(user != null && user.isSiteAdmin());
     add(container);
 
-    link = new PluginLink("settingsPlugin", com.rectang.xsm.pages.admin.Site.class, "settings");
-    container.add(link);
-    link = new PluginLink("themePlugin", com.rectang.xsm.pages.admin.Theme.class, "theme");
-    container.add(link);
-    link = new PluginLink("usersPlugin", com.rectang.xsm.pages.admin.Users.class, "users");
-    container.add(link);
-    link = new PluginLink("backupPlugin", com.rectang.xsm.pages.admin.Backup.class, "backup");
-    container.add(link);
-    link = new PluginLink("systemPlugin", com.rectang.xsm.pages.admin.System.class, "system");
+    link = new PluginLink("sitePlugin", com.rectang.xsm.pages.admin.Site.class, "site");
     container.add(link);
 
     container = new WebMarkupContainer("xsmadmin-buttons");
@@ -222,7 +214,7 @@ public abstract class XSMPage extends WebPage implements IMarkupResourceStreamPr
     return sess;
   }
 
-  class PluginLink extends BookmarkablePageLink {
+  public static class PluginLink extends BookmarkablePageLink {
     public PluginLink(String id, Class link, String img) {
       super(id, link);
 
