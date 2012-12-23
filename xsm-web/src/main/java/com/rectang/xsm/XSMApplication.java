@@ -137,7 +137,7 @@ public class XSMApplication extends WebApplication {
     return WebApplication.DEVELOPMENT;
   }
 
-    protected WebRequest newWebRequest(HttpServletRequest servletRequest) {
+  protected WebRequest newWebRequest(HttpServletRequest servletRequest) {
     return new UploadWebRequest(servletRequest);
   }
 

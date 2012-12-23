@@ -1,9 +1,10 @@
 <assembly>
-  <id></id>
+  <id>dist</id>
   <formats>
     <format>tar.gz</format>
     <!--format>tar.bz2</format-->
     <format>zip</format>
+    <format>dir</format>
   </formats>
   <fileSets>
     <fileSet>
@@ -17,6 +18,11 @@
         <include>TODO</include>
       </includes>
     </fileSet>
+    <fileSet>
+      <directory>target/scripts</directory>
+      <outputDirectory>bin</outputDirectory>
+      <fileMode>0755</fileMode>
+    </fileSet>
   </fileSets>
   <files>
     <file>
@@ -28,5 +34,20 @@
       <outputDirectory></outputDirectory>
       <destName>xsm.war</destName>
     </file>
+    <file>
+      <source>${basedir}/target/dependency/xsm-bin-${pom.version}.jar</source>
+      <outputDirectory>bin/</outputDirectory>
+      <destName>xsm-bin.jar</destName>
+    </file>
   </files>
+  <dependencySets>
+    <dependencySet>
+      <outputDirectory>bin/</outputDirectory>
+      <includes>
+        <include>org.mortbay.jetty:jetty</include>
+        <include>org.mortbay.jetty:jetty-util</include>
+        <include>org.mortbay.jetty:servlet-api-2.5</include>
+      </includes>
+    </dependencySet>
+  </dependencySets>
 </assembly>

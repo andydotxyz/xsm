@@ -13,6 +13,7 @@
 
   <modules>
     <module>xsm-web</module>
+    <module>xsm-bin</module>
     <module>xsm-dist</module>
   </modules>
 

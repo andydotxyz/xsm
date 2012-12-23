@@ -15,12 +15,40 @@
       <version>2.0-SNAPSHOT</version>
       <type>war</type>
     </dependency>
+    <dependency>
+      <groupId>com.rectang.xsm</groupId>
+      <artifactId>xsm-bin</artifactId>
+      <version>2.0-SNAPSHOT</version>
+    </dependency>
   </dependencies>
   <build>
+    <resources>
+      <resource>
+        <directory>src/main/scripts</directory>
+        <filtering>true</filtering>
+        <targetPath>../scripts</targetPath>
+      </resource>
+    </resources>
+
     <plugins>
       <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>process-resources</id>
+            <goals>
+              <goal>resources</goal>
+            </goals>
+            <phase>process-resources</phase>
+            <configuration>
+              <outputDirectory>${project.build.directory}/scripts</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
-        <version>2.0-alpha-4</version>
+        <version>2.1</version>
         <executions>
           <execution>
             <phase>process-resources</phase>
@@ -35,7 +63,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.1</version>
+        <version>2.4</version>
         <executions>
           <execution>
             <id>config</id>
@@ -61,6 +89,7 @@
                 <descriptor>src/main/assembly/dist.xml</descriptor>
               </descriptors>
               <finalName>xsm-${pom.version}</finalName>
+              <appendAssemblyId>false</appendAssemblyId>
             </configuration>
           </execution>
         </executions>
