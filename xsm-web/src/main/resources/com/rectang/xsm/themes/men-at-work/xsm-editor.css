@@ -1,220 +1,245 @@
 @import "xsm-toolbar.css";
 
 textarea, .metadata, .metadata_value, .metadata_title, .metadata_description {
-  width: 100%;
+    width: 100%;
 }
 
 #xsm_content .xsm-editor-tabs {
-  width: 100%;
-  height: 15pt;
-  margin-top: -10pt;
-  margin-bottom: -5pt;
-  padding: 0 1px;
-  position: relative;
-  z-index: 1000;
+    font-family: arial, sans-serif;
+    font-size: 13px;
 
-  background-image: url( xsm-editor-bg.png );
-  border: 1px solid #fde300;
-  color: #ffffff;
+    height: 15pt;
+    padding: 0 1px;
+    z-index: 1000;
 
-  font-family: arial, sans-serif;
-  font-size: 12px;
+    border: 1px solid black;
+    background-color: lightgrey;
+
+    opacity: 0.9;
+    color: black;
+
+    position: fixed;
+    top: 32px;
 }
 
 #xsm_content .xsm-editor-tab-active {
-  text-align: center;
+    text-align: center;
 
-  margin:0;
-  padding:2px 1px;
-  width: 80px;
+    margin:0;
+    padding:2px 1px;
+    width: 80px;
+
+    background-color: gray;
+    padding: 0px;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
 }
 
 #xsm_content .xsm-editor-tab-active a {
-  text-decoration: none;
-  background-color: #463f00;
-  display: block;
-  color: #ffffff;
-  border: 1px outset #fde300;
+    text-decoration: none;
+    display: block;
+    color: black;
 }
 
 #xsm_content .xsm-editor-tab-active a:hover {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 #xsm_content .xsm-editor-tab-inactive {
-  text-align: center;
-  margin:0;
-  padding:2px 1px;
-  width: 80px;
+    text-align: center;
+    margin:0;
+    padding:2px 1px;
+    width: 80px;
+
+    border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+}
+
+#xsm_content .xsm-editor-tab-inactive:hover {
+    background-color: gray;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
 }
 
 #xsm_content .xsm-editor-tab-inactive a {
-  text-decoration: none;
-  display: block;
-  padding: 1px;
-  color: #ffffff;
+    text-decoration: none;
+    display: block;
+    padding: 1px;
+    color: black;
 }
 
 #xsm_content .xsm-editor-tab-inactive a:hover {
-  text-decoration: none;
-  color: #ffffff;
-  background-color: #463f00;
-  border: 1px outset #fde300;
-  padding: 0;
+    text-decoration: none;
+    color: #ffffff;
+    padding: 0;
 }
 
 #xsm_content .xsm-editor-tab-extra {
-  display: none;
+    display: none;
 }
 
 #xsm_content .xsm-editor-tab-spacer {
-  margin:0;
-  padding:1px;
+    margin:0;
+    padding:1px;
 }
 
 #xsm_content .xsm-editor-php-mask {
-  border: 1px outset #fde300;
-  color: #ffffff;
-  background-image: url( xsm-editor-bg.png );
+    border: 1px outset #fde300;
+    color: #ffffff;
+    background-image: url( xsm-editor-bg.png );
 }
 
 #xsm_content .xsm-editor-message, #xsm_content .xsm-editor-message-wide {
-  border: 1px solid black;
-  background-color: lightgrey;
-  
-  opacity: 0.9;
-  color: black;
-  
-  position: fixed;
-  top: 32;
+    border: 1px solid black;
+    background-color: lightgrey;
+
+    opacity: 0.9;
+    color: black;
+
+    position: fixed;
+    top: 32px;
 }
 
 #xsm_content .xsm-editor-message-wide {
-  width: 100%;
+    width: 100%;
 }
 
 #xsm_content .xsm-editor-message-title {
-  text-align: left;
-  font-family: arial, sans-serif;
-  font-size: 12px;
-  font-weight: bold;
+    text-align: left;
+    font-family: arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
 
-  border-bottom: 1px solid black;
-  padding: 3px;
+    border-bottom: 1px solid black;
+    padding: 3px;
 }
 
 #xsm_content .xsm-editor-message-main {
-  color: black;
-  
-  padding: 3px;
+    color: black;
+
+    padding: 3px;
 }
 
 #xsm_content .xsm-editor-message-main a {
-  color: black;
-  text-decoration: none;
-  font-weight: bold;
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 #xsm_content .xsm-editor-message-main a:hover {
-  color: black;
-  text-decoration: underline;
-  font-weight: bold;
+    color: black;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+form {
+    padding: 0;
+    margin: 0;
+}
+
+input.savepage {
+    top: 25px;
+    float: right;
+    padding: 0;
+    margin: 0;
+    margin-top: -38px;
+    font-size: 14pt !important;
 }
 
 /* grouping of edit cells */
 
 #xsm_content .xsm-editor-group-main input, #xsm_content .xsm-editor-group-main textarea {
-  width: 99%;
+    width: 99%;
 }
 
 /* overriding themes */
 
 .contenticon {
-  width: 16px;
-  height: 16px;
+    width: 16px;
+    height: 16px;
 
-  background-repeat: no-repeat;
+    background-repeat: no-repeat;
 }
 
 .xsm_menu_item.addpage a, .xsm_menu_item.addlink a {
-  padding-left: 20px;
-  background-position: left center;
-  background-repeat: no-repeat;
+    padding-left: 20px;
+    background-position: left center;
+    background-repeat: no-repeat;
 }
 .xsm_menu_item.addpage a {
-  background-image: url(../../icons/document-new.png);
+    background-image: url(../../icons/document-new.png);
 }
 
 .xsm_menu_item.addlink a {
-  background-image: url(../../icons/html-new.png);
+    background-image: url(../../icons/html-new.png);
 }
 
 /* data tables */
 #xsm_content table.dataview {
-  background-image: url( xsm-editor-bg.png );
-  border: 1px solid #fde300;
-  margin-bottom: 10px;
+    background-image: url( xsm-editor-bg.png );
+    border: 1px solid #fde300;
+    margin-bottom: 10px;
 
-  font-family: arial, sans-serif;
-  font-size: 12px;
-  color: #ffffff;
+    font-family: arial, sans-serif;
+    font-size: 12px;
+    color: #ffffff;
 }
 
 #xsm_content table.dataview a {
-  color: #ffffff;
-  text-decoration: none;
-  font-weight: bold;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 #xsm_content table.dataview a:hover {
-  color: #ffffff;
-  text-decoration: underline;
-  font-weight: bold;
+    color: #ffffff;
+    text-decoration: underline;
+    font-weight: bold;
 }
 
 #xsm_content table.dataview th {
-  border-bottom: 1px outset #fde300;
+    border-bottom: 1px outset #fde300;
 
-  text-align: left;
-  white-space: nowrap;
+    text-align: left;
+    white-space: nowrap;
 }
 
 #xsm_content table.dataview tr {
-  padding-top: 2px;
-  padding-bottom: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px;
 }
 
 #xsm_content table.dataview tr.even {
-  background-color: #000000;
+    background-color: #000000;
 }
 
 #xsm_content table.dataview tr.odd {
-  background-color: #353105;
+    background-color: #353105;
 }
 
 #xsm_content table.dataview td, table.dataview th {
-  padding-left: 8px;
-  padding-right: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
 /* progress bar */
 
 div.wupb-uploadStatus {
-  color: #ffffff;
-  margin: 5px;
-  margin-top: 0;
+    color: #ffffff;
+    margin: 5px;
+    margin-top: 0;
 }
 
 div.wupb-progressBar {
-  margin: 5px;
+    margin: 5px;
 }
 
 div.wupb-progressBar .wupb-border {
-  background-color: #000000;
-  border: 1px solid #fde300;
-  width: 100%;
+    background-color: #000000;
+    border: 1px solid #fde300;
+    width: 100%;
 }
 
 div.wupb-progressBar .wupb-background {
-  background-image: url( xsm-editor-bg.png );
+    background-image: url( xsm-editor-bg.png );
 }

@@ -81,7 +81,6 @@ public class Edit extends DocumentPage {
 
   private class EditForm extends Form {
     private XSMDocument doc;
-    private boolean publish = false;
 
     public EditForm(String id, XSMDocument doc) {
       super(id);
@@ -93,8 +92,6 @@ public class Edit extends DocumentPage {
       setModel(new CompoundPropertyModel(doc));
       add(new UploadProgressBar("progress", this));
 
-      add(new PublishButton("publish1"));
-      add(new PublishButton("publish2"));
       add(getDoc().edit("content", "", getXSMSession().getUser()));
     }
 
@@ -122,29 +119,17 @@ public class Edit extends DocumentPage {
           }
         }
 
-        if (publish) {
-          if (pagePath.equals(site.getNewsSource())) {
-            // TODO perhaps report status on failure?
-            site.publish(getXSMSession().getUser());
-          } else {
-            // TODO perhaps report status on failure?
-            getDocumentPage().publish(getXSMSession().getUser());
-          }
-
-          setResponsePage(View.class, getPageNameParams());
+        if (pagePath.equals(site.getNewsSource())) {
+          // TODO perhaps report status on failure?
+          site.publish(getXSMSession().getUser());
+        } else {
+          // TODO perhaps report status on failure?
+          getDocumentPage().publish(getXSMSession().getUser());
         }
+
+        setResponsePage(View.class, getPageNameParams());
       } else {
         error("Failed to save page " + getDocumentPage().getTitle());
-      }
-    }
-
-    class PublishButton extends Button {
-      public PublishButton(String id) {
-        super(id);
-      }
-
-      public void onSubmit() {
-        publish = true;
       }
     }
   }
