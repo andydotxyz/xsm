@@ -137,15 +137,6 @@ form {
     margin: 0;
 }
 
-input.savepage {
-    top: 25px;
-    float: right;
-    padding: 0;
-    margin: 0;
-    margin-top: -38px;
-    font-size: 14pt !important;
-}
-
 /* grouping of edit cells */
 
 #xsm_content .xsm-editor-group-main input, #xsm_content .xsm-editor-group-main textarea {

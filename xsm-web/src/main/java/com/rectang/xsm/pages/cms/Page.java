@@ -3,21 +3,8 @@ package com.rectang.xsm.pages.cms;
 import com.rectang.xsm.AccessControl;
 import com.rectang.xsm.pages.XSMPage;
 import com.rectang.xsm.pages.Secure;
-import com.rectang.xsm.pages.nav.Contents;
-import com.rectang.xsm.site.HierarchicalPage;
 
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.*;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.model.StringResourceModel;
-
-import java.util.List;
-import java.util.Vector;
 
 /**
  * The main CMS pages parent
@@ -27,20 +14,13 @@ import java.util.Vector;
  * @since 2.0
  */
 public abstract class Page extends XSMPage implements Secure {
-  private List<Class<? extends Page>> tabs;
   private boolean error = false;
   private String pageName;
 
   public Page(PageParameters parameters) {
     super(parameters);
-    tabs = new Vector<Class<? extends Page>>();
 
-    tabs.add(Contents.class);
     pageName = parameters.getString("page");
-  }
-
-  public void addTab(Class<? extends Page> tab) {
-    tabs.add(tab);
   }
 
   public int getLevel() {
@@ -68,21 +48,6 @@ public abstract class Page extends XSMPage implements Secure {
       return;
     }
 
-    add(new ListView<Class<? extends Page>>("tabs", tabs) {
-      protected void populateItem(ListItem<Class<? extends Page>> listItem) {
-        String tabId = listItem.getModelObject().getSimpleName();
-        listItem.add(addWicketTab(listItem.getModelObject(), tabId));
-        listItem.setRenderBodyOnly(true);
-      }
-    });
-
-    // TODO - figure what we should be doing with this new tab thingy
-    add(addWicketTab(New.class, "New", "tab-new").setVisible((getXSMPage() instanceof HierarchicalPage) && canEdit()));
-    WebMarkupContainer space = new WebMarkupContainer("tab-new-spacer");
-    space.setVisible((getXSMPage() instanceof HierarchicalPage) && canEdit());
-    add(space);
-
-    
     if (pageName == null) {
       error("No page selected");
     }
@@ -99,31 +64,6 @@ public abstract class Page extends XSMPage implements Secure {
     return getXSMSession().getSite().getPage(getPageName());
   }
 
-  private WebMarkupContainer addWicketTab(final Class page, final String title) {
-    return addWicketTab(page, title, "tab-cell");
-  }
-
-  private WebMarkupContainer addWicketTab(final Class page, final String tabID, String id) {
-    final Class thisClass = this.getClass();
-    WebMarkupContainer tabCell = new WebMarkupContainer(id);
-    tabCell.add(new AttributeModifier("class", new Model() {
-      public String getObject() {
-        if (thisClass.equals(page))
-          return "xsm-editor-tab-active";
-
-        return "xsm-editor-tab-inactive";
-      }
-    }));
-
-    final Link tab = new BookmarkablePageLink("tab-link", page, getPageNameParams());
-    tabCell.add(tab);
-
-    Label label = new Label("tab-label",
-        new StringResourceModel("tab." + tabID + ".title", tab, null));
-    tab.add(label.setRenderBodyOnly(true));
-    return tabCell;
-  }
-
   protected PageParameters getPageNameParams() {
     PageParameters params = new PageParameters();
     if (getPageName() != null) {
@@ -135,5 +75,10 @@ public abstract class Page extends XSMPage implements Secure {
 
   protected boolean hasError() {
     return error;
+  }
+
+  @Override
+  public Class<? extends Page> getCMSEditPage() {
+    return Edit.class;
   }
 }

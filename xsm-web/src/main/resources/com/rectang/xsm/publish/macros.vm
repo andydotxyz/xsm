@@ -216,6 +216,29 @@
 
               <div id="xsm-editor-logo">XSM</div>
 
+              <ul class="xsm-editor-buttons-page" wicket:id="page-buttons">
+                <wicket:enclosure child="editPlugin">
+                <li><span class="xsm-editor-button-background xsm-editor-edit-button">
+                  <a wicket:id="editPlugin" href="#" class="xsm-editor-button">
+                    <img wicket:id="pluginImage" class="xsm-editor-button-icon"
+                         alt="Edit" title="Edit" />
+                    <span class="xsm-editor-button-main-caption">Edit</span></a></span></li>
+                </wicket:enclosure>
+                <wicket:enclosure child="savePlugin">
+                <li><span class="xsm-editor-button-background xsm-editor-edit-button">
+                  <a wicket:id="savePlugin" href="#" class="xsm-editor-button">
+                    <img wicket:id="pluginImage" class="xsm-editor-button-icon"
+                         alt="Save" title="Save" />
+                    <span class="xsm-editor-button-main-caption">Save</span></a></span></li>
+                </wicket:enclosure>
+
+                <li><span class="xsm-editor-button-background">
+                  <a wicket:id="pagePlugin" href="#" class="xsm-editor-button">
+                    <img wicket:id="pluginImage" class="xsm-editor-button-icon"
+                         alt="Page Options" title="Page Options" />
+                    <span class="xsm-editor-button-caption">Options</span></a></span></li>
+              </ul>
+
               <ul class="xsm-editor-buttons-user" wicket:id="user-buttons">
 
                 <li><span class="xsm-editor-button-background">

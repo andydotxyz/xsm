@@ -10,7 +10,10 @@
   <body>
     <wicket:extend>
       <form wicket:id="editform" accept-charset="utf-8">
-        <input type="submit" name="savepage" value="Save" class="savepage">
+        <span class="xsm-editor-button-background xsm-editor-edit-button">
+          <a wicket:id="saveButton" class="xsm-editor-button" id="saveButton">
+            <img wicket:id="saveImage" class="xsm-editor-button-icon" alt="Save" title="Save" />
+            <span class="xsm-editor-button-main-caption">Save</span></a></span>
 
         <div wicket:id="content"></div>
 

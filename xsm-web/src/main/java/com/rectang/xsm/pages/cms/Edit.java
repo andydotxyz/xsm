@@ -3,14 +3,17 @@ package com.rectang.xsm.pages.cms;
 import com.rectang.xsm.Locale;
 import com.rectang.xsm.UserData;
 import com.rectang.xsm.XSM;
+import com.rectang.xsm.pages.XSMPage;
 import com.rectang.xsm.site.Site;
 import com.rectang.xsm.util.EmailUtils;
 import com.rectang.xsm.io.XSMDocument;
+import org.apache.wicket.ResourceReference;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.extensions.ajax.markup.html.form.upload.UploadProgressBar;
+import org.apache.wicket.markup.html.form.SubmitLink;
+import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.util.lang.Bytes;
 import org.apache.wicket.model.CompoundPropertyModel;
 
@@ -25,8 +28,12 @@ import java.util.Iterator;
  * @since 2.0
  */
 public class Edit extends DocumentPage {
+  EditForm form;
+
   public Edit(PageParameters parameters) {
     super(parameters);
+
+    add(form = new EditForm("editform", getDoc()));
   }
 
   public void layout() {
@@ -41,8 +48,6 @@ public class Edit extends DocumentPage {
 
     add(new Label("activateEditor", activateEditor()).setEscapeModelStrings(false)
         .setVisible(!getXSMSession().getUser().getHtmlEditor().equals("textarea")));
-
-    add(new EditForm("editform", getDoc()));
   }
 
   private String activateEditor() {
@@ -93,6 +98,10 @@ public class Edit extends DocumentPage {
       add(new UploadProgressBar("progress", this));
 
       add(getDoc().edit("content", "", getXSMSession().getUser()));
+
+      SubmitLink submit = new SubmitLink("saveButton");
+      submit.add(new Image("saveImage", new ResourceReference(XSMPage.class, "buttons/save.png")));
+      add(submit.setVisible(isCMSPageEditing()));
     }
 
     protected void onSubmit() {
@@ -132,5 +141,9 @@ public class Edit extends DocumentPage {
         error("Failed to save page " + getDocumentPage().getTitle());
       }
     }
+  }
+
+  public Form getEditForm() {
+    return form;
   }
 }

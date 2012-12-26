@@ -15,12 +15,14 @@ import org.apache.wicket.PageParameters;
 public abstract class LinkPage extends Page implements Secure {
   protected LinkPage(PageParameters parameters) {
     super(parameters);
-
-    addTab(LinkView.class);
-    addTab(LinkEdit.class);
   }
 
   public int getLevel() {
     return AccessControl.MEMBER;
+  }
+
+  @Override
+  public Class<? extends Page> getCMSEditPage() {
+    return LinkEdit.class;
   }
 }

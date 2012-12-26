@@ -2,15 +2,20 @@ package com.rectang.xsm.pages;
 
 import com.rectang.xsm.*;
 import com.rectang.xsm.io.XSMDocument;
+import com.rectang.xsm.pages.cms.PageSettings;
 import com.rectang.xsm.pages.admin.Upgrade;
 import com.rectang.xsm.pages.admin.xsm.Admin;
 import com.rectang.xsm.pages.admin.xsm.Setup;
+import com.rectang.xsm.pages.cms.Edit;
+import com.rectang.xsm.pages.nav.LinkEdit;
 import com.rectang.xsm.panels.ContentPanel;
 import com.rectang.xsm.panels.XSMFeedbackPanel;
 import com.rectang.xsm.site.DocumentPage;
 import com.rectang.xsm.site.Site;
 import com.rectang.xsm.wicket.VelocityPanel;
 import org.apache.velocity.VelocityContext;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.authorization.AuthorizationException;
 import org.apache.wicket.behavior.HeaderContributor;
 import org.apache.wicket.markup.DefaultMarkupResourceStreamProvider;
@@ -18,6 +23,8 @@ import org.apache.wicket.markup.IMarkupCacheKeyProvider;
 import org.apache.wicket.markup.IMarkupResourceStreamProvider;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.StringResourceStream;
 import org.apache.wicket.*;
@@ -170,11 +177,32 @@ public abstract class XSMPage extends WebPage implements IMarkupResourceStreamPr
       ((XSMSession)getSession()).setRequestedSite(parameters.getString("sitename"));
     }
 
-    WebMarkupContainer container = new WebMarkupContainer("user-buttons");
+    WebMarkupContainer container = new WebMarkupContainer("page-buttons");
     container.setVisible(getXSMSession().isUserLoggedIn());
     add(container);
 
-    PluginLink link = new PluginLink("profilePlugin", Profile.class, "profile");
+    if (getCMSEditPage() != null) {
+      Link link = new PluginLink("editPlugin", getCMSEditPage(), getPageParameters(), "edit");
+      container.add(link.setVisible(!isCMSPageEditing()));
+    } else {
+      container.add(new WebMarkupContainer("editPlugin").setVisible(false));
+    }
+    if (isCMSPageEditing()) {
+      AjaxSubmitLink ajaxlink = new SubmitPluginLink("savePlugin", this, "save");
+      container.add(ajaxlink.setVisible(isCMSPageEditing()));
+    } else {
+      container.add(new WebMarkupContainer("savePlugin").setVisible(false));
+    }
+    Link link = new PluginLink("pagePlugin", PageSettings.class, getPageParameters(), "pagesettings");
+    container.add(link.setVisible(this instanceof com.rectang.xsm.pages.cms.DocumentPage));
+
+    container.setVisible(isCMSPage());
+
+    container = new WebMarkupContainer("user-buttons");
+    container.setVisible(getXSMSession().isUserLoggedIn());
+    add(container);
+
+    link = new PluginLink("profilePlugin", Profile.class, "profile");
     container.add(link);
     link = new PluginLink("preferencesPlugin", Preferences.class, "preferences");
     container.add(link);
@@ -218,8 +246,57 @@ public abstract class XSMPage extends WebPage implements IMarkupResourceStreamPr
     public PluginLink(String id, Class link, String img) {
       super(id, link);
 
+      addImage(img);
+    }
+
+    public PluginLink(String id, Class link, PageParameters params, String img) {
+      super(id, link, params);
+
+      addImage(img);
+    }
+
+    private void addImage(String img) {
       add(new Image("pluginImage", new ResourceReference(this.getClass(),
           "buttons/" + img + ".png")));
     }
+  }
+
+  public static class SubmitPluginLink extends AjaxSubmitLink {
+    public SubmitPluginLink(String id, XSMPage page, String img) {
+      super(id, getFormForEditPage(page));
+
+      addImage(img);
+    }
+
+    private void addImage(String img) {
+      add(new Image("pluginImage", new ResourceReference(this.getClass(),
+          "buttons/" + img + ".png")));
+    }
+
+    private static Form getFormForEditPage(XSMPage page) {
+      if (page instanceof Edit) {
+        return ((Edit) page).getEditForm();
+      } else if (page instanceof LinkEdit ) {
+        return ((LinkEdit) page).getEditForm();
+      }
+
+      return null;
+    }
+
+    @Override
+    protected void onSubmit(AjaxRequestTarget ajaxRequestTarget, Form<?> form) {
+    }
+  }
+
+  public boolean isCMSPage() {
+    return getCMSEditPage() != null;
+  }
+
+  public Class<? extends Page> getCMSEditPage() {
+    return null;
+  }
+
+  public boolean isCMSPageEditing() {
+    return getCMSEditPage() != null && this.getClass().isAssignableFrom(getCMSEditPage());
   }
 }

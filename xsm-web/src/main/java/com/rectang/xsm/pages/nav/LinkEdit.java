@@ -1,8 +1,12 @@
 package com.rectang.xsm.pages.nav;
 
+import com.rectang.xsm.pages.XSMPage;
 import org.apache.wicket.PageParameters;
+import org.apache.wicket.ResourceReference;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.model.PropertyModel;
 
 /**
@@ -13,21 +17,27 @@ import org.apache.wicket.model.PropertyModel;
  * @since 2.0
  */
 public class LinkEdit extends LinkPage {
+  EditLinkForm form;
+
   public LinkEdit(PageParameters parameters) {
     super(parameters);
+
+    add(form = new EditLinkForm("editlink"));
   }
 
   public void layout() {
     super.layout();
-
-    add(new EditLinkForm("editlink"));
   }
 
   class EditLinkForm extends Form {
     public EditLinkForm(String id) {
       super(id);
 
-      add(new TextField("link", new PropertyModel(getXSMPage(), "link")));
+      add(new TextField<String>("link", new PropertyModel<String>(getXSMPage(), "link")));
+
+      SubmitLink submit = new SubmitLink("saveButton");
+      submit.add(new Image("saveImage", new ResourceReference(XSMPage.class, "buttons/save.png")));
+      add(submit.setVisible(isCMSPageEditing()));
     }
 
 
@@ -40,5 +50,9 @@ public class LinkEdit extends LinkPage {
       }
       setResponsePage(LinkView.class, getPageNameParams());
     }
+  }
+
+  public Form getEditForm() {
+    return form;
   }
 }

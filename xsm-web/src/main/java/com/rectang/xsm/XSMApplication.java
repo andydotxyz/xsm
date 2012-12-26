@@ -98,6 +98,7 @@ public class XSMApplication extends WebApplication {
     initMount("page-options", Options.class);
     initMount("page-permissions", Permissions.class);
     initMount("page-security", Security.class);
+    initMount("page-settings", PageSettings.class);
     initMount("page-status", Status.class);
     initMount("page-view", View.class);
 

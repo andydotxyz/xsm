@@ -15,21 +15,11 @@ import org.apache.wicket.PageParameters;
 public abstract class DocumentPage extends Page implements Secure {
   protected DocumentPage(PageParameters parameters) {
     super(parameters);
-
-    addTab(View.class);
-    addTab(Edit.class);
-    addTab(Permissions.class);
-    addTab(Status.class);
-    addTab(Options.class);
-    if (getXSMSession().getSite().getTechnologies().contains("apache")) {
-      addTab(Security.class);
-    }
   }
 
   public int getLevel() {
     return AccessControl.MEMBER;
   }
-
 
   public boolean canEdit() {
     return getXSMPage() != null && getDoc() != null &&
