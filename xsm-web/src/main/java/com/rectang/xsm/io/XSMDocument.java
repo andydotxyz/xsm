@@ -28,7 +28,12 @@ public class XSMDocument implements Serializable {
   private DocumentPage page;
 
   public static XSMDocument getXSMDoc(Site site, DocumentPage page) {
-    return getXSMDoc(site, page, false);
+    try {
+      return getXSMDoc(site, page, false);
+    } catch (RuntimeException e) {
+      System.err.println("Unable to read document for page " + page.getPublishedPath() + ": " + e.getMessage());
+      throw e;
+    }
   }
 
   public static XSMDocument getXSMDoc(Site site, DocumentPage page, boolean create) {
@@ -299,7 +304,7 @@ public class XSMDocument implements Serializable {
         }
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      System.err.println("Unable to publish page " + getPage().getPublishedPath() + ": " + e.getMessage());
       return false;
     } finally {
       IOUtil.close(writer);
