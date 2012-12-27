@@ -20,116 +20,139 @@ import org.apache.wicket.ResourceReference;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.model.Model;
 
-public class Glossary extends DocGroup {
+public class Glossary
+        extends DocGroup
+{
 
-  static QSortAlgorithm sort;
+    static QSortAlgorithm sort;
 
-  public Glossary(java.lang.String name) {
-    super(name, new GlossaryItem("item"));
+    public Glossary( java.lang.String name )
+    {
+        super( name, new GlossaryItem( "item" ) );
 
-    sort = new QSortAlgorithm(compare);
-  }
+        sort = new QSortAlgorithm( compare );
+    }
 
-  public WebMarkupContainer edit(String wicketId, Element node, String path) {
-    return new GlossaryPanel(wicketId, node, path);
-  }
+    public WebMarkupContainer edit( String wicketId, Element node, String path )
+    {
+        return new GlossaryPanel( wicketId, node, path );
+    }
 
-  public void publish(Element node, StringBuffer s) {
-    List children = new java.util.Vector(node.getChildren("item"));
-    node.removeChildren("item");
-    sort.sort(children);
-    node.addContent(children);
+    public void publish( Element node, StringBuffer s )
+    {
+        List children = new java.util.Vector( node.getChildren( "item" ) );
+        node.removeChildren( "item" );
+        sort.sort( children );
+        node.addContent( children );
 
-    super.publish(node, s);
-  }
+        super.publish( node, s );
+    }
 
-  static Comparator compare = new Comparator() {
+    static Comparator compare = new Comparator()
+    {
 
-    public int compare(Object o1, Object o2) {
-      String o1term = ((Element) o1).getChildText("term");
-      String o2term = ((Element) o2).getChildText("term");
+        public int compare( Object o1, Object o2 )
+        {
+            String o1term = ((Element) o1).getChildText( "term" );
+            String o2term = ((Element) o2).getChildText( "term" );
 
-      return String.CASE_INSENSITIVE_ORDER.compare(o1term, o2term);
-    }    
-  };
-
-  class GlossaryPanel extends Panel {
-    public GlossaryPanel(final String wicketId, final Element node, final String path) {
-      super(wicketId);
-      add(new Label("name", getName()));
-
-      List children = node.getChildren(element.getName());
-      add(new ListView("elements", children) {
-        protected void populateItem(ListItem listItem) {
-          final Element child = (Element) listItem.getModelObject();
-          final int i = listItem.getIndex();
-
-          Link add = new Link("add") {
-            public void onClick() {
-              addChild(node, i);
-            }
-          };
-          listItem.add(add.setVisible(listItem.getIndex() == 0));
-          add.add(new Image("add-icon", new ResourceReference(XSM.class,
-                "icons/document-new.png")));
-          listItem.add(new Label("add-label", new StringResourceModel("add", add, new Model(element))));
-
-          Link delete = new Link("delete") {
-            public void onClick() {
-              //TODO add confirmation input
-              delete(node, element.getName() + "@" + i);
-            }
-          };
-          listItem.add(delete);
-          delete.add(new Image("delete-icon", new ResourceReference(XSM.class,
-                "icons/edit-delete.png")));
-
-          listItem.add(element.edit("content", child, path + "/" + element.getName() + "@" + i));
+            return String.CASE_INSENSITIVE_ORDER.compare( o1term, o2term );
         }
-      }).setRenderBodyOnly(true);
+    };
+
+    class GlossaryPanel
+            extends Panel
+    {
+        public GlossaryPanel( final String wicketId, final Element node, final String path )
+        {
+            super( wicketId );
+            add( new Label( "name", getName() ) );
+
+            List children = node.getChildren( element.getName() );
+            add( new ListView( "elements", children )
+            {
+                protected void populateItem( ListItem listItem )
+                {
+                    final Element child = (Element) listItem.getModelObject();
+                    final int i = listItem.getIndex();
+
+                    Link add = new Link( "add" )
+                    {
+                        public void onClick()
+                        {
+                            addChild( node, i );
+                        }
+                    };
+                    listItem.add( add.setVisible( listItem.getIndex() == 0 ) );
+                    add.add( new Image( "add-icon", new ResourceReference( XSM.class,
+                            "icons/document-new.png" ) ) );
+                    listItem.add( new Label( "add-label", new StringResourceModel( "add", add, new Model( element ) ) ) );
+
+                    Link delete = new Link( "delete" )
+                    {
+                        public void onClick()
+                        {
+                            //TODO add confirmation input
+                            delete( node, element.getName() + "@" + i );
+                        }
+                    };
+                    listItem.add( delete );
+                    delete.add( new Image( "delete-icon", new ResourceReference( XSM.class,
+                            "icons/edit-delete.png" ) ) );
+
+                    listItem.add( element.edit( "content", child, path + "/" + element.getName() + "@" + i ) );
+                }
+            } ).setRenderBodyOnly( true );
+        }
     }
-  }
 }
-  
-class GlossaryItem extends DocList {
 
-  public GlossaryItem(String name) {
-    super(name, new DocElement[] {
-        new com.rectang.xsm.widget.String("term"),
-        new com.rectang.xsm.widget.String("full-term"),
-        new com.rectang.xsm.widget.TextArea("definition")
-    });
-  }
+class GlossaryItem
+        extends DocList
+{
 
-  public void view(Element root, StringBuffer s) {
-    s.append("<p class=\"xsm_glossary_term\">");
-    elements[0].view(root.getChild("term"), s);
-
-    String full = root.getChildText("full-term");
-    if (full != null && !full.equals("")) {
-      s.append(" -- (");
-      elements[1].view(root.getChild("full-term"), s);
-      s.append(")");
+    public GlossaryItem( String name )
+    {
+        super( name, new DocElement[]{
+                new com.rectang.xsm.widget.String( "term" ),
+                new com.rectang.xsm.widget.String( "full-term" ),
+                new com.rectang.xsm.widget.TextArea( "definition" )
+        } );
     }
-    s.append("<br /><blockquote>");
-    elements[2].view(root.getChild("definition"), s);
-    s.append("</blockquote></p>\n");
-  }
 
-  public void publish(Element root, StringBuffer s) {
-    s.append("<p class=\"xsm_glossary_term\">");
-    elements[0].view(root.getChild("term"), s);
+    public void view( Element root, StringBuffer s )
+    {
+        s.append( "<p class=\"xsm_glossary_term\">" );
+        elements[0].view( root.getChild( "term" ), s );
 
-    String full = root.getChildText("full-term");
-    if (full != null && !full.equals("")) {
-      s.append(" -- (");
-      elements[1].view(root.getChild("full-term"), s);
-      s.append(")");
+        String full = root.getChildText( "full-term" );
+        if ( full != null && !full.equals( "" ) )
+        {
+            s.append( " -- (" );
+            elements[1].view( root.getChild( "full-term" ), s );
+            s.append( ")" );
+        }
+        s.append( "<br /><blockquote>" );
+        elements[2].view( root.getChild( "definition" ), s );
+        s.append( "</blockquote></p>\n" );
     }
-    s.append("</p><blockquote class=\"xsm_glossary_definition\">");
-    elements[2].view(root.getChild("definition"), s);
-    s.append("</blockquote>\n");
-  }
+
+    public void publish( Element root, StringBuffer s )
+    {
+        s.append( "<p class=\"xsm_glossary_term\">" );
+        elements[0].view( root.getChild( "term" ), s );
+
+        String full = root.getChildText( "full-term" );
+        if ( full != null && !full.equals( "" ) )
+        {
+            s.append( " -- (" );
+            elements[1].view( root.getChild( "full-term" ), s );
+            s.append( ")" );
+        }
+        s.append( "</p><blockquote class=\"xsm_glossary_definition\">" );
+        elements[2].view( root.getChild( "definition" ), s );
+        s.append( "</blockquote>\n" );
+    }
 
 }
 
@@ -169,8 +192,9 @@ class GlossaryItem extends DocList {
  * SortAlgorithm.java, Thu Oct 27 10:32:35 1994
  *
  * @author James Gosling
- * @version     1.6f, 31 Jan 1995
+ * @version 1.6f, 31 Jan 1995
  */
+
 /**
  * 19 Feb 1996: Fixed to avoid infinite loop discoved by Paul Haeberli.
  *              Misbehaviour expressed when the pivot element was not unique.
@@ -183,87 +207,99 @@ class GlossaryItem extends DocList {
  *
  * 09 Jan 1998: Another set of bug fixes by Thomas Everth (everth@wave.co.nz)
  *              and John Brzustowski (jbrzusto@gpu.srv.ualberta.ca).
- * 
+ *
  * 05 Jan 2006: Adapted by Andrew Williams (andy@hndyande.co.uk) to modify List
  *              objects using a Comparator instead of int arrays comparing ints.
  */
 
-class QSortAlgorithm {
+class QSortAlgorithm
+{
 
-  private Comparator comp;
+    private Comparator comp;
 
-  public QSortAlgorithm(Comparator c) {
-    this.comp = c;
-  }
+    public QSortAlgorithm( Comparator c )
+    {
+        this.comp = c;
+    }
 
-  void sort(List a, int lo0, int hi0) {
-    int lo = lo0;
-    int hi = hi0;
-    if (lo >= hi) {
-      return;
-    } else if( lo == hi - 1 ) {
+    void sort( List a, int lo0, int hi0 )
+    {
+        int lo = lo0;
+        int hi = hi0;
+        if ( lo >= hi )
+        {
+            return;
+        }
+        else if ( lo == hi - 1 )
+        {
       /*
        *  sort a two element list by swapping if necessary 
        */
-      if (comp.compare(a.get(lo), a.get(hi)) > 0) {
-        Object T = a.get(lo);
-        a.set(lo, a.get(hi));
-        a.set(hi, T);
-      }
-      return;
-    }
+            if ( comp.compare( a.get( lo ), a.get( hi ) ) > 0 )
+            {
+                Object T = a.get( lo );
+                a.set( lo, a.get( hi ) );
+                a.set( hi, T );
+            }
+            return;
+        }
 
     /*
      *  Pick a pivot and move it out of the way
      */
-    Object pivot = a.get((lo + hi) / 2);
+        Object pivot = a.get( (lo + hi) / 2 );
 
-    a.set((lo + hi) / 2, a.get(hi));
-    a.set(hi, pivot);
+        a.set( (lo + hi) / 2, a.get( hi ) );
+        a.set( hi, pivot );
 
-    while( lo < hi ) {
+        while ( lo < hi )
+        {
       /*
        *  Search forward from a[lo] until an element is found that
        *  is greater than the pivot or lo >= hi 
        */
-      while (comp.compare(a.get(lo), pivot) <= 0 && lo < hi) {
-        lo++;
-      }
+            while ( comp.compare( a.get( lo ), pivot ) <= 0 && lo < hi )
+            {
+                lo++;
+            }
 
       /*
        *  Search backward from a[hi] until element is found that
        *  is less than the pivot, or lo >= hi
        */
-      while (comp.compare(pivot, a.get(hi)) <= 0 && lo < hi ) {
-        hi--;
-      }
+            while ( comp.compare( pivot, a.get( hi ) ) <= 0 && lo < hi )
+            {
+                hi--;
+            }
 
       /*
        *  Swap elements a[lo] and a[hi]
        */
-      if( lo < hi ) {
-        Object T = a.get(lo);
-        a.set(lo, a.get(hi));
-        a.set(hi, T);
-      }
-    }
+            if ( lo < hi )
+            {
+                Object T = a.get( lo );
+                a.set( lo, a.get( hi ) );
+                a.set( hi, T );
+            }
+        }
 
     /*
      *  Put the median in the "center" of the list
      */
-    a.set(hi0, a.get(hi));
-    a.set(hi, pivot);
+        a.set( hi0, a.get( hi ) );
+        a.set( hi, pivot );
 
     /*
      *  Recursive calls, elements a[lo0] to a[lo-1] are less than or
      *  equal to pivot, elements a[hi+1] to a[hi0] are greater than
      *  pivot.
      */
-    sort(a, lo0, lo-1);
-    sort(a, hi+1, hi0);
-  }
+        sort( a, lo0, lo - 1 );
+        sort( a, hi + 1, hi0 );
+    }
 
-  void sort(List a) {
-    sort(a, 0, a.size() - 1);
-  }
+    void sort( List a )
+    {
+        sort( a, 0, a.size() - 1 );
+    }
 }

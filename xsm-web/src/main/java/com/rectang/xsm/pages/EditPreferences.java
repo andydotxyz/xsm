@@ -18,72 +18,95 @@ import java.util.*;
  * @version $Id: EditPreferences.java 826 2011-09-25 12:17:36Z andy $
  * @since 2.0
  */
-public class EditPreferences extends XSMPage implements Secure {
-  public EditPreferences(PageParameters parameters) {
-    super(parameters);
-  }
+public class EditPreferences
+        extends XSMPage
+        implements Secure
+{
+    public EditPreferences( PageParameters parameters )
+    {
+        super( parameters );
+    }
 
-  public int getLevel() {
-    return AccessControl.MEMBER;
-  }
+    public int getLevel()
+    {
+        return AccessControl.MEMBER;
+    }
 
-  public void layout() {
-    super.layout();
+    public void layout()
+    {
+        super.layout();
 
-    UserData user = getXSMSession().getUser();
+        UserData user = getXSMSession().getUser();
 
-    add(new EditPreferences.PreferencesForm("preferences", user));
-  }
+        add( new EditPreferences.PreferencesForm( "preferences", user ) );
+    }
 
-  class PreferencesForm extends Form
-  {
-    UserData user;
-    public PreferencesForm(String id, UserData user) {
-      super(id);
-      this.user = user;
+    class PreferencesForm
+            extends Form
+    {
+        UserData user;
 
-      setModel(new CompoundPropertyModel(user));
+        public PreferencesForm( String id, UserData user )
+        {
+            super( id );
+            this.user = user;
 
-      add(new ThemeDropDownChoice("theme"));
-      add(new EditorDropDownChoice("htmlEditor"));
+            setModel( new CompoundPropertyModel( user ) );
+
+            add( new ThemeDropDownChoice( "theme" ) );
+            add( new EditorDropDownChoice( "htmlEditor" ) );
 //      add(new LangDropDownChoice("locale", getXSMSession()));
-    }
+        }
 
-    public void onSubmit() {
-      if (user.getLocale() != null) {
-        this.getSession().setLocale(new Locale(user.getLocale()));
-      }
+        public void onSubmit()
+        {
+            if ( user.getLocale() != null )
+            {
+                this.getSession().setLocale( new Locale( user.getLocale() ) );
+            }
 
-      if (user.save())
-        this.setResponsePage(Preferences.class);
+            if ( user.save() )
+            {
+                this.setResponsePage( Preferences.class );
+            }
+        }
     }
-  }
 }
 
-class ThemeDropDownChoice extends DropDownChoice {
-  public ThemeDropDownChoice(String id) {
-    super(id, Theme.listThemes());
-  }
+class ThemeDropDownChoice
+        extends DropDownChoice
+{
+    public ThemeDropDownChoice( String id )
+    {
+        super( id, Theme.listThemes() );
+    }
 }
 
-class EditorDropDownChoice extends DropDownChoice {
-  static Map editors;
+class EditorDropDownChoice
+        extends DropDownChoice
+{
+    static Map editors;
 
-  static {
-    editors = new LinkedHashMap();
-    editors.put("tinymce", "TinyMCE - (default) An advanced WYSIWYG HTML editor");
-    editors.put("textarea", "Textarea (advanced) - for editing the HTML source code manually");
-  }
-
-  public EditorDropDownChoice(String id) {
-    super(id, new LinkedList(editors.keySet()));
-
-    this.setChoiceRenderer(new EditorRenderer());
-  }
-
-  class EditorRenderer extends ChoiceRenderer {
-    public Object getDisplayValue(Object object) {
-      return editors.get(object);
+    static
+    {
+        editors = new LinkedHashMap();
+        editors.put( "tinymce", "TinyMCE - (default) An advanced WYSIWYG HTML editor" );
+        editors.put( "textarea", "Textarea (advanced) - for editing the HTML source code manually" );
     }
-  }
+
+    public EditorDropDownChoice( String id )
+    {
+        super( id, new LinkedList( editors.keySet() ) );
+
+        this.setChoiceRenderer( new EditorRenderer() );
+    }
+
+    class EditorRenderer
+            extends ChoiceRenderer
+    {
+        public Object getDisplayValue( Object object )
+        {
+            return editors.get( object );
+        }
+    }
 }

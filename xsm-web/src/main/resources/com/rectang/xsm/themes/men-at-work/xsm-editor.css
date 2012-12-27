@@ -25,8 +25,8 @@ textarea, .metadata, .metadata_value, .metadata_title, .metadata_description {
 #xsm_content .xsm-editor-tab-active {
     text-align: center;
 
-    margin:0;
-    padding:2px 1px;
+    margin: 0;
+    padding: 2px 1px;
     width: 80px;
 
     background-color: gray;
@@ -47,8 +47,8 @@ textarea, .metadata, .metadata_value, .metadata_title, .metadata_description {
 
 #xsm_content .xsm-editor-tab-inactive {
     text-align: center;
-    margin:0;
-    padding:2px 1px;
+    margin: 0;
+    padding: 2px 1px;
     width: 80px;
 
     border-left: 1px solid lightgray;
@@ -79,14 +79,14 @@ textarea, .metadata, .metadata_value, .metadata_title, .metadata_description {
 }
 
 #xsm_content .xsm-editor-tab-spacer {
-    margin:0;
-    padding:1px;
+    margin: 0;
+    padding: 1px;
 }
 
 #xsm_content .xsm-editor-php-mask {
     border: 1px outset #fde300;
     color: #ffffff;
-    background-image: url( xsm-editor-bg.png );
+    background-image: url(xsm-editor-bg.png);
 }
 
 #xsm_content .xsm-editor-message, #xsm_content .xsm-editor-message-wide {
@@ -157,6 +157,7 @@ form {
     background-position: left center;
     background-repeat: no-repeat;
 }
+
 .xsm_menu_item.addpage a {
     background-image: url(../../icons/document-new.png);
 }
@@ -167,7 +168,7 @@ form {
 
 /* data tables */
 #xsm_content table.dataview {
-    background-image: url( xsm-editor-bg.png );
+    background-image: url(xsm-editor-bg.png);
     border: 1px solid #fde300;
     margin-bottom: 10px;
 
@@ -232,5 +233,5 @@ div.wupb-progressBar .wupb-border {
 }
 
 div.wupb-progressBar .wupb-background {
-    background-image: url( xsm-editor-bg.png );
+    background-image: url(xsm-editor-bg.png);
 }

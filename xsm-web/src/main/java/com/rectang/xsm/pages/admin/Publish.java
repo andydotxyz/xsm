@@ -22,37 +22,48 @@ import java.util.*;
  * @version $Id: Publish.java 832 2011-09-26 21:45:04Z andy $
  * @since 2.0
  */
-public class Publish extends XSMPage implements Secure {
-  public Publish(PageParameters parameters) {
-    super(parameters);
-  }
+public class Publish
+        extends XSMPage
+        implements Secure
+{
+    public Publish( PageParameters parameters )
+    {
+        super( parameters );
+    }
 
-  public int getLevel() {
-    return AccessControl.MANAGER;
-  }
+    public int getLevel()
+    {
+        return AccessControl.MANAGER;
+    }
 
-  public void layout() {
-    super.layout();
+    public void layout()
+    {
+        super.layout();
 
-    UserData user = getXSMSession().getUser();
+        UserData user = getXSMSession().getUser();
 
-    final Map results = user.getSite().publish(user);
-    List paths = new LinkedList(results.keySet());
-    Collections.sort(paths);
+        final Map results = user.getSite().publish( user );
+        List paths = new LinkedList( results.keySet() );
+        Collections.sort( paths );
 
-    add(new ListView<String>("status-output", paths) {
-      protected void populateItem(ListItem listItem) {
-        String path = (String) listItem.getModelObject();
-        listItem.add(new Label("path", path));
+        add( new ListView<String>( "status-output", paths )
+        {
+            protected void populateItem( ListItem listItem )
+            {
+                String path = (String) listItem.getModelObject();
+                listItem.add( new Label( "path", path ) );
 
-        Boolean ok = (Boolean) results.get(path);
-        if (ok == Boolean.TRUE) {
-          listItem.add(new Image("icon", new ResourceReference(XSM.class, "icons/emblem-default.png")));
-        } else {
-          listItem.add(new Image("icon", new ResourceReference(XSM.class, "icons/emblem-important.png")));
-        }
-      }
+                Boolean ok = (Boolean) results.get( path );
+                if ( ok == Boolean.TRUE )
+                {
+                    listItem.add( new Image( "icon", new ResourceReference( XSM.class, "icons/emblem-default.png" ) ) );
+                }
+                else
+                {
+                    listItem.add( new Image( "icon", new ResourceReference( XSM.class, "icons/emblem-important.png" ) ) );
+                }
+            }
 
-    });
-  }
+        } );
+    }
 }

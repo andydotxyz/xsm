@@ -1,84 +1,84 @@
 /* XSM layout */
 
 #xsm_page {
-  width: 760px;
-  margin-left: auto;
-  margin-right: auto;
+    width: 760px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #xsm_content {
-  clear: both;
+    clear: both;
 }
 
 #xsm_news {
-  display: none;
+    display: none;
 }
 
 #xsm_footer {
-  clear: both;
+    clear: both;
 }
 
 .xsm_edit {
-  float: right;
+    float: right;
 }
 
 /* XSM Gallery */
 p.xsm_gallery_nav {
-  width: 100%;
-  text-align: center;
+    width: 100%;
+    text-align: center;
 }
 
 span.xsm_gallery_nav_prev {
-  float: left;
+    float: left;
 }
 
 span.xsm_gallery_nav_curr {
-  text-align: center;
-  margin: 0 100px;
-  display: block;
+    text-align: center;
+    margin: 0 100px;
+    display: block;
 }
 
 span.xsm_gallery_nav_next {
-  float: right;
+    float: right;
 }
 
 div.xsm_gallery_preview {
-  width: 100%;
-  text-align: center;
+    width: 100%;
+    text-align: center;
 }
 
 /* XSM Menu bar */
 
 .xsm_menu_group ul, .xsm_menu_group li {
-  width: 100%;
-  display: inline;
-  list-style: none;
+    width: 100%;
+    display: inline;
+    list-style: none;
 }
 
 #xsm_menu ul {
-  padding: 0;
-  margin: 0;
+    padding: 0;
+    margin: 0;
 }
 
 .xsm_menu_group li {
-  position: relative;
+    position: relative;
 }
 
 .xsm_menu_group ul {
-  display: none;
-  position: absolute;
-  left: 0;
-  top: 15px;
-  z-index: 500;
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 15px;
+    z-index: 500;
 }
 
 .xsm_menu_group ul li {
-  display: block;
+    display: block;
 }
 
 .xsm_menu_group ul ul {
-  top: 5px;
-  left: 20px;
+    top: 5px;
+    left: 20px;
 }
 
 .xsm_news_archive ul {
@@ -87,25 +87,25 @@ div.xsm_gallery_preview {
 
 /* This is not so nice as li:hover ul, but it is IE compatible - only handles 3 levels */
 .xsm_menu_group li:hover ul, .xsm_menu_group li.over ul {
-  display: block;
+    display: block;
 }
 
 .xsm_menu_group li:hover ul ul, .xsm_menu_group li.over ul ul,
 .xsm_menu_group ul li:hover ul ul, .xsm_menu_group ul li.over ul ul {
-  display: none;
+    display: none;
 }
 
 .xsm_menu_group ul li:hover ul, .xsm_menu_group ul li.over ul,
 .xsm_menu_group ul ul li:hover ul, .xsm_menu_group ul ul li.over ul {
-  display: block;
+    display: block;
 }
 
 .xsm_powered_logo {
-  border: 0;
-  display: none;
+    border: 0;
+    display: none;
 }
 
 .xsm_buttons img {
-  float: left;
-  border: 0;
+    float: left;
+    border: 0;
 }

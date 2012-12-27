@@ -1,31 +1,43 @@
 <html>
-  <body>
-    <wicket:extend>
-      <h1><wicket:message key="title" /></h1>
+<body>
+<wicket:extend>
+  <h1>
+    <wicket:message key="title" />
+  </h1>
 
-      <p><wicket:message key="intro" /></p>
+  <p>
+    <wicket:message key="intro" />
+  </p>
 
-      <form wicket:id="addvisitor" action="#">
-        <table>
-          <tr>
-            <td><label for="username" class="label"><wicket:message key="username" /></label></td>
-            <td><input type="text" wicket:id="username" id="username" /></td>
-          </tr>
-          <tr>
-            <td><label for="password" class="label"><wicket:message key="password" /></label></td>
-            <td><input type="password" wicket:id="password" id="password" /></td>
-          </tr>
-          <tr>
-            <td><label for="repeatPassword" class="label"><wicket:message key="repeatPassword" /></label></td>
-            <td><input type="password" wicket:id="repeatPassword" id="repeatPassword" /></td>
-          </tr>
+  <form wicket:id="addvisitor" action="#">
+    <table>
+      <tr>
+        <td><label for="username" class="label">
+          <wicket:message key="username" />
+        </label></td>
+        <td><input type="text" wicket:id="username" id="username" /></td>
+      </tr>
+      <tr>
+        <td><label for="password" class="label">
+          <wicket:message key="password" />
+        </label></td>
+        <td><input type="password" wicket:id="password" id="password" /></td>
+      </tr>
+      <tr>
+        <td><label for="repeatPassword" class="label">
+          <wicket:message key="repeatPassword" />
+        </label></td>
+        <td><input type="password" wicket:id="repeatPassword" id="repeatPassword" /></td>
+      </tr>
 
-          <tr>
-            <td colspan="2"><div align="right"><input type="submit" wicket:id="add" value="Add Visitor" /></div></td>
-          </tr>
-        </table>
-      </form>
+      <tr>
+        <td colspan="2">
+          <div align="right"><input type="submit" wicket:id="add" value="Add Visitor" /></div>
+        </td>
+      </tr>
+    </table>
+  </form>
 
-    </wicket:extend>
-  </body>
+</wicket:extend>
+</body>
 </html>

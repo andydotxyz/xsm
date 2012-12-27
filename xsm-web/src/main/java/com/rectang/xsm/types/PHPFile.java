@@ -7,5 +7,6 @@ package com.rectang.xsm.types;
  * @version $Id: PHPFile.java 783 2009-04-01 21:47:46Z andy $
  * @since 1.2
  */
-public interface PHPFile {
+public interface PHPFile
+{
 }

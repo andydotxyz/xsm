@@ -1,37 +1,45 @@
 <html>
-  <body>
-    <wicket:extend>
-      <p><wicket:message key="intro"></wicket:message></p>
-      <form wicket:id="newform">
-        <ul>
-          <li>Page type<br />
-            <div wicket:id="typegroup">
-            <table border="0" width="100%">
-              <tr wicket:id="types"><td>
+<body>
+<wicket:extend>
+  <p>
+    <wicket:message key="intro"></wicket:message>
+  </p>
+  <form wicket:id="newform">
+    <ul>
+      <li>Page type<br />
+
+        <div wicket:id="typegroup">
+          <table border="0" width="100%">
+            <tr wicket:id="types">
+              <td>
                 <input type="radio" wicket:id="type" /><span wicket:id="typename"></span>
-              </td><td>
+              </td>
+              <td>
                 <label wicket:id="typelabel"></label>
-              </td></tr>
-            </table>
-            </div>
-          </li>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </li>
 
-          <li>Page name<br />
-            <input type="text" wicket:id="name" />
-            <p><i>hint</i> this is the name that will appear in the navigation bar,
-              don't use a space ( ) or an underscore (_) at the beginning</p>
-          </li>
+      <li>Page name<br />
+        <input type="text" wicket:id="name" />
 
-          <li><div wicket:id="levelgroup"><p>Page location<br />
-            <input type="radio" wicket:id="siblinglevel" />
-              <span wicket:id="siblingtext"></span><br />
-            <input type="radio" wicket:id="childlevel" />
-              <span wicket:id="childtext"></span></p></div>
-          </li>
-        </ul>
+        <p><i>hint</i> this is the name that will appear in the navigation bar,
+          don't use a space ( ) or an underscore (_) at the beginning</p>
+      </li>
 
-        <input type="submit" value="Create Page">
-      </form>
-    </wicket:extend>
-  </body>
+      <li>
+        <div wicket:id="levelgroup"><p>Page location<br />
+          <input type="radio" wicket:id="siblinglevel" />
+          <span wicket:id="siblingtext"></span><br />
+          <input type="radio" wicket:id="childlevel" />
+          <span wicket:id="childtext"></span></p></div>
+      </li>
+    </ul>
+
+    <input type="submit" value="Create Page">
+  </form>
+</wicket:extend>
+</body>
 </html>

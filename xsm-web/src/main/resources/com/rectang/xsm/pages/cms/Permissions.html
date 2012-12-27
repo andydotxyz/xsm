@@ -1,15 +1,17 @@
 <html>
-  <body>
-    <wicket:extend>
-      <p wicket:id="owner">Page owner</p>
+<body>
+<wicket:extend>
+  <p wicket:id="owner">Page owner</p>
 
-      <p><wicket:message key="permissions">Page editors</wicket:message></p>
-      <ul>
-        <li wicket:id="editors">
-          <input type="checkbox" wicket:id="edit" />
-          <span wicket:id="username">username</span>
-        </li>
-      </ul>
-    </wicket:extend>
-  </body>
+  <p>
+    <wicket:message key="permissions">Page editors</wicket:message>
+  </p>
+  <ul>
+    <li wicket:id="editors">
+      <input type="checkbox" wicket:id="edit" />
+      <span wicket:id="username">username</span>
+    </li>
+  </ul>
+</wicket:extend>
+</body>
 </html>

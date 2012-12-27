@@ -22,69 +22,89 @@ import org.apache.wicket.model.CompoundPropertyModel;
  * @version $Id: Theme.java 802 2009-05-16 17:25:24Z andy $
  * @since 2.0
  */
-public class Theme extends XSMPage implements Secure {
-  public Theme(PageParameters parameters) {
-    super(parameters);
-  }
-
-  public int getLevel() {
-    return AccessControl.MANAGER;
-  }
-
-  public void layout() {
-    super.layout();
-
-    add(new ThemeForm("theme", getXSMSession().getSite()));
-  }
-
-  class ThemeForm extends Form {
-    private com.rectang.xsm.site.Site site;
-    public ThemeForm(String id, com.rectang.xsm.site.Site site) {
-      super(id);
-      this.site = site;
-
-      setModel(new CompoundPropertyModel(site));
-
-      add(new DropDownChoice("stylesheet", getStyles()));
-      add(new DropDownChoice("layout", getLayouts()));
+public class Theme
+        extends XSMPage
+        implements Secure
+{
+    public Theme( PageParameters parameters )
+    {
+        super( parameters );
     }
 
-    public void onSubmit() {
-      if (site.save()) {
-        Engine.initTemplates();
-        site.publishTheme();
-      } else {
-        error("Unable to save site settings");
-      }
+    public int getLevel()
+    {
+        return AccessControl.MANAGER;
     }
-  }
 
-  public List getStyles() {
-    List ret = new Vector();
-    ret.add("dashed");
-    ret.add("grey");
-    ret.add("light-blue");
-    ret.add("simple-blue");
-    ret.add("typewriter");
+    public void layout()
+    {
+        super.layout();
 
-    com.rectang.xsm.site.Site site = getXSMSession().getSite();
-    if (new File(XSM.getConfig().getSiteTemplateDir(site), "style.css").exists())
-      ret.add("custom");
+        add( new ThemeForm( "theme", getXSMSession().getSite() ) );
+    }
 
-    return ret;
-  }
+    class ThemeForm
+            extends Form
+    {
+        private com.rectang.xsm.site.Site site;
 
-  public List getLayouts() {
-    List ret = new Vector();
-    ret.add("menu-left");
-    ret.add("menu-right");
-    ret.add("news");
-    ret.add("one-column");
+        public ThemeForm( String id, com.rectang.xsm.site.Site site )
+        {
+            super( id );
+            this.site = site;
 
-    com.rectang.xsm.site.Site site = getXSMSession().getSite();
-    if (new File(XSM.getConfig().getSiteTemplateDir(site), "layout.css").exists())
-      ret.add("custom");
+            setModel( new CompoundPropertyModel( site ) );
 
-    return ret;
-  }
+            add( new DropDownChoice( "stylesheet", getStyles() ) );
+            add( new DropDownChoice( "layout", getLayouts() ) );
+        }
+
+        public void onSubmit()
+        {
+            if ( site.save() )
+            {
+                Engine.initTemplates();
+                site.publishTheme();
+            }
+            else
+            {
+                error( "Unable to save site settings" );
+            }
+        }
+    }
+
+    public List getStyles()
+    {
+        List ret = new Vector();
+        ret.add( "dashed" );
+        ret.add( "grey" );
+        ret.add( "light-blue" );
+        ret.add( "simple-blue" );
+        ret.add( "typewriter" );
+
+        com.rectang.xsm.site.Site site = getXSMSession().getSite();
+        if ( new File( XSM.getConfig().getSiteTemplateDir( site ), "style.css" ).exists() )
+        {
+            ret.add( "custom" );
+        }
+
+        return ret;
+    }
+
+    public List getLayouts()
+    {
+        List ret = new Vector();
+        ret.add( "menu-left" );
+        ret.add( "menu-right" );
+        ret.add( "news" );
+        ret.add( "one-column" );
+
+        com.rectang.xsm.site.Site site = getXSMSession().getSite();
+        if ( new File( XSM.getConfig().getSiteTemplateDir( site ), "layout.css" ).exists() )
+        {
+            ret.add( "custom" );
+        }
+
+        return ret;
+    }
 }

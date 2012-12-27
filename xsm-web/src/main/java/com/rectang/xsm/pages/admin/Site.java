@@ -26,22 +26,28 @@ import org.apache.wicket.model.PropertyModel;
  * @version $Id$
  * @since 2.0
  */
-public class Site extends XSMPage implements Secure {
-  public Site(PageParameters parameters) {
-    super(parameters);
-  }
+public class Site
+        extends XSMPage
+        implements Secure
+{
+    public Site( PageParameters parameters )
+    {
+        super( parameters );
+    }
 
-  public int getLevel() {
-    return AccessControl.MANAGER;
-  }
+    public int getLevel()
+    {
+        return AccessControl.MANAGER;
+    }
 
-  public void layout() {
-    super.layout();
+    public void layout()
+    {
+        super.layout();
 
-    add(new PluginLink("settingsPlugin", com.rectang.xsm.pages.admin.Settings.class, "settings"));
-    add(new PluginLink("themePlugin", com.rectang.xsm.pages.admin.Theme.class, "theme"));
-    add(new PluginLink("usersPlugin", com.rectang.xsm.pages.admin.Users.class, "users"));
-    add(new PluginLink("backupPlugin", com.rectang.xsm.pages.admin.Backup.class, "backup"));
-    add(new PluginLink("systemPlugin", com.rectang.xsm.pages.admin.System.class, "system"));
-  }
+        add( new PluginLink( "settingsPlugin", com.rectang.xsm.pages.admin.Settings.class, "settings" ) );
+        add( new PluginLink( "themePlugin", com.rectang.xsm.pages.admin.Theme.class, "theme" ) );
+        add( new PluginLink( "usersPlugin", com.rectang.xsm.pages.admin.Users.class, "users" ) );
+        add( new PluginLink( "backupPlugin", com.rectang.xsm.pages.admin.Backup.class, "backup" ) );
+        add( new PluginLink( "systemPlugin", com.rectang.xsm.pages.admin.System.class, "system" ) );
+    }
 }

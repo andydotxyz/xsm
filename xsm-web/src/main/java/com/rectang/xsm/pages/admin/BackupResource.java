@@ -20,60 +20,88 @@ import java.io.FileInputStream;
  * @version $Id: BackupResource.java 688 2007-10-13 19:52:33Z aje $
  * @since 1.0
  */
-public class BackupResource extends Resource {
-  com.rectang.xsm.site.Site site;
-  String type;
+public class BackupResource
+        extends Resource
+{
+    com.rectang.xsm.site.Site site;
+    String type;
 
-  public BackupResource(com.rectang.xsm.site.Site site, String type) {
-    this.site = site;
-    this.type = type;
-  }
-
-
-  protected void configureResponse(Response response) {
-    if (type.equals("tar.gz"))
-      response.setContentType("application/x-gzip");
-    else
-      response.setContentType("application/zip");
-  }
-
-  public IResourceStream getResourceStream() {
-    File source = new File(XSM.getConfig().getDataDir(), site.getId());
-
-    try {
-      File backup;
-      if (type.equals("tar.gz")) {
-        backup = source.tarCompress(false).gzipCompress(true);
-      } else {
-        backup = source.zipCompress(false);
-      }
-
-      return new DeleteAfterReadFileResourceStream(backup);
-    } catch (IOException e) {
-      Session.get().error("Unable to archive site for backup, " + e.getMessage());
+    public BackupResource( com.rectang.xsm.site.Site site, String type )
+    {
+        this.site = site;
+        this.type = type;
     }
 
-    return null;
-  }
+
+    protected void configureResponse( Response response )
+    {
+        if ( type.equals( "tar.gz" ) )
+        {
+            response.setContentType( "application/x-gzip" );
+        }
+        else
+        {
+            response.setContentType( "application/zip" );
+        }
+    }
+
+    public IResourceStream getResourceStream()
+    {
+        File source = new File( XSM.getConfig().getDataDir(), site.getId() );
+
+        try
+        {
+            File backup;
+            if ( type.equals( "tar.gz" ) )
+            {
+                backup = source.tarCompress( false ).gzipCompress( true );
+            }
+            else
+            {
+                backup = source.zipCompress( false );
+            }
+
+            return new DeleteAfterReadFileResourceStream( backup );
+        }
+        catch ( IOException e )
+        {
+            Session.get().error( "Unable to archive site for backup, " + e.getMessage() );
+        }
+
+        return null;
+    }
 }
 
-class DeleteAfterReadFileResourceStream extends FileResourceStream {
-  public DeleteAfterReadFileResourceStream(File file) {
-    super(file);
-  }
-
-
-  public InputStream getInputStream() throws ResourceStreamNotFoundException {
-    try {
-      return new FileInputStream(getFile()){
-
-        public void close() throws IOException {
-          if (getFile().exists())
-            getFile().delete();
-        }
-      };
-    } catch (IOException e) {
-      throw new ResourceStreamNotFoundException(e);
+class DeleteAfterReadFileResourceStream
+        extends FileResourceStream
+{
+    public DeleteAfterReadFileResourceStream( File file )
+    {
+        super( file );
     }
-  }
+
+
+    public InputStream getInputStream()
+            throws ResourceStreamNotFoundException
+    {
+        try
+        {
+            return new FileInputStream( getFile() )
+            {
+
+                public void close()
+                        throws IOException
+                {
+                    if ( getFile().exists() )
+                    {
+                        getFile().delete();
+                    }
+                }
+            };
+        }
+        catch ( IOException e )
+        {
+            throw new ResourceStreamNotFoundException( e );
+        }
+    }
 }

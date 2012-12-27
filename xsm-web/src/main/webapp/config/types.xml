@@ -14,12 +14,14 @@
   </type>
   <type name="donate" class="com.rectang.xsm.types.Donate">
     <description>A donate page for your site! Allows you to accept donations
-      from your website to your paypal account.</description>
+      from your website to your paypal account.
+    </description>
     <requires></requires>
   </type>
   <type name="embed" class="com.rectang.xsm.types.Embed">
     <description>Embed a page or site inside an XSM page. This uses the IFRAME
-      tag and is not fully supported by all browsers.</description>
+      tag and is not fully supported by all browsers.
+    </description>
     <requires></requires>
   </type>
   <type name="events" class="com.rectang.xsm.types.Events">
@@ -44,7 +46,8 @@
   </type>
   <type name="glossary" class="com.rectang.xsm.types.Glossary">
     <description>A glossary page for definitions of terms or
-      abbreviations.</description>
+      abbreviations.
+    </description>
     <requires></requires>
   </type>
   <type name="images" class="com.rectang.xsm.types.Images" hidden="true">
@@ -57,7 +60,8 @@
   </type>
   <type name="login" class="com.rectang.xsm.types.Login">
     <description>A login page for your site, keeps a unified look and saves
-      typing the site name</description>
+      typing the site name
+    </description>
     <requires></requires>
   </type>
   <type name="news" class="com.rectang.xsm.types.News">

@@ -16,83 +16,102 @@ import org.apache.wicket.model.PropertyModel;
  * @version $Id: EditPassword.java 816 2010-05-30 14:02:03Z andy $
  * @since 2.0
  */
-public class EditPassword extends XSMPage implements Secure {
-  public EditPassword(PageParameters parameters) {
-    super(parameters);
-  }
-
-  public int getLevel() {
-    return AccessControl.MEMBER;
-  }
-
-  public void layout() {
-    super.layout();
-
-      UserData user = EditProfile.getUserToEdit(getPageParameters(), getXSMSession().getUser());
-
-    add(new PasswordForm("profile", user));
-  }
-
-  class PasswordForm extends Form
-  {
-    UserData user;
-    String oldPassword, password, confirmPassword;
-
-    public PasswordForm(String id, UserData user) {
-      super(id);
-      this.user = user;
-
-      add(new PasswordTextField("oldPassword", new PropertyModel(this, "oldPassword")));
-      add(new PasswordTextField("password", new PropertyModel(this, "password")));
-      add(new PasswordTextField("confirmPassword", new PropertyModel(this, "confirmPassword")));
+public class EditPassword
+        extends XSMPage
+        implements Secure
+{
+    public EditPassword( PageParameters parameters )
+    {
+        super( parameters );
     }
 
-    public void onSubmit() {
-      MD5 md5 = new MD5(oldPassword);
-      if (!md5.asHex().equals(user.getPassword())) {
-        warn("Old password is not correct");
-        return ;
-      }
+    public int getLevel()
+    {
+        return AccessControl.MEMBER;
+    }
 
-      if (password == null || confirmPassword == null ||
-          password.equals("") || !password.equals(confirmPassword)) {
-        warn("Passwords must match");
-        return;
-      }
+    public void layout()
+    {
+        super.layout();
 
-      user.setPassword(password);
+        UserData user = EditProfile.getUserToEdit( getPageParameters(), getXSMSession().getUser() );
 
-      if (user.save()) {
-        if (user.getSite().getTechnologies().contains("apache")) {
-          user.getSite().setVisitor(new Visitor(user.getUsername(), password));
+        add( new PasswordForm( "profile", user ) );
+    }
+
+    class PasswordForm
+            extends Form
+    {
+        UserData user;
+        String oldPassword, password, confirmPassword;
+
+        public PasswordForm( String id, UserData user )
+        {
+            super( id );
+            this.user = user;
+
+            add( new PasswordTextField( "oldPassword", new PropertyModel( this, "oldPassword" ) ) );
+            add( new PasswordTextField( "password", new PropertyModel( this, "password" ) ) );
+            add( new PasswordTextField( "confirmPassword", new PropertyModel( this, "confirmPassword" ) ) );
         }
 
-        this.setResponsePage(Profile.class);
-      }
-    }
+        public void onSubmit()
+        {
+            MD5 md5 = new MD5( oldPassword );
+            if ( !md5.asHex().equals( user.getPassword() ) )
+            {
+                warn( "Old password is not correct" );
+                return;
+            }
 
-    public String getOldPassword() {
-      return oldPassword;
-    }
+            if ( password == null || confirmPassword == null ||
+                    password.equals( "" ) || !password.equals( confirmPassword ) )
+            {
+                warn( "Passwords must match" );
+                return;
+            }
 
-    public void setOldPassword(String oldPassword) {
-      this.oldPassword = oldPassword;
-    }
+            user.setPassword( password );
 
-    public String getPassword() {
-      return password;
-    }
+            if ( user.save() )
+            {
+                if ( user.getSite().getTechnologies().contains( "apache" ) )
+                {
+                    user.getSite().setVisitor( new Visitor( user.getUsername(), password ) );
+                }
 
-    public void setPassword(String password) {
-      this.password = password;
-    }
+                this.setResponsePage( Profile.class );
+            }
+        }
 
-    public String getConfirmPassword() {
-      return confirmPassword;
-    }
+        public String getOldPassword()
+        {
+            return oldPassword;
+        }
 
-    public void setConfirmPassword( String confirmPassword ) {
-      this.confirmPassword = confirmPassword;
+        public void setOldPassword( String oldPassword )
+        {
+            this.oldPassword = oldPassword;
+        }
+
+        public String getPassword()
+        {
+            return password;
+        }
+
+        public void setPassword( String password )
+        {
+            this.password = password;
+        }
+
+        public String getConfirmPassword()
+        {
+            return confirmPassword;
+        }
+
+        public void setConfirmPassword( String confirmPassword )
+        {
+            this.confirmPassword = confirmPassword;
+        }
     }
-  }
 }

@@ -12,35 +12,46 @@ import com.rectang.xsm.UserData;
  *
  * Represents a page in a site structure
  */
-public class DocumentPage extends HierarchicalPage {
+public class DocumentPage
+        extends HierarchicalPage
+{
 
-  public DocumentPage(Site site, HierarchicalPage parent, String title) {
-    this(site, parent, title, false);
-  }
-
-  public DocumentPage(Site site, HierarchicalPage parent, String title, boolean hidden) {
-    super(site, parent, title, hidden);
-  }
-
-  public XSMDocument getXSMDocument() {
-    try {
-      return XSMDocument.getXSMDoc(getSite(), this);
-    } catch (RuntimeException e) {
-      System.err.println("Error reading file" + getTitle());
-      throw e;
+    public DocumentPage( Site site, HierarchicalPage parent, String title )
+    {
+        this( site, parent, title, false );
     }
-  }
 
-  public boolean publish(UserData user) {
-    XSMDocument doc = getXSMDocument();
-    return (doc != null && doc.publish(user));
-  }
+    public DocumentPage( Site site, HierarchicalPage parent, String title, boolean hidden )
+    {
+        super( site, parent, title, hidden );
+    }
 
-  public String getType() {
-    return "page";
-  }
+    public XSMDocument getXSMDocument()
+    {
+        try
+        {
+            return XSMDocument.getXSMDoc( getSite(), this );
+        }
+        catch ( RuntimeException e )
+        {
+            System.err.println( "Error reading file" + getTitle() );
+            throw e;
+        }
+    }
 
-  public boolean isPublishable() {
-    return true;
-  }
+    public boolean publish( UserData user )
+    {
+        XSMDocument doc = getXSMDocument();
+        return (doc != null && doc.publish( user ));
+    }
+
+    public String getType()
+    {
+        return "page";
+    }
+
+    public boolean isPublishable()
+    {
+        return true;
+    }
 }

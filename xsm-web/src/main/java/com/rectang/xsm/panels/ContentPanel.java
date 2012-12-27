@@ -19,18 +19,21 @@ import org.apache.wicket.ResourceReference;
  * @version $Id: ContentPanel.java 802 2009-05-16 17:25:24Z andy $
  * @since 2.0
  */
-public class ContentPanel extends Panel {
+public class ContentPanel
+        extends Panel
+{
 
-  public ContentPanel(String id, XSMSession session, String page) {
-    super(id);
+    public ContentPanel( String id, XSMSession session, String page )
+    {
+        super( id );
 
-    Site site = session.getSite();
-    add(new ContentTreePanel("content", site.getRootPage(), page));
+        Site site = session.getSite();
+        add( new ContentTreePanel( "content", site.getRootPage(), page ) );
 
-    PageParameters params = new PageParameters();
-    params.add("page", site.getDefault());
+        PageParameters params = new PageParameters();
+        params.add( "page", site.getDefault() );
 
-    add(new BookmarkablePageLink("new-page-link", New.class, params));
-    add(new BookmarkablePageLink("new-link-link", NewLink.class, params));
-  }
+        add( new BookmarkablePageLink( "new-page-link", New.class, params ) );
+        add( new BookmarkablePageLink( "new-link-link", NewLink.class, params ) );
+    }
 }

@@ -19,77 +19,96 @@ import java.util.Iterator;
  * @version $Id: Delete.java 831 2011-09-25 12:59:18Z andy $
  * @since 2.0
  */
-public class Delete extends Page {
-  public Delete(PageParameters parameters) {
-    super(parameters);
-  }
-
-  public void layout() {
-    super.layout();
-
-    if (!canEdit()) {
-      warn("You do not have permission to delete this page");
-      setResponsePage(Contents.class, getPageNameParams());
-      return;
+public class Delete
+        extends Page
+{
+    public Delete( PageParameters parameters )
+    {
+        super( parameters );
     }
 
-    add(new Label("confirm", getString("confirm", new Model(getXSMPage()))));
-    add(new DeleteForm("deleteform"));
-  }
+    public void layout()
+    {
+        super.layout();
 
-  private class DeleteForm extends Form {
-    public DeleteForm(String id) {
-      super(id);
+        if ( !canEdit() )
+        {
+            warn( "You do not have permission to delete this page" );
+            setResponsePage( Contents.class, getPageNameParams() );
+            return;
+        }
 
-      add(new Button("yes") {
-        public void onSubmit() {
-          Site site = getXSMSession().getSite();
+        add( new Label( "confirm", getString( "confirm", new Model( getXSMPage() ) ) ) );
+        add( new DeleteForm( "deleteform" ) );
+    }
 
-          HierarchicalPage parentPage = getXSMPage().getParent();
-          String pagePath = getXSMPage().getPath();
-          boolean wasHidden = getXSMPage().getHidden();
+    private class DeleteForm
+            extends Form
+    {
+        public DeleteForm( String id )
+        {
+            super( id );
+
+            add( new Button( "yes" )
+            {
+                public void onSubmit()
+                {
+                    Site site = getXSMSession().getSite();
+
+                    HierarchicalPage parentPage = getXSMPage().getParent();
+                    String pagePath = getXSMPage().getPath();
+                    boolean wasHidden = getXSMPage().getHidden();
           /* try to delete the page from the site, then the page from the xsm
            * store then all of its sub pages from xsm store */
-          boolean deleted = true;
-          if (getXSMPage() instanceof com.rectang.xsm.site.DocumentPage) {
-            deleted = ((com.rectang.xsm.site.DocumentPage) getXSMPage()).getXSMDocument().delete();
-          }
-          if (deleted && getXSMPage().delete()) {
-            (RemoteDocument.getDoc(site, "/data" + pagePath, false)).delete(); /* rm dir */
+                    boolean deleted = true;
+                    if ( getXSMPage() instanceof com.rectang.xsm.site.DocumentPage )
+                    {
+                        deleted = ((com.rectang.xsm.site.DocumentPage) getXSMPage()).getXSMDocument().delete();
+                    }
+                    if ( deleted && getXSMPage().delete() )
+                    {
+                        (RemoteDocument.getDoc( site, "/data" + pagePath, false )).delete(); /* rm dir */
             /* then delete the pages from the server */
-            site.getPublishedDoc(pagePath).delete();
-            site.save();
-            getSession().info("Page " + pagePath + " deleted successfully");
+                        site.getPublishedDoc( pagePath ).delete();
+                        site.save();
+                        getSession().info( "Page " + pagePath + " deleted successfully" );
 
-            if (!wasHidden) {
-              site.publish(getXSMSession().getUser());
-            }
-            HierarchicalPage requestedPage = parentPage;
+                        if ( !wasHidden )
+                        {
+                            site.publish( getXSMSession().getUser() );
+                        }
+                        HierarchicalPage requestedPage = parentPage;
 
             /* if there is no parent page just display the first... */
-            if (requestedPage.equals(site.getRootPage())) {
-              Iterator pages = site.getPages().iterator();
-              if (pages.hasNext()) {
-                // TODO fix - the first page in the site may not be a heirarchical page...
-                requestedPage = (HierarchicalPage) pages.next();
-              }
-            }
+                        if ( requestedPage.equals( site.getRootPage() ) )
+                        {
+                            Iterator pages = site.getPages().iterator();
+                            if ( pages.hasNext() )
+                            {
+                                // TODO fix - the first page in the site may not be a heirarchical page...
+                                requestedPage = (HierarchicalPage) pages.next();
+                            }
+                        }
 
-            PageParameters newPage = new PageParameters();
-            newPage.add("page", requestedPage.getPath());
-            setResponsePage(Contents.class, newPage);
+                        PageParameters newPage = new PageParameters();
+                        newPage.add( "page", requestedPage.getPath() );
+                        setResponsePage( Contents.class, newPage );
 
-          } else {
-            error("Failed to deleted page " + pagePath);
-          }
+                    }
+                    else
+                    {
+                        error( "Failed to deleted page " + pagePath );
+                    }
+                }
+            } );
+
+            add( new Button( "no" )
+            {
+                public void onSubmit()
+                {
+                    setResponsePage( Contents.class, getPageNameParams() );
+                }
+            } );
         }
-      });
-
-      add(new Button("no") {
-        public void onSubmit() {
-          setResponsePage(Contents.class, getPageNameParams());
-        }
-      });
     }
-  }
 }

@@ -1,49 +1,49 @@
 body {
-  font-family: arial, sans-serif;
+    font-family: arial, sans-serif;
 }
 
 #xsm_page {
-  border: 1px solid gray;
-  padding: 10px;
+    border: 1px solid gray;
+    padding: 10px;
 }
 
 #xsm_header {
-  padding: 5px;
-  background-color: rgb(213, 219, 225);
+    padding: 5px;
+    background-color: rgb(213, 219, 225);
 }
 
 #xsm_main {
-  background-color: rgb(235, 235, 235);
+    background-color: rgb(235, 235, 235);
 }
 
 #xsm_content {
-  padding: 5px;
-  background-color: gray;
+    padding: 5px;
+    background-color: gray;
 }
 
 #tinymce {
-  background-color: gray;
+    background-color: gray;
 }
 
 #xsm_menu {
-  padding: 10px;
-  background-color: rgb(235, 235, 235);
+    padding: 10px;
+    background-color: rgb(235, 235, 235);
 }
 
 .xsm_menu_group ul li {
-  background-color: rgb(235, 235, 235);
-  padding: 3px;
+    background-color: rgb(235, 235, 235);
+    padding: 3px;
 }
 
 #xsm_footer {
-  padding: 5px;
-  height: 30px;
+    padding: 5px;
+    height: 30px;
 
-  background-color: rgb(213, 219, 225);
+    background-color: rgb(213, 219, 225);
 }
 
 /** common styling */
-.xsm_form table{
+.xsm_form table {
     width: 100%;
 }
 

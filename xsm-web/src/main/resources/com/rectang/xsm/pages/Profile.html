@@ -1,22 +1,26 @@
 <html>
-  <body>
-    <wicket:extend>
-      <h1>Your Profile</h1>
+<body>
+<wicket:extend>
+  <h1>Your Profile</h1>
 
-      <p>This is your profile.
-      It is used to automatically annotate news articles and similar pages.</p>
+  <p>This is your profile.
+    It is used to automatically annotate news articles and similar pages.</p>
 
-      <p>Click here to <a wicket:id="edit-profile" href="#">edit your profile</a>.</p>
-      <p>Click here to <a wicket:id="edit-password" href="#">change your password</a></p>
-      <br />
+  <p>Click here to <a wicket:id="edit-profile" href="#">edit your profile</a>.</p>
 
-      <p>Full name: <span wicket:id="name"></span></p>
-      <p>Email address: <a wicket:id="email" href="#"><span wicket:id="label"></span></a></p>
-      <p>Web address: <a wicket:id="homepage" href="#" target="_blank"><span wicket:id="label"></span></a> [opens in a new window]</p>
+  <p>Click here to <a wicket:id="edit-password" href="#">change your password</a></p>
+  <br />
 
-      <p><span wicket:id="avatar"></span></p>
+  <p>Full name: <span wicket:id="name"></span></p>
 
-      <p>Notes: <i wicket:id="note"></i></p>
-    </wicket:extend>
-  </body>
+  <p>Email address: <a wicket:id="email" href="#"><span wicket:id="label"></span></a></p>
+
+  <p>Web address: <a wicket:id="homepage" href="#" target="_blank"><span wicket:id="label"></span></a> [opens in a new
+    window]</p>
+
+  <p><span wicket:id="avatar"></span></p>
+
+  <p>Notes: <i wicket:id="note"></i></p>
+</wicket:extend>
+</body>
 </html>

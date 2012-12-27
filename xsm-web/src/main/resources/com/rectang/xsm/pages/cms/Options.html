@@ -1,30 +1,32 @@
 <html>
-  <body>
-    <wicket:extend>
-      <form wicket:id="optionsform">
-        <table border="0">
-          <tr>
-            <td>Page title</td>
-            <td><input type="text" wicket:id="title" /></td>
-          </tr>
-          <tr>
-            <td>Description</td>
-            <td><textarea wicket:id="description"></textarea></td>
-          </tr>
-          <tr>
-            <td>Custom URL - this overrides the usual output of the page title</td>
-            <td><input type="text" wicket:id="slug" /></td>
-          </tr>
+<body>
+<wicket:extend>
+  <form wicket:id="optionsform">
+    <table border="0">
+      <tr>
+        <td>Page title</td>
+        <td><input type="text" wicket:id="title" /></td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td><textarea wicket:id="description"></textarea></td>
+      </tr>
+      <tr>
+        <td>Custom URL - this overrides the usual output of the page title</td>
+        <td><input type="text" wicket:id="slug" /></td>
+      </tr>
 
-          <tr wicket:id="options">
-            <td><span wicket:id="label"></span></td>
-            <td><div wicket:id="option"></div></td>
-          </tr>
-        </table>
+      <tr wicket:id="options">
+        <td><span wicket:id="label"></span></td>
+        <td>
+          <div wicket:id="option"></div>
+        </td>
+      </tr>
+    </table>
 
-        <input type="submit" value="Save" wicket:id="save" />
-        <input type="reset" value="Reset" wicket:id="reset" />
-      </form>
-    </wicket:extend>
-  </body>
+    <input type="submit" value="Save" wicket:id="save" />
+    <input type="reset" value="Reset" wicket:id="reset" />
+  </form>
+</wicket:extend>
+</body>
 </html>

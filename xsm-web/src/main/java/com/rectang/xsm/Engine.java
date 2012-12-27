@@ -27,138 +27,167 @@ import java.util.Map;
  * @author Andrew Williams
  * @since 2.0
  */
-public class Engine {
-  private static VelocityEngine velocity;
-  private static Site fakeSite;
+public class Engine
+{
+    private static VelocityEngine velocity;
+    private static Site fakeSite;
 
-  static {
-    initTemplates();
-        
-    fakeSite = new Site("") {
-      @Override
-      public String getTitle() {
-        return "XSM - eXtensible Site Manager";
-      }
+    static
+    {
+        initTemplates();
 
-      @Override
-      public String getPrefixUrl() {
-        return XSM.getConfig().getUrl().substring(0, XSM.getConfig().getUrl().length() - 1);
-      }
+        fakeSite = new Site( "" )
+        {
+            @Override
+            public String getTitle()
+            {
+                return "XSM - eXtensible Site Manager";
+            }
 
-      @Override
-      public String getId() {
-        return "xsm";
-      }
-    };
-  }
+            @Override
+            public String getPrefixUrl()
+            {
+                return XSM.getConfig().getUrl().substring( 0, XSM.getConfig().getUrl().length() - 1 );
+            }
 
-  public static void initTemplates() {
+            @Override
+            public String getId()
+            {
+                return "xsm";
+            }
+        };
+    }
+
+    public static void initTemplates()
+    {
     /* Initialise an engine that we will use for all document publishing */
-    velocity = new VelocityEngine();
+        velocity = new VelocityEngine();
     /*  first, get and initialize an engine  */
 
-    Map<String, String> properties = Engine.getProperties();
-    for (String key : properties.keySet()) {
-      velocity.setProperty(key, properties.get(key));
+        Map<String, String> properties = Engine.getProperties();
+        for ( String key : properties.keySet() )
+        {
+            velocity.setProperty( key, properties.get( key ) );
+        }
+
+        try
+        {
+            velocity.init();
+        }
+        catch ( Exception e )
+        {
+            // TODO handle this error in a more visible way
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 
-    try {
-      velocity.init();
-    } catch (Exception e) {
-      // TODO handle this error in a more visible way
-      e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-    }
-  }
-
-  public static VelocityEngine getVelocityEngine() {
-    return velocity;
-  }
-
-  public static Map<String, String> getProperties() {
-    HashMap<String, String> ret = new HashMap<String, String>();
-
-    ret.put("resource.loader", "class,file");
-    ret.put("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
-    ret.put("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader");
-    ret.put("file.resource.loader.path", XSM.getConfig().getDataDir());
-    ret.put("file.resource.loader.cache", "false");
-    ret.put("velocimacro.library", "com/rectang/xsm/publish/macros.vm");
-    ret.put("velocimacro.library.autoreload", "true");
-    ret.put("velocimacro.permissions.allow.inline.to.replace.global", "true");
-
-    ret.put("runtime.log.logsystem.class", "org.apache.velocity.runtime.log.SimpleLog4JLogSystem");
-    ret.put("runtime.log.logsystem.log4j.category", "org.apache.velocity.runtime.log.SimpleLog4JLogSystem");
-
-    return ret;
-  }
-
-  public static Map<String, Object> getContext(XSMDocument doc, Page page, DocElement rootType, PublishedFile pubFile,
-                                               Site site, String content, UserData user) {
-    MetaData metadata = null;
-    if (doc != null) {
-      metadata = doc.getMetadata();
-    }
-    if (site == null) {
-      site = fakeSite;
+    public static VelocityEngine getVelocityEngine()
+    {
+        return velocity;
     }
 
-    HashMap<String, Object> ret = new HashMap<String, Object>();
-    ret.put("page", page);
-    ret.put("metadata", metadata);
-    ret.put("user", user);
-    ret.put("site", site);
-    ret.put("config", XSM.getConfig());
-    ret.put("type", rootType);
-    ret.put("content", content);
-  
-    ret.put("pubFile", pubFile);
-    ret.put("doc", doc);
-  
-    ret.put("dateFormatter", new DateFormatter());
-    ret.put("htmlUtils", new HTMLUtils());
-    ret.put("stringUtils", new StringUtils());
-    ret.put("fileUtils", new FileUtils());
-    ret.put("numberUtils", new NumberUtils());
-    ret.put("renderUtils", new RenderUtils());
-  
-    boolean isWelcome = rootType instanceof Html && Html.WELCOME_PAGE.getBoolean(doc) ||
-            rootType instanceof PHP && PHP.WELCOME_PAGE.getBoolean(doc);
-    ret.put("isWelcome", isWelcome);
-    boolean hasRss = rootType instanceof News ||
-     (rootType instanceof PreviewedFile && PreviewedFile.PUBLISH_RSS.getBoolean(doc));
-    ret.put("hasrss", hasRss);
+    public static Map<String, String> getProperties()
+    {
+        HashMap<String, String> ret = new HashMap<String, String>();
 
-    return ret;
-  }
+        ret.put( "resource.loader", "class,file" );
+        ret.put( "class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader" );
+        ret.put( "file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader" );
+        ret.put( "file.resource.loader.path", XSM.getConfig().getDataDir() );
+        ret.put( "file.resource.loader.cache", "false" );
+        ret.put( "velocimacro.library", "com/rectang/xsm/publish/macros.vm" );
+        ret.put( "velocimacro.library.autoreload", "true" );
+        ret.put( "velocimacro.permissions.allow.inline.to.replace.global", "true" );
 
-  public static org.apache.velocity.Template getTemplate(Site site) throws Exception {
-    File customTemplate = new File(XSM.getConfig().getSiteTemplateDir(site), "publish.vm");
+        ret.put( "runtime.log.logsystem.class", "org.apache.velocity.runtime.log.SimpleLog4JLogSystem" );
+        ret.put( "runtime.log.logsystem.log4j.category", "org.apache.velocity.runtime.log.SimpleLog4JLogSystem" );
 
-    org.apache.velocity.Template t;
-    try {
-      if (customTemplate.exists()) {
-        t = Engine.getVelocityEngine().getTemplate(site.getId() + "/template/publish.vm");
-      } else {
-        t = Engine.getVelocityEngine().getTemplate("com/rectang/xsm/publish/publish.vm");
-      }
-    } catch ( NullPointerException e ) {
-      // reset the template engine
-      Engine.initTemplates();
-
-      // try again
-      if (customTemplate.exists()) {
-        t = Engine.getVelocityEngine().getTemplate(site.getId() + "/template/publish.vm");
-      } else {
-        t = Engine.getVelocityEngine().getTemplate("com/rectang/xsm/publish/publish.vm");
-      }
+        return ret;
     }
 
-    return t;
-  }
+    public static Map<String, Object> getContext( XSMDocument doc, Page page, DocElement rootType, PublishedFile pubFile,
+                                                  Site site, String content, UserData user )
+    {
+        MetaData metadata = null;
+        if ( doc != null )
+        {
+            metadata = doc.getMetadata();
+        }
+        if ( site == null )
+        {
+            site = fakeSite;
+        }
 
-  public static void process(Site site, Context context, Writer writer) throws Exception {
-    org.apache.velocity.Template t = getTemplate(site);
+        HashMap<String, Object> ret = new HashMap<String, Object>();
+        ret.put( "page", page );
+        ret.put( "metadata", metadata );
+        ret.put( "user", user );
+        ret.put( "site", site );
+        ret.put( "config", XSM.getConfig() );
+        ret.put( "type", rootType );
+        ret.put( "content", content );
 
-    t.merge(context, writer);
-  }
+        ret.put( "pubFile", pubFile );
+        ret.put( "doc", doc );
+
+        ret.put( "dateFormatter", new DateFormatter() );
+        ret.put( "htmlUtils", new HTMLUtils() );
+        ret.put( "stringUtils", new StringUtils() );
+        ret.put( "fileUtils", new FileUtils() );
+        ret.put( "numberUtils", new NumberUtils() );
+        ret.put( "renderUtils", new RenderUtils() );
+
+        boolean isWelcome = rootType instanceof Html && Html.WELCOME_PAGE.getBoolean( doc ) ||
+                rootType instanceof PHP && PHP.WELCOME_PAGE.getBoolean( doc );
+        ret.put( "isWelcome", isWelcome );
+        boolean hasRss = rootType instanceof News ||
+                (rootType instanceof PreviewedFile && PreviewedFile.PUBLISH_RSS.getBoolean( doc ));
+        ret.put( "hasrss", hasRss );
+
+        return ret;
+    }
+
+    public static org.apache.velocity.Template getTemplate( Site site )
+            throws Exception
+    {
+        File customTemplate = new File( XSM.getConfig().getSiteTemplateDir( site ), "publish.vm" );
+
+        org.apache.velocity.Template t;
+        try
+        {
+            if ( customTemplate.exists() )
+            {
+                t = Engine.getVelocityEngine().getTemplate( site.getId() + "/template/publish.vm" );
+            }
+            else
+            {
+                t = Engine.getVelocityEngine().getTemplate( "com/rectang/xsm/publish/publish.vm" );
+            }
+        }
+        catch ( NullPointerException e )
+        {
+            // reset the template engine
+            Engine.initTemplates();
+
+            // try again
+            if ( customTemplate.exists() )
+            {
+                t = Engine.getVelocityEngine().getTemplate( site.getId() + "/template/publish.vm" );
+            }
+            else
+            {
+                t = Engine.getVelocityEngine().getTemplate( "com/rectang/xsm/publish/publish.vm" );
+            }
+        }
+
+        return t;
+    }
+
+    public static void process( Site site, Context context, Writer writer )
+            throws Exception
+    {
+        org.apache.velocity.Template t = getTemplate( site );
+
+        t.merge( context, writer );
+    }
 }

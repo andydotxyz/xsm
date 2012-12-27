@@ -20,90 +20,116 @@ import java.util.*;
  * @version $Id: Setup.java 833 2011-09-26 22:00:00Z andy $
  * @since 2.0
  */
-public class Setup extends XSMPage implements Secure {
+public class Setup
+        extends XSMPage
+        implements Secure
+{
 
-  static List setupTasks = new ArrayList();
-  static {
-    setupTasks.add(new SetupTask("Check /etc/xsm exists") {
-      public Boolean run() {
-        return new Boolean(new java.io.File("/etc/xsm").exists());
-      }
-    });
-    setupTasks.add(new SetupTask("Check /etc/xsm is writable") {
-      public Boolean run() {
-        return new Boolean(new java.io.File("/etc/xsm").canWrite());
-      }
-    });
+    static List setupTasks = new ArrayList();
 
-  }
+    static
+    {
+        setupTasks.add( new SetupTask( "Check /etc/xsm exists" )
+        {
+            public Boolean run()
+            {
+                return new Boolean( new java.io.File( "/etc/xsm" ).exists() );
+            }
+        } );
+        setupTasks.add( new SetupTask( "Check /etc/xsm is writable" )
+        {
+            public Boolean run()
+            {
+                return new Boolean( new java.io.File( "/etc/xsm" ).canWrite() );
+            }
+        } );
 
-  public Setup(PageParameters parameters) {
-    super(parameters);
-  }
-
-  static abstract class SetupTask {
-    private String description;
-
-    protected SetupTask(String description) {
-      this.description = description;
     }
 
-    public abstract Boolean run();
-
-    public String getDescription() {
-      return description;
+    public Setup( PageParameters parameters )
+    {
+        super( parameters );
     }
-  }
 
-  public int getLevel() {
-    return AccessControl.ADMIN;
-  }
+    static abstract class SetupTask
+    {
+        private String description;
 
-  public void layout() {
-    super.layout();
-
-    final List results = runSetup();
-
-    add(new ListView("status-output", results) {
-      protected void populateItem(ListItem listItem) {
-        Boolean ok = (Boolean) listItem.getModelObject();
-        SetupTask task = (SetupTask) setupTasks.get(listItem.getIndex());
-
-        if (ok.equals(Boolean.TRUE)) {
-          listItem.add(new Image("icon", new ResourceReference(XSM.class, "icons/emblem-default.png")));
-        } else {
-          listItem.add(new Image("icon", new ResourceReference(XSM.class, "icons/emblem-important.png")));
+        protected SetupTask( String description )
+        {
+            this.description = description;
         }
 
-        listItem.add(new Label("description", task.getDescription()));
-      }
+        public abstract Boolean run();
 
-    });
-
-    Boolean passed = (Boolean) results.get(results.size() - 1);
-    if (passed.equals(Boolean.TRUE)) {
-      add(new Image("icon", new ResourceReference(XSM.class, "icons/emblem-default.png")));
-      add(new Label("summary", "OK - everything is fine!"));
-    } else {
-      add(new Image("icon", new ResourceReference(XSM.class, "icons/emblem-important.png")));
-      add(new Label("summary", "Oh no, there seems to be a problem - please ensure you have extracted the supplied " +
-              "xsm-demo-config.zip file to /etc/xsm and that it is writable by this server process"));
-    }
-  }
-
-  protected List runSetup() {
-    List ret = new ArrayList();
-
-    for (int i = 0; i < setupTasks.size(); i++) {
-      Boolean result = ((SetupTask) setupTasks.get(i)).run();
-      ret.add(result);
-
-      if (result.equals(Boolean.FALSE)) {
-        break;
-      }
+        public String getDescription()
+        {
+            return description;
+        }
     }
 
+    public int getLevel()
+    {
+        return AccessControl.ADMIN;
+    }
 
-    return ret;
-  }
+    public void layout()
+    {
+        super.layout();
+
+        final List results = runSetup();
+
+        add( new ListView( "status-output", results )
+        {
+            protected void populateItem( ListItem listItem )
+            {
+                Boolean ok = (Boolean) listItem.getModelObject();
+                SetupTask task = (SetupTask) setupTasks.get( listItem.getIndex() );
+
+                if ( ok.equals( Boolean.TRUE ) )
+                {
+                    listItem.add( new Image( "icon", new ResourceReference( XSM.class, "icons/emblem-default.png" ) ) );
+                }
+                else
+                {
+                    listItem.add( new Image( "icon", new ResourceReference( XSM.class, "icons/emblem-important.png" ) ) );
+                }
+
+                listItem.add( new Label( "description", task.getDescription() ) );
+            }
+
+        } );
+
+        Boolean passed = (Boolean) results.get( results.size() - 1 );
+        if ( passed.equals( Boolean.TRUE ) )
+        {
+            add( new Image( "icon", new ResourceReference( XSM.class, "icons/emblem-default.png" ) ) );
+            add( new Label( "summary", "OK - everything is fine!" ) );
+        }
+        else
+        {
+            add( new Image( "icon", new ResourceReference( XSM.class, "icons/emblem-important.png" ) ) );
+            add( new Label( "summary", "Oh no, there seems to be a problem - please ensure you have extracted the supplied " +
+                    "xsm-demo-config.zip file to /etc/xsm and that it is writable by this server process" ) );
+        }
+    }
+
+    protected List runSetup()
+    {
+        List ret = new ArrayList();
+
+        for ( int i = 0; i < setupTasks.size(); i++ )
+        {
+            Boolean result = ((SetupTask) setupTasks.get( i )).run();
+            ret.add( result );
+
+            if ( result.equals( Boolean.FALSE ) )
+            {
+                break;
+            }
+        }
+
+
+        return ret;
+    }
 }

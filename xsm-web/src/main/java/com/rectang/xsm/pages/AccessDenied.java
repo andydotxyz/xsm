@@ -9,8 +9,11 @@ import org.apache.wicket.PageParameters;
  * @version $Id: AccessDenied.java 663 2007-10-04 22:50:25Z aje $
  * @since 2.0
  */
-public class AccessDenied extends XSMPage {
-  public AccessDenied(PageParameters parameters) {
-    super(parameters);
-  }
+public class AccessDenied
+        extends XSMPage
+{
+    public AccessDenied( PageParameters parameters )
+    {
+        super( parameters );
+    }
 }

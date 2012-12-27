@@ -1,38 +1,48 @@
 <html>
-  <body>
-    <wicket:extend>
-      <table class="dataview" cellspacing="0">
-        <tr class="headers"><th colspan="9"><span wicket:id="childtext"></span></th></tr>
-        <tr wicket:id="childpages" class="odd">
-          <td><div wicket:id="page-icon">&nbsp</div></td>
-          <td><a href="page-contents" wicket:id="link"><span wicket:id="label">page</span></a></td>
-          <td><a href="#" wicket:id="showhide"><span wicket:id="label">show</span></a></td>
-          <td><a href="#" wicket:id="top"><img wicket:id="top-icon" border="0" alt="top" title="top" /></a></td>
-          <td><a href="#" wicket:id="up"><img wicket:id="up-icon" border="0" alt="up" title="up" /></a></td>
-          <td><a href="#" wicket:id="down"><img wicket:id="down-icon" border="0" alt="down" title="down" /></a></td>
-          <td><a href="#" wicket:id="bottom"><img wicket:id="bottom-icon" border="0" alt="bottom" title="bottom" /></a></td>
-          <td><a href="#" wicket:id="delete"><img wicket:id="delete-icon" border="0" alt="delete" title="delete" /></a></td>
-          <td><a href="#" wicket:id="rename"><img wicket:id="rename-icon" border="0" alt="rename" title="rename" /></a></td>
-        </tr>
-      <!--/table>
+<body>
+<wicket:extend>
+  <table class="dataview" cellspacing="0">
+    <tr class="headers">
+      <th colspan="9"><span wicket:id="childtext"></span></th>
+    </tr>
+    <tr wicket:id="childpages" class="odd">
+      <td>
+        <div wicket:id="page-icon">&nbsp</div>
+      </td>
+      <td><a href="page-contents" wicket:id="link"><span wicket:id="label">page</span></a></td>
+      <td><a href="#" wicket:id="showhide"><span wicket:id="label">show</span></a></td>
+      <td><a href="#" wicket:id="top"><img wicket:id="top-icon" border="0" alt="top" title="top" /></a></td>
+      <td><a href="#" wicket:id="up"><img wicket:id="up-icon" border="0" alt="up" title="up" /></a></td>
+      <td><a href="#" wicket:id="down"><img wicket:id="down-icon" border="0" alt="down" title="down" /></a></td>
+      <td><a href="#" wicket:id="bottom"><img wicket:id="bottom-icon" border="0" alt="bottom" title="bottom" /></a></td>
+      <td><a href="#" wicket:id="delete"><img wicket:id="delete-icon" border="0" alt="delete" title="delete" /></a></td>
+      <td><a href="#" wicket:id="rename"><img wicket:id="rename-icon" border="0" alt="rename" title="rename" /></a></td>
+    </tr>
+    <!--/table>
 
-      <table border="1" cellspacing="0"-->
-        <tr class="headers"><th colspan="9"><span wicket:id="siblingtext"></span></th></tr>
-        <tr wicket:id="siblingpages" class="odd">
-          <td><div wicket:id="page-icon">&nbsp</div></td>
-          <td><a href="page-contents" wicket:id="link"><span wicket:id="label">page</span></a></td>
-          <td><a href="#" wicket:id="showhide"><span wicket:id="label">show</span></a></td>
-          <td><a href="#" wicket:id="top"><img wicket:id="top-icon" border="0" alt="top" title="top" /></a></td>
-          <td><a href="#" wicket:id="up"><img wicket:id="up-icon" border="0" alt="up" title="up" /></a></td>
-          <td><a href="#" wicket:id="down"><img wicket:id="down-icon" border="0" alt="down" title="down" /></a></td>
-          <td><a href="#" wicket:id="bottom"><img wicket:id="bottom-icon" border="0" alt="bottom" title="bottom" /></a></td>
-          <td><a href="#" wicket:id="delete"><img wicket:id="delete-icon" border="0" alt="delete" title="delete" /></a></td>
-          <td><a href="#" wicket:id="rename"><img wicket:id="rename-icon" border="0" alt="rename" title="rename" /></a></td>
-        </tr>
-      </table>
+    <table border="1" cellspacing="0"-->
+    <tr class="headers">
+      <th colspan="9"><span wicket:id="siblingtext"></span></th>
+    </tr>
+    <tr wicket:id="siblingpages" class="odd">
+      <td>
+        <div wicket:id="page-icon">&nbsp</div>
+      </td>
+      <td><a href="page-contents" wicket:id="link"><span wicket:id="label">page</span></a></td>
+      <td><a href="#" wicket:id="showhide"><span wicket:id="label">show</span></a></td>
+      <td><a href="#" wicket:id="top"><img wicket:id="top-icon" border="0" alt="top" title="top" /></a></td>
+      <td><a href="#" wicket:id="up"><img wicket:id="up-icon" border="0" alt="up" title="up" /></a></td>
+      <td><a href="#" wicket:id="down"><img wicket:id="down-icon" border="0" alt="down" title="down" /></a></td>
+      <td><a href="#" wicket:id="bottom"><img wicket:id="bottom-icon" border="0" alt="bottom" title="bottom" /></a></td>
+      <td><a href="#" wicket:id="delete"><img wicket:id="delete-icon" border="0" alt="delete" title="delete" /></a></td>
+      <td><a href="#" wicket:id="rename"><img wicket:id="rename-icon" border="0" alt="rename" title="rename" /></a></td>
+    </tr>
+  </table>
 
-      <p wicket:id="parent"><wicket:message key="parent" />
-        (<a href="#" wicket:id="parentlink"><span wicket:id="parentlabel"></span></a>)</p>
-    </wicket:extend>
-  </body>
+  <p wicket:id="parent">
+    <wicket:message key="parent" />
+    (<a href="#" wicket:id="parentlink"><span wicket:id="parentlabel"></span></a>)
+  </p>
+</wicket:extend>
+</body>
 </html>

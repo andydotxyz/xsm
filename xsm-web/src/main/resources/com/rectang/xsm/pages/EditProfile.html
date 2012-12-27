@@ -1,39 +1,42 @@
 <html>
-  <body>
-    <wicket:extend>
-      <h1>Your Profile</h1>
+<body>
+<wicket:extend>
+  <h1>Your Profile</h1>
 
-      <p>Please enter your details below and click "Save Profile".</p>
+  <p>Please enter your details below and click "Save Profile".</p>
 
 
-      <form wicket:id="profile">
-      <table>
-        <tr>
-          <td><label for="name" class="label">Full name:</label></td>
-          <td><input wicket:id="name" id="name"/></td>
-        </tr>
-        <tr>
-          <td><label for="email" class="label">Email address:</label></td>
-          <td><input wicket:id="email" id="email"/></td>
-        </tr>
-        <tr>
-          <td><label for="homepage" class="label">Web address:</label></td>
-          <td><input wicket:id="homepage" id="homepage"/></td>
-        </tr>
-        <tr>
-          <td><label for="avatar" class="label">Picture URL:</label></td>
-          <td><input wicket:id="avatar" id="avatar"/></td>
-        </tr>
-        <tr wicket:id="admin">
-          <td><label for="note" class="label">Notes:</label></td>
-          <td><input wicket:id="note" id="note"/></td>
-        </tr>
-        <tr>
-          <td colspan="2"><div align="right"><input type="submit" value="Save Profile"/></div></td>
-        </tr>
+  <form wicket:id="profile">
+    <table>
+      <tr>
+        <td><label for="name" class="label">Full name:</label></td>
+        <td><input wicket:id="name" id="name" /></td>
+      </tr>
+      <tr>
+        <td><label for="email" class="label">Email address:</label></td>
+        <td><input wicket:id="email" id="email" /></td>
+      </tr>
+      <tr>
+        <td><label for="homepage" class="label">Web address:</label></td>
+        <td><input wicket:id="homepage" id="homepage" /></td>
+      </tr>
+      <tr>
+        <td><label for="avatar" class="label">Picture URL:</label></td>
+        <td><input wicket:id="avatar" id="avatar" /></td>
+      </tr>
+      <tr wicket:id="admin">
+        <td><label for="note" class="label">Notes:</label></td>
+        <td><input wicket:id="note" id="note" /></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div align="right"><input type="submit" value="Save Profile" /></div>
+        </td>
+      </tr>
 
-      </table></form>
+    </table>
+  </form>
 
-    </wicket:extend>
-  </body>
+</wicket:extend>
+</body>
 </html>

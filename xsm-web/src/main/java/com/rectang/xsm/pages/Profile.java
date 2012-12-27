@@ -16,33 +16,39 @@ import org.apache.wicket.MarkupContainer;
  * @version $Id: Profile.java 663 2007-10-04 22:50:25Z aje $
  * @since 2.0
  */
-public class Profile extends XSMPage implements Secure {
-  public Profile(PageParameters parameters) {
-    super(parameters);
-  }
+public class Profile
+        extends XSMPage
+        implements Secure
+{
+    public Profile( PageParameters parameters )
+    {
+        super( parameters );
+    }
 
-  public int getLevel() {
-    return AccessControl.MEMBER;
-  }
+    public int getLevel()
+    {
+        return AccessControl.MEMBER;
+    }
 
-  public void layout() {
-    super.layout();
+    public void layout()
+    {
+        super.layout();
 
-    UserData user = getXSMSession().getUser();
+        UserData user = getXSMSession().getUser();
 
-    add(new BookmarkablePageLink("edit-profile", EditProfile.class));
-    add(new BookmarkablePageLink("edit-password", EditPassword.class));
+        add( new BookmarkablePageLink( "edit-profile", EditProfile.class ) );
+        add( new BookmarkablePageLink( "edit-password", EditPassword.class ) );
 
-    setDefaultModel(new CompoundPropertyModel(user));
-    add(new Label("name"));
-    MarkupContainer link = new ExternalLink("email", user.getEmail());
-    link.add(new Label("label", user.getEmail()));
-    add(link);
-    link = new ExternalLink("homepage", user.getHomepage());
-    link.add(new Label("label", user.getHomepage()));
-    add(link);
+        setDefaultModel( new CompoundPropertyModel( user ) );
+        add( new Label( "name" ) );
+        MarkupContainer link = new ExternalLink( "email", user.getEmail() );
+        link.add( new Label( "label", user.getEmail() ) );
+        add( link );
+        link = new ExternalLink( "homepage", user.getHomepage() );
+        link.add( new Label( "label", user.getHomepage() ) );
+        add( link );
 
-    add(new Label("avatar"));
-    add(new Label("note"));
-  }
+        add( new Label( "avatar" ) );
+        add( new Label( "note" ) );
+    }
 }

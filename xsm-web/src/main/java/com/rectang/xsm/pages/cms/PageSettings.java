@@ -14,29 +14,36 @@ import org.apache.wicket.markup.html.link.BookmarkablePageLink;
  * @version $Id$
  * @since 2.0
  */
-public class PageSettings extends DocumentPage implements Secure {
-  public PageSettings(PageParameters parameters) {
-    super(parameters);
-  }
+public class PageSettings
+        extends DocumentPage
+        implements Secure
+{
+    public PageSettings( PageParameters parameters )
+    {
+        super( parameters );
+    }
 
-  public int getLevel() {
-    return AccessControl.MEMBER;
-  }
+    public int getLevel()
+    {
+        return AccessControl.MEMBER;
+    }
 
-  public void layout() {
-    super.layout();
+    public void layout()
+    {
+        super.layout();
 
-    add(new BookmarkablePageLink("contents", Contents.class, getPageParameters()));
-    add(new BookmarkablePageLink("permissions", Permissions.class, getPageParameters()));
-    add(new BookmarkablePageLink("status", Status.class, getPageParameters()));
-    add(new BookmarkablePageLink("options", Options.class, getPageParameters()));
+        add( new BookmarkablePageLink( "contents", Contents.class, getPageParameters() ) );
+        add( new BookmarkablePageLink( "permissions", Permissions.class, getPageParameters() ) );
+        add( new BookmarkablePageLink( "status", Status.class, getPageParameters() ) );
+        add( new BookmarkablePageLink( "options", Options.class, getPageParameters() ) );
 
-    add(new BookmarkablePageLink("security", Security.class, getPageParameters()).setVisible(isApache()));
+        add( new BookmarkablePageLink( "security", Security.class, getPageParameters() ).setVisible( isApache() ) );
 
-    add(new BookmarkablePageLink("new", New.class, getPageParameters()));
-  }
+        add( new BookmarkablePageLink( "new", New.class, getPageParameters() ) );
+    }
 
-  private boolean isApache() {
-    return getXSMSession().getSite().getTechnologies().contains("apache");
-  }
+    private boolean isApache()
+    {
+        return getXSMSession().getSite().getTechnologies().contains( "apache" );
+    }
 }

@@ -1,14 +1,15 @@
 <html>
-  <body>
-    <wicket:extend>
-      <form wicket:id="securityform">
-        <p><input type="checkbox" wicket:id="enable" />
-          Restrict access to this page and all content it contains (this includes sub-pages).</p>
+<body>
+<wicket:extend>
+  <form wicket:id="securityform">
+    <p><input type="checkbox" wicket:id="enable" />
+      Restrict access to this page and all content it contains (this includes sub-pages).</p>
 
-        <blockquote>
-          <p><input type="checkbox" wicket:id="all" />
-            Alow access to all users (visitors and XSM accounts).</p>
-          <p>or just to these visitors:</p>
+    <blockquote>
+      <p><input type="checkbox" wicket:id="all" />
+        Alow access to all users (visitors and XSM accounts).</p>
+
+      <p>or just to these visitors:</p>
 
           <span wicket:id="group">
           <table border="0">
@@ -18,11 +19,11 @@
             </tr>
           </table>
           </span>
-        </blockquote>
+    </blockquote>
 
-        <input type="submit" value="Save" wicket:id="save" />
-        <input type="reset" value="Reset" wicket:id="reset" />
-      </form>
-    </wicket:extend>
-  </body>
+    <input type="submit" value="Save" wicket:id="save" />
+    <input type="reset" value="Reset" wicket:id="reset" />
+  </form>
+</wicket:extend>
+</body>
 </html>

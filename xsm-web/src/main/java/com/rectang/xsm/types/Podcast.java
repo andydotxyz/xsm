@@ -13,62 +13,75 @@ import org.jdom.Element;
  * @version $Id: Podcast.java 802 2009-05-16 17:25:24Z andy $
  * @since 1.0
  */
-public class Podcast extends News {
-  public Podcast(String name) {
-    this(name, new PodcastArticle("article"));
-  }
+public class Podcast
+        extends News
+{
+    public Podcast( String name )
+    {
+        this( name, new PodcastArticle( "article" ) );
+    }
 
-  protected Podcast(String name, DocList child) {
-    super(name, child);
-  }
+    protected Podcast( String name, DocList child )
+    {
+        super( name, child );
+    }
 }
 
-class PodcastArticle extends NewsArticle {
+class PodcastArticle
+        extends NewsArticle
+{
 
-  public PodcastArticle(String name) {
-    super(name);
+    public PodcastArticle( String name )
+    {
+        super( name );
 
-    setEmbeds(new DocElement[]{new File("enclosure").setAcceptedExtensions(getExtensions())});
-  }
-
-  protected void publishEmbeded(Element root, DocElement[] embed, StringBuffer s) {
-    java.lang.String path = root.getChildText("enclosure");
-    if (path == null || path.length() == 0) {
-      return;
+        setEmbeds( new DocElement[]{new File( "enclosure" ).setAcceptedExtensions( getExtensions() )} );
     }
 
-    s.append("  <p class=\"xsm_news_enclosure\">Download file: <a href=\"");
-    s.append(getSite().getRootUrl());
-    s.append(File.getPath(embed[0], path));
-    s.append("\">");
-    s.append(path);
-    s.append("</a></p>\n");
-  }
+    protected void publishEmbeded( Element root, DocElement[] embed, StringBuffer s )
+    {
+        java.lang.String path = root.getChildText( "enclosure" );
+        if ( path == null || path.length() == 0 )
+        {
+            return;
+        }
 
-  protected void publishEmbededRSS(Element root, DocElement[] embed, StringBuffer s) {
-    java.lang.String path = root.getChildText("enclosure");
-    if (path == null || path.length() == 0) {
-      return;
+        s.append( "  <p class=\"xsm_news_enclosure\">Download file: <a href=\"" );
+        s.append( getSite().getRootUrl() );
+        s.append( File.getPath( embed[0], path ) );
+        s.append( "\">" );
+        s.append( path );
+        s.append( "</a></p>\n" );
     }
 
-    s.append("  <enclosure url=\"");
-    s.append(getSite().getRootUrl());
-    s.append(File.getPath(embed[0], path));
-    s.append("\" length=\"");
+    protected void publishEmbededRSS( Element root, DocElement[] embed, StringBuffer s )
+    {
+        java.lang.String path = root.getChildText( "enclosure" );
+        if ( path == null || path.length() == 0 )
+        {
+            return;
+        }
 
-    Site site = this.getPage().getSite();
-    s.append(site.getPublishedDoc(getDoc().getPage().getPath() + "/_files/" + path).length());
+        s.append( "  <enclosure url=\"" );
+        s.append( getSite().getRootUrl() );
+        s.append( File.getPath( embed[0], path ) );
+        s.append( "\" length=\"" );
 
-    s.append("\" type=\"");
-    s.append(getMime(path));
-    s.append("\" />\n");
-  }
+        Site site = this.getPage().getSite();
+        s.append( site.getPublishedDoc( getDoc().getPage().getPath() + "/_files/" + path ).length() );
 
-  protected String[] getExtensions() {
-    return new String[]{"mp3"};
-  }
+        s.append( "\" type=\"" );
+        s.append( getMime( path ) );
+        s.append( "\" />\n" );
+    }
 
-  protected String getMime(String ext) {
-    return "audio/mpeg";
-  }
+    protected String[] getExtensions()
+    {
+        return new String[]{"mp3"};
+    }
+
+    protected String getMime( String ext )
+    {
+        return "audio/mpeg";
+    }
 }

@@ -20,37 +20,48 @@ import org.apache.wicket.model.PropertyModel;
  * @version $Id: ComboBox.java 786 2009-04-02 22:25:55Z andy $
  * @since 1.2
  */
-public class ComboBox extends DocWidget implements Serializable {
-  private List items;
+public class ComboBox
+        extends DocWidget
+        implements Serializable
+{
+    private List items;
 
-  public ComboBox(java.lang.String name, List items) {
-    super(name);
+    public ComboBox( java.lang.String name, List items )
+    {
+        super( name );
 
-    this.items = items;
-  }
-
-  public void view(Element node, StringBuffer s) {
-    s.append(node.getValue());
-  }
-
-  public void publish(Element node, StringBuffer s) {
-    s.append(node.getValue());
-  }
-
-  public WebMarkupContainer edit(java.lang.String wicketId, Element node, java.lang.String path) {
-    return new ComboBoxPanel(wicketId, node);
-  }
-
-  public void create(Element node) {
-    node.setText("");
-  }
-
-  class ComboBoxPanel extends Panel {
-    public ComboBoxPanel(java.lang.String id, Element node) {
-      super(id);
-
-      add(new Label("label", name));
-      add(new DropDownChoice("value", new PropertyModel(node, "text"), items));
+        this.items = items;
     }
-  }
+
+    public void view( Element node, StringBuffer s )
+    {
+        s.append( node.getValue() );
+    }
+
+    public void publish( Element node, StringBuffer s )
+    {
+        s.append( node.getValue() );
+    }
+
+    public WebMarkupContainer edit( java.lang.String wicketId, Element node, java.lang.String path )
+    {
+        return new ComboBoxPanel( wicketId, node );
+    }
+
+    public void create( Element node )
+    {
+        node.setText( "" );
+    }
+
+    class ComboBoxPanel
+            extends Panel
+    {
+        public ComboBoxPanel( java.lang.String id, Element node )
+        {
+            super( id );
+
+            add( new Label( "label", name ) );
+            add( new DropDownChoice( "value", new PropertyModel( node, "text" ), items ) );
+        }
+    }
 }

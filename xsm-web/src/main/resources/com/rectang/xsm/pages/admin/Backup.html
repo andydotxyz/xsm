@@ -1,17 +1,27 @@
 <html>
-  <body>
-    <wicket:extend>
-      <h1><wicket:message key="title" /></h1>
+<body>
+<wicket:extend>
+  <h1>
+    <wicket:message key="title" />
+  </h1>
 
-      <p><wicket:message key="intro" /></p>
+  <p>
+    <wicket:message key="intro" />
+  </p>
 
-      <ul>
-        <li><a wicket:id="zip" title="zip">
-          <wicket:message key="download" /> Zip</a> - <wicket:message key="zip-tip" /></li>
-        <li><a wicket:id="tar.gz" title="tar.gz">
-          <wicket:message key="download" /> Tar.Gz</a> - <wicket:message key="tar.gz-tip" /></li>
-      </ul>
+  <ul>
+    <li><a wicket:id="zip" title="zip">
+      <wicket:message key="download" />
+      Zip</a> -
+      <wicket:message key="zip-tip" />
+    </li>
+    <li><a wicket:id="tar.gz" title="tar.gz">
+      <wicket:message key="download" />
+      Tar.Gz</a> -
+      <wicket:message key="tar.gz-tip" />
+    </li>
+  </ul>
 
-    </wicket:extend>
-  </body>
+</wicket:extend>
+</body>
 </html>

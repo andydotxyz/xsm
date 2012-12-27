@@ -12,140 +12,190 @@ import java.io.Serializable;
  * @version $Id$
  * @since 1.0
  */
-public abstract class Page implements Serializable {
-  private Site site;
-  private HierarchicalPage parent;
-  private String title;
-  private String slug;
-  boolean hidden;
+public abstract class Page
+        implements Serializable
+{
+    private Site site;
+    private HierarchicalPage parent;
+    private String title;
+    private String slug;
+    boolean hidden;
 
-  public Page(Site site, HierarchicalPage parent, String title) {
-    this(site, parent, title, false);
-  }
-
-  public Page(Site site, HierarchicalPage parent, String title, boolean hidden) {
-    this.site = site;
-    this.parent = parent;
-    this.title = title;
-    this.hidden = hidden;
-  }
-
-  public Site getSite() {
-    return site;
-  }
-
-  public HierarchicalPage getParent() {
-    return parent;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public String getSlug() {
-    if (slug != null) {
-      return slug;
+    public Page( Site site, HierarchicalPage parent, String title )
+    {
+        this( site, parent, title, false );
     }
 
-    return getFile();
-  }
+    public Page( Site site, HierarchicalPage parent, String title, boolean hidden )
+    {
+        this.site = site;
+        this.parent = parent;
+        this.title = title;
+        this.hidden = hidden;
+    }
 
-  public void setSlug(String slug) {
-    this.slug = slug;
-  }
+    public Site getSite()
+    {
+        return site;
+    }
 
-  public boolean getHidden() {
-    return hidden;
-  }
+    public HierarchicalPage getParent()
+    {
+        return parent;
+    }
 
-  public void setHidden(boolean hide) {
-    hidden = hide;
-  }
+    public String getTitle()
+    {
+        return title;
+    }
 
-  public String getFile() {
-    return XSMDocument.encode(title);
-  }
+    public void setTitle( String title )
+    {
+        this.title = title;
+    }
 
-  public String toString() {
-    return getClass().getName() + " [" + getTitle() + "]";
-  }
+    public String getSlug()
+    {
+        if ( slug != null )
+        {
+            return slug;
+        }
 
-  public String getPath() {
-    String ret = "";
-    if (parent != null)
-      ret = parent.getPath();
-    if (getTitle().equals("/"))
-      return "/";
-    if (ret.charAt(ret.length() - 1) == '/')
-      return ret + getFile();
-    return ret + "/" + getFile();
-  }
+        return getFile();
+    }
 
-  public String getPublishedPath() {
-    String ret = "";
-    if (parent != null)
-      ret = parent.getPublishedPath();
-    if (getTitle().equals("/"))
-      return "/";
-    if (ret.charAt(ret.length() - 1) == '/')
-      return ret + getSlug();
-    return ret + "/" + getSlug();
-  }
+    public void setSlug( String slug )
+    {
+        this.slug = slug;
+    }
 
-  public boolean rename(String name) {
-    if (name.charAt(0) == '/')
-      return site.movePageTo(this, name);
-    setTitle(name);
-    return true;
-  }
+    public boolean getHidden()
+    {
+        return hidden;
+    }
 
-  // These require that the parent is a Hierarchical Page - which it must be
-  // by definition :)
+    public void setHidden( boolean hide )
+    {
+        hidden = hide;
+    }
 
-  public boolean delete() {
-    return parent.removeSubPage(this);
-  }
+    public String getFile()
+    {
+        return XSMDocument.encode( title );
+    }
 
-  public void moveToTop() {
-    if (parent != null)
-      parent.movePageToTop(this);
-  }
+    public String toString()
+    {
+        return getClass().getName() + " [" + getTitle() + "]";
+    }
 
-  public void moveUp() {
-    if (parent != null)
-      parent.movePageUp(this);
-  }
+    public String getPath()
+    {
+        String ret = "";
+        if ( parent != null )
+        {
+            ret = parent.getPath();
+        }
+        if ( getTitle().equals( "/" ) )
+        {
+            return "/";
+        }
+        if ( ret.charAt( ret.length() - 1 ) == '/' )
+        {
+            return ret + getFile();
+        }
+        return ret + "/" + getFile();
+    }
 
-  public void moveDown() {
-    if (parent != null)
-      parent.movePageDown(this);
-  }
+    public String getPublishedPath()
+    {
+        String ret = "";
+        if ( parent != null )
+        {
+            ret = parent.getPublishedPath();
+        }
+        if ( getTitle().equals( "/" ) )
+        {
+            return "/";
+        }
+        if ( ret.charAt( ret.length() - 1 ) == '/' )
+        {
+            return ret + getSlug();
+        }
+        return ret + "/" + getSlug();
+    }
 
-  public void moveToBottom() {
-    if (parent != null)
-      parent.movePageToBottom(this);
-  }
+    public boolean rename( String name )
+    {
+        if ( name.charAt( 0 ) == '/' )
+        {
+            return site.movePageTo( this, name );
+        }
+        setTitle( name );
+        return true;
+    }
 
-  public abstract boolean publish(UserData user);
+    // These require that the parent is a Hierarchical Page - which it must be
+    // by definition :)
 
-  public abstract String getType();
+    public boolean delete()
+    {
+        return parent.removeSubPage( this );
+    }
 
-  public String getLink() {
-    return getSite().getRootUrl() + getPublishedPath() + "/";
-  }
+    public void moveToTop()
+    {
+        if ( parent != null )
+        {
+            parent.movePageToTop( this );
+        }
+    }
 
-  public boolean isPublishable() {
-    return false;
-  }
+    public void moveUp()
+    {
+        if ( parent != null )
+        {
+            parent.movePageUp( this );
+        }
+    }
 
-  public boolean equals(Object page) {
-    if (!(page instanceof Page))
-      return false;
+    public void moveDown()
+    {
+        if ( parent != null )
+        {
+            parent.movePageDown( this );
+        }
+    }
 
-    return ((Page) page).getPath().equals(getPath());
-  }
+    public void moveToBottom()
+    {
+        if ( parent != null )
+        {
+            parent.movePageToBottom( this );
+        }
+    }
+
+    public abstract boolean publish( UserData user );
+
+    public abstract String getType();
+
+    public String getLink()
+    {
+        return getSite().getRootUrl() + getPublishedPath() + "/";
+    }
+
+    public boolean isPublishable()
+    {
+        return false;
+    }
+
+    public boolean equals( Object page )
+    {
+        if ( !(page instanceof Page) )
+        {
+            return false;
+        }
+
+        return ((Page) page).getPath().equals( getPath() );
+    }
 }

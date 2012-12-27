@@ -1,7 +1,7 @@
 body {
-    margin-top:    15px;
-    margin-left:   15px;
-    margin-right:  15px;
+    margin-top: 15px;
+    margin-left: 15px;
+    margin-right: 15px;
     margin-bottom: 15px;
     background-color: #ffffff;
     font-family: courier, monospace;
@@ -70,7 +70,7 @@ p {
 }
 
 /** common styling */
-.xsm_form table{
+.xsm_form table {
     width: 100%;
 }
 

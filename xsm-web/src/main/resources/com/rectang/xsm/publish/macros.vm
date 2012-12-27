@@ -1,287 +1,290 @@
 #macro( title )
-  $site.title :: #pageName()
+    $site.title :: #pageName()
 #end
 
 #macro( pageName )
-  #if( $editing )
-    $!page.title [edit]
-  #else
-    $!page.title
-  #end
+    #if( $editing )
+        $!page.title [edit]
+    #else
+        $!page.title
+    #end
 #end
 
 #macro( metadataTitle )
-  $!metadata.title
+    $!metadata.title
 #end
 
 #macro( metadataDescription )
-  $!metadata.description
+    $!metadata.description
 #end
 
 #macro( metadataLastEditor )
-  $metadata.lastEditor
+    $metadata.lastEditor
 #end
 
 #macro( metadataLastEdited )
-  $dateFormatter.formatISO($metadata.lastEdited)
+    $dateFormatter.formatISO($metadata.lastEdited)
 #end
 
 #macro( metadataFormattedLastEdited $format )
-  #if( $format == "shortdate" )
-    $dateFormatter.formatShortDate($metadata.lastEdited)
-  #elseif( $format == "date" )
-    $dateFormatter.formatDate($metadata.lastEdited)
-  #elseif( $format == "shorttime" )
-    $dateFormatter.formatShortTime($metadata.lastEdited)
-  #elseif( $format == "time" )
-    $dateFormatter.formatTime($metadata.lastEdited)
-  #else
-    $dateFormatter.formatISO($metadata.lastEdited)
-  #end
+    #if( $format == "shortdate" )
+        $dateFormatter.formatShortDate($metadata.lastEdited)
+    #elseif( $format == "date" )
+        $dateFormatter.formatDate($metadata.lastEdited)
+    #elseif( $format == "shorttime" )
+        $dateFormatter.formatShortTime($metadata.lastEdited)
+    #elseif( $format == "time" )
+        $dateFormatter.formatTime($metadata.lastEdited)
+    #else
+        $dateFormatter.formatISO($metadata.lastEdited)
+    #end
 #end
 
 #macro( navigation )
-  #if( $editing )
+    #if( $editing )
     <div wicket:id="xsm-tree"></div>
-  #else
-    #publishedNav()
-  #end
+    #else
+        #publishedNav()
+    #end
 #end
 
 #macro( publishedNav )
-  #navtree( $site.pages, true )
+    #navtree( $site.pages, true )
 #end
 
 #macro( categorisedNavigation )
-  #set( $pages = $site.pages )
+    #set( $pages = $site.pages )
 
-  <ul class="xsm_menu_categories">
+<ul class="xsm_menu_categories">
 
-  #foreach( $node in $pages )
-    <li class="xsm_menu_category">$node.title
+    #foreach( $node in $pages )
+      <li class="xsm_menu_category">$node.title
 
     #if( $node.subPages && $node.subPages.size() > 0 )
-      #navtree( $node.subPages, true )
+          #navtree( $node.subPages, true )
+      #end
+      </li>
     #end
-    </li>
-  #end
-  </ul>
+</ul>
 #end
 
 #macro( navtree $pages $visible )
-  <ul class="xsm_menu_group">
+<ul class="xsm_menu_group">
 
-  #foreach( $node in $pages )
+    #foreach( $node in $pages )
 
-    #if( $visible )
-      #set( $class = '' )
-    #else
-      #set( $class = 'xsm_menu_hidden' )
+        #if( $visible )
+            #set( $class = '' )
+        #else
+            #set( $class = 'xsm_menu_hidden' )
+        #end
+
+        #if( !$node.hidden )
+            #if ($node.path.equals($page.path))
+                #set( $selected = "xsm_menu_item_selected" )
+            #else
+                #set( $selected = "" )
+            #end
+
+          <li class="xsm_menu_item $selected $class ${node.file}"><a href="${node.link}">$node.title</a>
+
+              #if( $node.subPages && $node.subPages.size() > 0 )
+                  #navtree( $node.subPages, $page.path.startsWith($node.path) )
+              #end
+          </li>
+        #end
     #end
-
-    #if( !$node.hidden )
-      #if ($node.path.equals($page.path))
-        #set( $selected = "xsm_menu_item_selected" )
-      #else
-        #set( $selected = "" )
-      #end
-
-    <li class="xsm_menu_item $selected $class ${node.file}"><a href="${node.link}">$node.title</a>
-
-      #if( $node.subPages && $node.subPages.size() > 0 )
-        #navtree( $node.subPages, $page.path.startsWith($node.path) )
-      #end
-    </li>
-    #end
-  #end
-  </ul>
+</ul>
 #end
 
 #macro( newsSummary )
-  #set( $source = $site.getNewsSource() )
-  #set( $length = 150 )
-  #set( $count = 5 )
+    #set( $source = $site.getNewsSource() )
+    #set( $length = 150 )
+    #set( $count = 5 )
 
-  #if ( !$source )
+    #if ( !$source )
     (No news source chosen)
-  #else
-    #set( $docPage = $renderUtils.getXSMDoc($site, $site.getPage($source)) )
-    #if ( !$docPage.getType($user).getClass().getName().endsWith(".News") )
-      (Chosen page is not a news page)
     #else
-      #set( $list = $docPage.getContentElement().getChildren("article") )
-      #foreach( $article in $list )
-        #if ($velocityCount <= $count)
-          <p class="xsm_newssummary">
-            <span class="xsm_newssummary_subject">$article.getChildText("subject")</span><br />
+        #set( $docPage = $renderUtils.getXSMDoc($site, $site.getPage($source)) )
+        #if ( !$docPage.getType($user).getClass().getName().endsWith(".News") )
+        (Chosen page is not a news page)
+        #else
+            #set( $list = $docPage.getContentElement().getChildren("article") )
+            #foreach( $article in $list )
+                #if ($velocityCount <= $count)
+                <p class="xsm_newssummary">
+                  <span class="xsm_newssummary_subject">$article.getChildText("subject")</span><br />
 
-            <span class="xsm_newssummary_body">$htmlUtils.summarise( $article.getChildText("body"), $length)</span><br />
+                  <span
+                      class="xsm_newssummary_body">$htmlUtils.summarise( $article.getChildText("body"), $length)</span><br />
 
-            <a href="$site.getPrefixUrl()$site.getNewsSource()/_articles/${article.getAttributeValue("index")}.html" class="xsm_newssummary_more">read more...</a>
-          </p>
+                  <a href="$site.getPrefixUrl()$site.getNewsSource()/_articles/${article.getAttributeValue("index")}.html"
+                     class="xsm_newssummary_more">read more...</a>
+                </p>
+                #end
+            #end
         #end
-      #end
     #end
-  #end
 #end
 
 #macro( newsArchiveBlock )
-  <div class="xsm_news_archive">
-    <h3 class="title">Archives</h3>
-  #set( $source = $site.getNewsSource() )
+<div class="xsm_news_archive">
+  <h3 class="title">Archives</h3>
+    #set( $source = $site.getNewsSource() )
 
-  #if ( !$source )
-    (No news source chosen)
-  #else
-    #set( $docPage = $renderUtils.getXSMDoc($site, $site.getPage($source)) )
-    #if ( !$docPage.getType($user).getClass().getName().endsWith(".News") )
-      (Chosen page is not a news page)
+    #if ( !$source )
+      (No news source chosen)
     #else
-      $renderUtils.renderNewsArchiveBlock($site, $docPage)
+        #set( $docPage = $renderUtils.getXSMDoc($site, $site.getPage($source)) )
+        #if ( !$docPage.getType($user).getClass().getName().endsWith(".News") )
+          (Chosen page is not a news page)
+        #else
+            $renderUtils.renderNewsArchiveBlock($site, $docPage)
+        #end
     #end
-  #end
-  </div>
+</div>
 #end
 
 #macro( lastAddition $pageName )
-  #set( $source = $site.getPage( $pageName ) )
+    #set( $source = $site.getPage( $pageName ) )
 
-  #if ( !$source )
+    #if ( !$source )
     (Page not found)
-  #else
-    #set( $docPage = $source.getXSMDocument() )
-    #set( $nextIndex = $docPage.getContentElement().getAttributeValue( "next_index" ) )
-    #if ( !$nextIndex )
-      (Chosen page is not a list based page)
     #else
-      #set( $list = $docPage.getContentElement().getChildren() )
+        #set( $docPage = $source.getXSMDocument() )
+        #set( $nextIndex = $docPage.getContentElement().getAttributeValue( "next_index" ) )
+        #if ( !$nextIndex )
+        (Chosen page is not a list based page)
+        #else
+            #set( $list = $docPage.getContentElement().getChildren() )
 
-      #foreach( $index in [$numberUtils.parseInt($nextIndex) .. 0] )
-        #if (!$latest)
-          #foreach( $item in $list )
-            #if ( $item.getAttributeValue("index") == $index )
-              #set( $latest = $item )
+            #foreach( $index in [$numberUtils.parseInt($nextIndex) .. 0] )
+                #if (!$latest)
+                    #foreach( $item in $list )
+                        #if ( $item.getAttributeValue("index") == $index )
+                            #set( $latest = $item )
+                        #end
+                    #end
+                #end
             #end
-          #end
+
+            #if (!$latest)
+                #set( $latest = $list.get(0) )
+            #end
+
+            #if (!$latest)
+            (No entries)
+            #else
+                $renderUtils.publish( $docPage.getType($user), $latest )
+            #end
         #end
-      #end
-
-      #if (!$latest)
-        #set( $latest = $list.get(0) )
-      #end
-
-      #if (!$latest)
-        (No entries)
-      #else
-        $renderUtils.publish( $docPage.getType($user), $latest )
-      #end
     #end
-  #end
 #end
 
 #macro( feedback )
-  #if( $editing )
+    #if( $editing )
     <div wicket:id="feedback" />
-  #end
+    #end
 #end
 
 #macro( editheaders )
-  #if( $editing )
+    #if( $editing )
     <link rel="stylesheet" type="text/css" href="/sitetheme/layout.css" />
     <link rel="stylesheet" type="text/css" href="/sitetheme/style.css" />
-    <link rel="stylesheet" type="text/css" href="/resources/com.rectang.xsm.XSMApplication/themes/$theme/xsm-editor.css" />
-  #else
+    <link rel="stylesheet" type="text/css"
+          href="/resources/com.rectang.xsm.XSMApplication/themes/$theme/xsm-editor.css" />
+    #else
     <link rel="stylesheet" type="text/css" href="${site.rootUrl}/_theme/layout.css" />
     <link rel="stylesheet" type="text/css" href="${site.rootUrl}/_theme/style.css" />
-  #end
+    #end
 #end
 
 #macro( editlink )
-  #if( $editing )
+    #if( $editing )
     XSM Version: $config.version
-  #else
-    #if( $site.login == "" )
-      #set( $login = $config.url + "login?sitename=" + $site.id )
     #else
-      #set( $login = $site.prefixUrl + $site.login )
-    #end
+        #if( $site.login == "" )
+            #set( $login = $config.url + "login?sitename=" + $site.id )
+        #else
+            #set( $login = $site.prefixUrl + $site.login )
+        #end
 
     <a href="$login">Edit</a>
-  #end
+    #end
 #end
 
 #macro( toolbar )
-  #if( $editing )
-            <div id="xsm-editor-toolbar">
+    #if( $editing )
+    <div id="xsm-editor-toolbar">
 
-              <div id="xsm-editor-logo">XSM</div>
+      <div id="xsm-editor-logo">XSM</div>
 
-              <ul class="xsm-editor-buttons-page" wicket:id="page-buttons">
-                <wicket:enclosure child="editPlugin">
-                <li><span class="xsm-editor-button-background xsm-editor-edit-button">
+      <ul class="xsm-editor-buttons-page" wicket:id="page-buttons">
+        <wicket:enclosure child="editPlugin">
+          <li><span class="xsm-editor-button-background xsm-editor-edit-button">
                   <a wicket:id="editPlugin" href="#" class="xsm-editor-button">
                     <img wicket:id="pluginImage" class="xsm-editor-button-icon"
                          alt="Edit" title="Edit" />
                     <span class="xsm-editor-button-main-caption">Edit</span></a></span></li>
-                </wicket:enclosure>
-                <wicket:enclosure child="savePlugin">
-                <li><span class="xsm-editor-button-background xsm-editor-edit-button">
+        </wicket:enclosure>
+        <wicket:enclosure child="savePlugin">
+          <li><span class="xsm-editor-button-background xsm-editor-edit-button">
                   <a wicket:id="savePlugin" href="#" class="xsm-editor-button">
                     <img wicket:id="pluginImage" class="xsm-editor-button-icon"
                          alt="Save" title="Save" />
                     <span class="xsm-editor-button-main-caption">Save</span></a></span></li>
-                </wicket:enclosure>
+        </wicket:enclosure>
 
-                <li><span class="xsm-editor-button-background">
+        <li><span class="xsm-editor-button-background">
                   <a wicket:id="pagePlugin" href="#" class="xsm-editor-button">
                     <img wicket:id="pluginImage" class="xsm-editor-button-icon"
                          alt="Page Options" title="Page Options" />
                     <span class="xsm-editor-button-caption">Options</span></a></span></li>
-              </ul>
+      </ul>
 
-              <ul class="xsm-editor-buttons-user" wicket:id="user-buttons">
+      <ul class="xsm-editor-buttons-user" wicket:id="user-buttons">
 
-                <li><span class="xsm-editor-button-background">
+        <li><span class="xsm-editor-button-background">
                   <a wicket:id="profilePlugin" href="#" class="xsm-editor-button">
                     <img wicket:id="pluginImage" class="xsm-editor-button-icon"
-                        alt="Profile" title="Profile" />
-                  <span class="xsm-editor-button-caption">Profile</span></a></span></li>
-                <li><span class="xsm-editor-button-background">
+                         alt="Profile" title="Profile" />
+                    <span class="xsm-editor-button-caption">Profile</span></a></span></li>
+        <li><span class="xsm-editor-button-background">
                   <a wicket:id="preferencesPlugin" href="#" class="xsm-editor-button">
                     <img wicket:id="pluginImage" class="xsm-editor-button-icon"
-                        alt="Prefences" title="Preferences" />
-                  <span class="xsm-editor-button-caption">Preferences</span></a></span></li>
+                         alt="Prefences" title="Preferences" />
+                    <span class="xsm-editor-button-caption">Preferences</span></a></span></li>
 
-                <li><span class="xsm-editor-button-background">
+        <li><span class="xsm-editor-button-background">
                   <a wicket:id="logoutPlugin" href="#" class="xsm-editor-button">
                     <img wicket:id="pluginImage" class="xsm-editor-button-icon"
-                        alt="Logout" title="Logout" />
-                  <span class="xsm-editor-button-caption">Logout</span></a></span></li>
-              </ul>
+                         alt="Logout" title="Logout" />
+                    <span class="xsm-editor-button-caption">Logout</span></a></span></li>
+      </ul>
 
-              <ul class="xsm-editor-buttons-admin" wicket:id="admin-buttons">
-                <li><span class="xsm-editor-button-background">
+      <ul class="xsm-editor-buttons-admin" wicket:id="admin-buttons">
+        <li><span class="xsm-editor-button-background">
                   <a wicket:id="sitePlugin" href="#" class="xsm-editor-button">
                     <img wicket:id="pluginImage" class="xsm-editor-button-icon"
-                        alt="Site Settings" title="Site Settings" />
-                  <span class="xsm-editor-button-caption">Site</span></a></span></li>
-              </ul>
+                         alt="Site Settings" title="Site Settings" />
+                    <span class="xsm-editor-button-caption">Site</span></a></span></li>
+      </ul>
 
-              <ul class="xsm-editor-buttons-xsmadmin" wicket:id="xsmadmin-buttons">
-                <li><span class="xsm-editor-button-background">
+      <ul class="xsm-editor-buttons-xsmadmin" wicket:id="xsmadmin-buttons">
+        <li><span class="xsm-editor-button-background">
                   <a wicket:id="adminPlugin" href="#" class="xsm-editor-button">
                     <img wicket:id="pluginImage" class="xsm-editor-button-icon"
-                        alt="XSM Admin" title="XSM Admin" />
-                  <span class="xsm-editor-button-caption">XSM Admin</span></a></span></li>
-              </ul>
+                         alt="XSM Admin" title="XSM Admin" />
+                    <span class="xsm-editor-button-caption">XSM Admin</span></a></span></li>
+      </ul>
 
-              <ul class="xsm-editor-buttons-help">
-                <li><span class="xsm-editor-button-background">
+      <ul class="xsm-editor-buttons-help">
+        <li><span class="xsm-editor-button-background">
                   <a wicket:id="helpPlugin" href="#" class="xsm-editor-button">
                     <img wicket:id="pluginImage" class="xsm-editor-button-icon"
-                        alt="Help" title="Help" />
-                  <span class="xsm-editor-button-caption">Help</span></a></span></li>
-              </ul>
-            </div>
-  #end
+                         alt="Help" title="Help" />
+                    <span class="xsm-editor-button-caption">Help</span></a></span></li>
+      </ul>
+    </div>
+    #end
 #end

@@ -17,40 +17,53 @@ import org.apache.wicket.markup.html.basic.Label;
  * @version $Id: ImageList.java 802 2009-05-16 17:25:24Z andy $
  * @since 2.0
  */
-public class ImageList extends DocumentPage {
-  public ImageList(PageParameters parameters) {
-    super(parameters);
-  }
-
-  public void layout() {
-    List files = new Vector();
-
-    if (getDoc() != null) {
-      Element rootElem = getDoc().getContentElement();
-      if (rootElem != null) {
-        Element images = rootElem.getChild("images");
-        if (images != null) {
-          files = images.getChildren("image");
-        }
-      }
+public class ImageList
+        extends DocumentPage
+{
+    public ImageList( PageParameters parameters )
+    {
+        super( parameters );
     }
 
-    add(new ListView("images", files) {
-      protected void populateItem(ListItem listItem) {
-        Element next = (Element) listItem.getModelObject();
-        String path = getDocumentPage().getPath() + "/_images/" + next.getChildText("path");
-        String caption = next.getChildText("caption");
-        if (caption == null || caption.equals(""))
-          caption = next.getChildText("path");
+    public void layout()
+    {
+        List files = new Vector();
 
-        String line = "  [\"" + caption + "\", \"" + getXSMSession().getSite().getPrefixUrl() + path + "\"]";
-        if (listItem.getIndex() < ((List)listItem.getParent().getDefaultModelObject()).size() - 1)
-          line += ",\n";
+        if ( getDoc() != null )
+        {
+            Element rootElem = getDoc().getContentElement();
+            if ( rootElem != null )
+            {
+                Element images = rootElem.getChild( "images" );
+                if ( images != null )
+                {
+                    files = images.getChildren( "image" );
+                }
+            }
+        }
 
-        listItem.add(new Label("image", line).setEscapeModelStrings(false).setRenderBodyOnly(true));
-        listItem.setRenderBodyOnly(true);
-      }
+        add( new ListView( "images", files )
+        {
+            protected void populateItem( ListItem listItem )
+            {
+                Element next = (Element) listItem.getModelObject();
+                String path = getDocumentPage().getPath() + "/_images/" + next.getChildText( "path" );
+                String caption = next.getChildText( "caption" );
+                if ( caption == null || caption.equals( "" ) )
+                {
+                    caption = next.getChildText( "path" );
+                }
 
-    }.setRenderBodyOnly(true));
-  }
+                String line = "  [\"" + caption + "\", \"" + getXSMSession().getSite().getPrefixUrl() + path + "\"]";
+                if ( listItem.getIndex() < ((List) listItem.getParent().getDefaultModelObject()).size() - 1 )
+                {
+                    line += ",\n";
+                }
+
+                listItem.add( new Label( "image", line ).setEscapeModelStrings( false ).setRenderBodyOnly( true ) );
+                listItem.setRenderBodyOnly( true );
+            }
+
+        }.setRenderBodyOnly( true ) );
+    }
 }

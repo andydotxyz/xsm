@@ -12,31 +12,43 @@ import org.apache.wicket.PageParameters;
  * @version $Id: DocumentPage.java 802 2009-05-16 17:25:24Z andy $
  * @since 2.0
  */
-public abstract class DocumentPage extends Page implements Secure {
-  protected DocumentPage(PageParameters parameters) {
-    super(parameters);
-  }
+public abstract class DocumentPage
+        extends Page
+        implements Secure
+{
+    protected DocumentPage( PageParameters parameters )
+    {
+        super( parameters );
+    }
 
-  public int getLevel() {
-    return AccessControl.MEMBER;
-  }
+    public int getLevel()
+    {
+        return AccessControl.MEMBER;
+    }
 
-  public boolean canEdit() {
-    return getXSMPage() != null && getDoc() != null &&
-        getDoc().canEdit(getXSMSession().getUser());
-  }
+    public boolean canEdit()
+    {
+        return getXSMPage() != null && getDoc() != null &&
+                getDoc().canEdit( getXSMSession().getUser() );
+    }
 
-  protected com.rectang.xsm.site.DocumentPage getDocumentPage() {
-    if (getPageName() == null)
-      return null;
+    protected com.rectang.xsm.site.DocumentPage getDocumentPage()
+    {
+        if ( getPageName() == null )
+        {
+            return null;
+        }
 
-    return (com.rectang.xsm.site.DocumentPage) getXSMSession().getSite().getPage(getPageName());
-  }
+        return (com.rectang.xsm.site.DocumentPage) getXSMSession().getSite().getPage( getPageName() );
+    }
 
-  protected XSMDocument getDoc() {
-    if (getDocumentPage() == null)
-      return null;
+    protected XSMDocument getDoc()
+    {
+        if ( getDocumentPage() == null )
+        {
+            return null;
+        }
 
-    return getDocumentPage().getXSMDocument();
-  }
+        return getDocumentPage().getXSMDocument();
+    }
 }

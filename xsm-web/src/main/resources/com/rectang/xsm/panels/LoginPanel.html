@@ -1,19 +1,25 @@
 <wicket:panel>
-<form wicket:id="login" action="#">
+  <form wicket:id="login" action="#">
 
-<label for="username"><wicket:message key="login.username" /></label><br />
-<input type="text" wicket:id="username" id="username"><br />
-<label for="password"><wicket:message key="login.password" /></label><br />
-<input type="password" wicket:id="password" id="password"><br>
+    <label for="username">
+      <wicket:message key="login.username" />
+    </label><br />
+    <input type="text" wicket:id="username" id="username"><br />
+    <label for="password">
+      <wicket:message key="login.password" />
+    </label><br />
+    <input type="password" wicket:id="password" id="password"><br>
 
-<wicket:enclosure child="sitename">
-<label for="sitename"><wicket:message key="login.sitename" /></label><br />
-<input type="text" wicket:id="sitename" id="sitename"><br />
-</wicket:enclosure>
+    <wicket:enclosure child="sitename">
+      <label for="sitename">
+        <wicket:message key="login.sitename" />
+      </label><br />
+      <input type="text" wicket:id="sitename" id="sitename"><br />
+    </wicket:enclosure>
 
-<!--label for="lang"><wicket:message key="login.language" /></label><br />
-<select wicket:id="lang" id="lang" />
-<br /--><br />
-<input type="submit" wicket:id="login" value="Log In">
-</form>
+    <!--label for="lang"><wicket:message key="login.language" /></label><br />
+    <select wicket:id="lang" id="lang" />
+    <br /--><br />
+    <input type="submit" wicket:id="login" value="Log In">
+  </form>
 </wicket:panel>

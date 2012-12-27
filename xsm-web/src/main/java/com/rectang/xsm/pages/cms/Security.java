@@ -26,114 +26,148 @@ import java.util.Iterator;
  * @version $Id: Security.java 816 2010-05-30 14:02:03Z andy $
  * @since 2.0
  */
-public class Security extends DocumentPage {
-  private static final SupportedOption VISITORS = new SupportedOption("SECURITY_VISITORS", "allowed users", "");
-  private static final SupportedOption ALL_USERS = new SupportedOption("SECURITY_ALL_USERS", "allow all users", true);
+public class Security
+        extends DocumentPage
+{
+    private static final SupportedOption VISITORS = new SupportedOption( "SECURITY_VISITORS", "allowed users", "" );
+    private static final SupportedOption ALL_USERS = new SupportedOption( "SECURITY_ALL_USERS", "allow all users", true );
 
-  public Security(PageParameters parameters) {
-    super(parameters);
-  }
-
-  public void layout() {
-    super.layout();
-    if (hasError()) return;
-
-    // stop folk from loading this page if we have no apache support
-    if (!getXSMSession().getSite().getTechnologies().contains("apache")) {
-      setResponsePage(Options.class);
+    public Security( PageParameters parameters )
+    {
+        super( parameters );
     }
 
-    add(new OptionsForm("securityform"));
-  }
-
-  private class OptionsForm extends Form {
-    private boolean enable = getOverrideFile().exists();
-    private boolean all = ALL_USERS.getBoolean(getDoc());
-    private List visitors = StringUtils.stringToList(VISITORS.getString(getDoc()));
-
-    public OptionsForm(String id) {
-      super(id);
-      final boolean canEdit = getDoc().canEdit(getXSMSession().getUser());
-
-      add(new CheckBox("enable", new PropertyModel(this, "enable")));
-      add(new CheckBox("all", new PropertyModel(this, "all")));
-
-      CheckGroup group = new CheckGroup("group", new PropertyModel(this, "visitors"));
-      add(group);
-      group.add(new ListView("visitor", getXSMSession().getSite().getVisitors()) {
-        protected void populateItem(ListItem listItem) {
-          Visitor visitor = (Visitor) listItem.getModelObject();
-          listItem.add(new Label("username", visitor.getUsername()));
-
-          listItem.add(new Check("allow", new Model(visitor.getUsername())));
+    public void layout()
+    {
+        super.layout();
+        if ( hasError() )
+        {
+            return;
         }
-      });
 
-      Button save = new Button("save");
-      save.setVisible(canEdit);
-      add(save);
-
-      Button reset = new Button("reset");
-      reset.setVisible(canEdit);
-      add(reset);
-    }
-
-
-    protected void onSubmit() {
-      super.onSubmit();
-      getDoc().setOption(VISITORS.getName(), StringUtils.listToString(visitors));
-      getDoc().setOption(ALL_USERS.getName(), String.valueOf(all));
-      getDoc().save();
-      PublishedFile file = getOverrideFile();
-
-      if (enable) {
-        Site site = getXSMSession().getSite();
-        BufferedWriter out = null;
-        try {
-          out = new BufferedWriter(new OutputStreamWriter(file.getOutputStream()));
-          out.write("AuthUserFile " + site.getVisitorsFile().getAbsolutePath());
-          out.newLine();
-          out.write("AuthType Basic");
-          out.newLine();
-          out.write("AuthName \"" + site.getTitle() + " Security\"");
-          out.newLine();
-
-          if (all) {
-            out.write("require valid-user");
-          } else {
-            out.write("require user");
-            if (visitors.size() == 0) {
-              out.write(" totallynousersallowed");
-            } else {
-              Iterator users = visitors.iterator();
-              while (users.hasNext()) {
-                String visitor = (String) users.next();
-
-                out.write(" ");
-                out.write(visitor);
-              }
-            }
-          }
-          out.newLine();
-        } catch (IOException e) {
-          e.printStackTrace();
-        } finally {
-          try {
-            if ( out != null ) {
-              out.close();
-            }
-          } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-          }
+        // stop folk from loading this page if we have no apache support
+        if ( !getXSMSession().getSite().getTechnologies().contains( "apache" ) )
+        {
+            setResponsePage( Options.class );
         }
-      } else {
-        file.delete();
-      }
+
+        add( new OptionsForm( "securityform" ) );
     }
 
-    protected PublishedFile getOverrideFile() {
-      Site site = ( (XSMSession) getSession() ).getSite();
-      return site.getPublishedDoc(getDoc().getPage().getPath() + "/.htaccess");
+    private class OptionsForm
+            extends Form
+    {
+        private boolean enable = getOverrideFile().exists();
+        private boolean all = ALL_USERS.getBoolean( getDoc() );
+        private List visitors = StringUtils.stringToList( VISITORS.getString( getDoc() ) );
+
+        public OptionsForm( String id )
+        {
+            super( id );
+            final boolean canEdit = getDoc().canEdit( getXSMSession().getUser() );
+
+            add( new CheckBox( "enable", new PropertyModel( this, "enable" ) ) );
+            add( new CheckBox( "all", new PropertyModel( this, "all" ) ) );
+
+            CheckGroup group = new CheckGroup( "group", new PropertyModel( this, "visitors" ) );
+            add( group );
+            group.add( new ListView( "visitor", getXSMSession().getSite().getVisitors() )
+            {
+                protected void populateItem( ListItem listItem )
+                {
+                    Visitor visitor = (Visitor) listItem.getModelObject();
+                    listItem.add( new Label( "username", visitor.getUsername() ) );
+
+                    listItem.add( new Check( "allow", new Model( visitor.getUsername() ) ) );
+                }
+            } );
+
+            Button save = new Button( "save" );
+            save.setVisible( canEdit );
+            add( save );
+
+            Button reset = new Button( "reset" );
+            reset.setVisible( canEdit );
+            add( reset );
+        }
+
+
+        protected void onSubmit()
+        {
+            super.onSubmit();
+            getDoc().setOption( VISITORS.getName(), StringUtils.listToString( visitors ) );
+            getDoc().setOption( ALL_USERS.getName(), String.valueOf( all ) );
+            getDoc().save();
+            PublishedFile file = getOverrideFile();
+
+            if ( enable )
+            {
+                Site site = getXSMSession().getSite();
+                BufferedWriter out = null;
+                try
+                {
+                    out = new BufferedWriter( new OutputStreamWriter( file.getOutputStream() ) );
+                    out.write( "AuthUserFile " + site.getVisitorsFile().getAbsolutePath() );
+                    out.newLine();
+                    out.write( "AuthType Basic" );
+                    out.newLine();
+                    out.write( "AuthName \"" + site.getTitle() + " Security\"" );
+                    out.newLine();
+
+                    if ( all )
+                    {
+                        out.write( "require valid-user" );
+                    }
+                    else
+                    {
+                        out.write( "require user" );
+                        if ( visitors.size() == 0 )
+                        {
+                            out.write( " totallynousersallowed" );
+                        }
+                        else
+                        {
+                            Iterator users = visitors.iterator();
+                            while ( users.hasNext() )
+                            {
+                                String visitor = (String) users.next();
+
+                                out.write( " " );
+                                out.write( visitor );
+                            }
+                        }
+                    }
+                    out.newLine();
+                }
+                catch ( IOException e )
+                {
+                    e.printStackTrace();
+                }
+                finally
+                {
+                    try
+                    {
+                        if ( out != null )
+                        {
+                            out.close();
+                        }
+                    }
+                    catch ( IOException e )
+                    {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                }
+            }
+            else
+            {
+                file.delete();
+            }
+        }
+
+        protected PublishedFile getOverrideFile()
+        {
+            Site site = ((XSMSession) getSession()).getSite();
+            return site.getPublishedDoc( getDoc().getPage().getPath() + "/.htaccess" );
+        }
     }
-  }
 }

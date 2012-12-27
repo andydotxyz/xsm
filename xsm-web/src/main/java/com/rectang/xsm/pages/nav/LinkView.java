@@ -11,16 +11,20 @@ import org.apache.wicket.markup.html.link.ExternalLink;
  * @version $Id: LinkView.java 802 2009-05-16 17:25:24Z andy $
  * @since 2.0
  */
-public class LinkView extends LinkPage {
-  public LinkView(PageParameters parameters) {
-    super(parameters);
-  }
+public class LinkView
+        extends LinkPage
+{
+    public LinkView( PageParameters parameters )
+    {
+        super( parameters );
+    }
 
-  public void layout() {
-    super.layout();
+    public void layout()
+    {
+        super.layout();
 
-    ExternalLink link = new ExternalLink("link", getXSMPage().getLink());
-    link.add(new Label("link-label", getXSMPage().getLink()));
-    add(link);
-  }
+        ExternalLink link = new ExternalLink( "link", getXSMPage().getLink() );
+        link.add( new Label( "link-label", getXSMPage().getLink() ) );
+        add( link );
+    }
 }

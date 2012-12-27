@@ -12,17 +12,23 @@ import org.apache.wicket.PageParameters;
  * @version $Id: LinkPage.java 802 2009-05-16 17:25:24Z andy $
  * @since 2.0
  */
-public abstract class LinkPage extends Page implements Secure {
-  protected LinkPage(PageParameters parameters) {
-    super(parameters);
-  }
+public abstract class LinkPage
+        extends Page
+        implements Secure
+{
+    protected LinkPage( PageParameters parameters )
+    {
+        super( parameters );
+    }
 
-  public int getLevel() {
-    return AccessControl.MEMBER;
-  }
+    public int getLevel()
+    {
+        return AccessControl.MEMBER;
+    }
 
-  @Override
-  public Class<? extends Page> getCMSEditPage() {
-    return LinkEdit.class;
-  }
+    @Override
+    public Class<? extends Page> getCMSEditPage()
+    {
+        return LinkEdit.class;
+    }
 }

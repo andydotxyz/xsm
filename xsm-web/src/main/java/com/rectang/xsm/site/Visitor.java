@@ -9,42 +9,54 @@ import java.io.Serializable;
  * @version $Id: Visitor.java 790 2009-04-14 21:39:47Z andy $
  * @since 2.0
  */
-public class Visitor implements Serializable, Comparable {
-  private String username, password;
-  public Visitor(String username) {
-    this(username, null);
-  }
+public class Visitor
+        implements Serializable, Comparable
+{
+    private String username, password;
 
-  public Visitor(String username, String password) {
-    this.username = username;
-    this.password = password;
-  }
-
-  public String getUsername() {
-    return username;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public boolean equals(Object o) {
-    return o instanceof Visitor && equals((Visitor) o);
-  }
-
-  public boolean equals(Visitor v) {
-    return v.getUsername().equals(username);
-  }
-
-  public int hashCode() {
-    return username.hashCode();
-  }
-
-  public int compareTo(Object o) {
-    if (!(o instanceof Visitor)) {
-      return -1;
+    public Visitor( String username )
+    {
+        this( username, null );
     }
 
-    return username.compareTo(((Visitor) o).getUsername());
-  }
+    public Visitor( String username, String password )
+    {
+        this.username = username;
+        this.password = password;
+    }
+
+    public String getUsername()
+    {
+        return username;
+    }
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public boolean equals( Object o )
+    {
+        return o instanceof Visitor && equals( (Visitor) o );
+    }
+
+    public boolean equals( Visitor v )
+    {
+        return v.getUsername().equals( username );
+    }
+
+    public int hashCode()
+    {
+        return username.hashCode();
+    }
+
+    public int compareTo( Object o )
+    {
+        if ( !(o instanceof Visitor) )
+        {
+            return -1;
+        }
+
+        return username.compareTo( ((Visitor) o).getUsername() );
+    }
 }
