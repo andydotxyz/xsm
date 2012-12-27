@@ -116,7 +116,7 @@
                   <span class="xsm_newssummary_subject">$article.getChildText("subject")</span><br />
 
                   <span
-                      class="xsm_newssummary_body">$htmlUtils.summarise( $article.getChildText("body"), $length)</span><br />
+                      class="xsm_newssummary_body">$htmlUtils.summarise( $article.getChildText("body"), $length )</span><br />
 
                   <a href="$site.getPrefixUrl()$site.getNewsSource()/_articles/${article.getAttributeValue("index")}.html"
                      class="xsm_newssummary_more">read more...</a>
@@ -201,15 +201,12 @@
 
 #macro( editlink )
     #if( $editing )
-    XSM Version: $config.version
+        XSM $config.version
     #else
-        #if( $site.login == "" )
-            #set( $login = $config.url + "login?sitename=" + $site.id )
-        #else
-            #set( $login = $site.prefixUrl + $site.login )
-        #end
+        #set( $encodedPageName = $htmlUtils.urlEncode( $page.path ) )
+        #set( $login = $config.url + "page-edit?page=" + $encodedPageName + "&sitename=" + $site.id )
 
-    <a href="$login">Edit</a>
+        <a href="$login">Edit</a>
     #end
 #end
 

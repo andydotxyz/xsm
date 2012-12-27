@@ -5,6 +5,8 @@ import com.rectang.xsm.site.Site;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.HTML;
 import javax.swing.text.MutableAttributeSet;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.*;
 import java.io.StringReader;
 
@@ -46,6 +48,26 @@ public class HTMLUtils
       /* if we cannot parse just return a trimmed version */
             return StringUtils.summarise( in, chars );
         }
+    }
+
+    /**
+     * Convert a page name to a url encoded page url.
+     *
+     * @param in The page name to encode
+     * @return   A url encoded version of the page name
+     */
+    public String urlEncode( String in )
+    {
+        try
+        {
+            return URLEncoder.encode( in, "UTF-8" );
+        }
+        catch ( UnsupportedEncodingException e )
+        {
+            // UTF-8 always exists
+        }
+
+        return in;
     }
 
     public static String toAbsolute( String link, Site site )
