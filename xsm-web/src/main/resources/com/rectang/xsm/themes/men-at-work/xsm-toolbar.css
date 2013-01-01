@@ -93,7 +93,7 @@
     margin-right: 5px;
 }
 
-#xsm_content #saveButton {
+#saveButton {
     top: 25px;
     float: right;
     padding: 0;
@@ -104,16 +104,16 @@
     border: 1px solid black;
 }
 
-#xsm_content #saveButton img {
+#saveButton img {
     float: right;
     width: 24px;
     height: 24px;
 }
 
-#xsm_content #saveButton span {
+#saveButton span {
     float: left;
 }
 
-#xsm_content #saveButton:hover {
+#saveButton:hover {
     background-color: lightgray;
 }
