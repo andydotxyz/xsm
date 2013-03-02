@@ -1,5 +1,6 @@
 package com.rectang.xsm.pages.nav;
 
+import com.rectang.xsm.pages.XSMPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
@@ -121,19 +122,20 @@ public class Rename
                 else
                 {
                     boolean renamed = true;
-                    if ( getXSMPage() instanceof com.rectang.xsm.site.DocumentPage )
+                    com.rectang.xsm.site.Page xsmPage = getXSMPage();
+                    if ( xsmPage instanceof com.rectang.xsm.site.DocumentPage )
                     {
-                        renamed = ((com.rectang.xsm.site.DocumentPage) getXSMPage()).getXSMDocument()
+                        renamed = ((com.rectang.xsm.site.DocumentPage) xsmPage).getXSMDocument()
                                 .rename( site, new DocumentPage( site, newParent, escaped ) );
                     }
 
-                    if ( renamed && getXSMPage().rename( newTitle ) )
+                    if ( renamed && xsmPage.rename( newTitle ) )
                     {
                         (RemoteDocument.getDoc( site, "/data" + pagePath, false )).rename( site, "/data" + path, false );
                         // this means there is no slug set, so rename the output too
-                        if ( getXSMPage().getPath().equals( getXSMPage().getPublishedPath() ) )
+                        if ( xsmPage.getPath().equals( xsmPage.getPublishedPath() ) )
                         {
-                            site.getPublishedDoc( getXSMPage().getPath() ).rename( path );
+                            site.getPublishedDoc( xsmPage.getPath() ).rename( path );
                         }
                         site.save();
                         getSession().info( "Page \"" + oldTitle + "\" successfully renamed to \""

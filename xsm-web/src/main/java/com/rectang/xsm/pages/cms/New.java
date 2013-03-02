@@ -64,7 +64,7 @@ public class New
             UserData user = getXSMSession().getUser();
 
             WebMarkupContainer grouping =
-                    new RadioGroup( "typegroup", new PropertyModel( this, "type" ) );
+                    new RadioGroup( "typegroup", new PropertyModel( this, "type" ) ).setRequired( true );
             add( grouping );
 
             grouping.add( new ListView( "types", Type.listTypes() )
@@ -84,7 +84,7 @@ public class New
             add( new TextField( "name", new PropertyModel( this, "name" ) ).setRequired( true ) );
 
             add( grouping =
-                    new RadioGroup( "levelgroup", new PropertyModel( this, "level" ) ) );
+                    new RadioGroup( "levelgroup", new PropertyModel( this, "level" ) ).setRequired( true ) );
 
             boolean canAddSibling = false;
             if ( getXSMPage().getParent() != null )
