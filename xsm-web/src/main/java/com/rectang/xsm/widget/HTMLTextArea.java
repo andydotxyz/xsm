@@ -35,7 +35,9 @@ public class HTMLTextArea
 
     public void view( Element node, StringBuffer s )
     {
-        s.append( HTMLUtils.toAbsoluteLinks( node.getValue(), getSite() ) );
+// TODO find a better HTML parser as this is screwing up lots of stuff
+//        s.append( HTMLUtils.toAbsoluteLinks( node.getValue(), getSite() ) );
+        s.append( node.getValue() );
     }
 
     public void publish( Element node, StringBuffer s )
