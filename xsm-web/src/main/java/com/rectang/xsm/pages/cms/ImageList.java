@@ -47,7 +47,7 @@ public class ImageList
             protected void populateItem( ListItem listItem )
             {
                 Element next = (Element) listItem.getModelObject();
-                String path = getDocumentPage().getPath() + "/_images/" + next.getChildText( "path" );
+                String path = getDocumentPage().getPublishedPath() + "/_images/" + next.getChildText( "path" );
                 String caption = next.getChildText( "caption" );
                 if ( caption == null || caption.equals( "" ) )
                 {

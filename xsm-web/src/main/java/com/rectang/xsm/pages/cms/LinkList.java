@@ -47,7 +47,7 @@ public class LinkList
             protected void populateItem( ListItem<Element> listItem )
             {
                 Element next = listItem.getModelObject();
-                String path = getDocumentPage().getPath() + "/_files/" + next.getChildText( "path" );
+                String path = getDocumentPage().getPublishedPath() + "/_files/" + next.getChildText( "path" );
                 String caption = next.getChildText( "caption" );
                 if ( caption == null || caption.equals( "" ) )
                 {
